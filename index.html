@@ -1,410 +1,660 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
 
-    <title>MELER</title>
+  <title>MELER</title>
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        body {
-            background: #080808;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-        }
+    body {
+      background: #080808;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
 
-        .app {
-            max-width: 500px;
-            margin: auto;
-            padding: 20px 16px 100px;
-        }
+    button {
+      font-family: inherit;
+    }
 
-        /* LOGO */
+    .app {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px 16px 100px;
+    }
 
-        .logo {
-            text-align: center;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            margin: 15px 0 25px;
-            color: #ff1f1f;
-        }
+    .logo {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      margin: 15px 0 8px;
+      color: #ff1f1f;
+    }
 
-        /* BALANCE */
+    .welcome {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
 
-        .balance-card {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(145deg, #1a0808, #0e0e0e);
-            border: 1px solid #3b1111;
-            border-radius: 24px;
-            padding: 26px 20px;
-            text-align: center;
-            box-shadow: 0 10px 35px rgba(255, 0, 0, 0.08);
-        }
+    .balance-card {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(145deg, #1a0808, #0e0e0e);
+      border: 1px solid #3b1111;
+      border-radius: 24px;
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: 0 10px 35px rgba(255, 0, 0, .08);
+    }
 
-        .balance-card::before {
-            content: "";
-            position: absolute;
-            width: 180px;
-            height: 180px;
-            background: #ff0000;
-            filter: blur(100px);
-            opacity: 0.12;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
+    .balance-card::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      background: #ff0000;
+      filter: blur(100px);
+      opacity: .12;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
-        .balance-title {
-            position: relative;
-            color: #888;
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
+    .balance-title {
+      position: relative;
+      color: #888;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
 
-        .balance {
-            position: relative;
-            font-size: 42px;
-            font-weight: 900;
-        }
+    .balance {
+      position: relative;
+      font-size: 42px;
+      font-weight: 900;
+    }
 
-        .currency {
-            position: relative;
-            color: #ff2a2a;
-            font-size: 16px;
-            font-weight: 800;
-        }
+    .currency {
+      position: relative;
+      color: #ff2a2a;
+      font-size: 16px;
+      font-weight: 800;
+    }
 
-        /* BUTTONS */
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 15px;
+    }
 
-        .buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 15px;
-        }
+    .button {
+      border: none;
+      border-radius: 16px;
+      padding: 17px 10px;
+      font-size: 15px;
+      font-weight: 800;
+      color: white;
+      background: #171717;
+      border: 1px solid #292929;
+      cursor: pointer;
+    }
 
-        .button {
-            border: none;
-            border-radius: 16px;
-            padding: 17px 10px;
-            font-size: 15px;
-            font-weight: 800;
-            color: white;
-            background: #171717;
-            border: 1px solid #292929;
-        }
+    .button.primary {
+      background: #e91515;
+      border-color: #ff3030;
+      box-shadow: 0 8px 25px rgba(255, 0, 0, .2);
+    }
 
-        .button.primary {
-            background: #e91515;
-            border-color: #ff3030;
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.2);
-        }
+    .button:active {
+      transform: scale(.97);
+    }
 
-        .button:active {
-            transform: scale(0.97);
-        }
+    .section {
+      margin-top: 28px;
+    }
 
-        /* SECTIONS */
+    .section-title {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
 
-        .section {
-            margin-top: 28px;
-        }
+    .task {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #111;
+      border: 1px solid #252525;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 10px;
+    }
 
-        .section-title {
-            font-size: 20px;
-            font-weight: 900;
-            margin-bottom: 12px;
-        }
+    .task-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
 
-        /* TASK */
+    .task-title {
+      font-size: 15px;
+      font-weight: 800;
+    }
 
-        .task {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
+    .task-reward {
+      color: #ff2929;
+      font-size: 13px;
+      font-weight: 700;
+    }
 
-            background: #111;
-            border: 1px solid #252525;
-            border-radius: 18px;
-            padding: 16px;
-            margin-bottom: 10px;
-        }
+    .task-button {
+      flex-shrink: 0;
+      border: none;
+      background: #e91515;
+      color: white;
+      padding: 11px 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
 
-        .task-info {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
+    .task-button:disabled {
+      opacity: .5;
+      cursor: default;
+    }
 
-        .task-title {
-            font-size: 15px;
-            font-weight: 800;
-        }
+    .notice {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 15px;
+      background: #160909;
+      border: 1px solid #351010;
+      color: #aaa;
+      font-size: 13px;
+      line-height: 1.4;
+    }
 
-        .task-reward {
-            color: #ff2929;
-            font-size: 13px;
-            font-weight: 700;
-        }
+    .status {
+      text-align: center;
+      margin-top: 14px;
+      color: #777;
+      font-size: 12px;
+      min-height: 16px;
+    }
 
-        .task-button {
-            flex-shrink: 0;
-            border: none;
-            background: #e91515;
-            color: white;
-            padding: 11px 14px;
-            border-radius: 12px;
-            font-weight: 800;
-        }
+    .bottom-nav {
+      position: fixed;
+      z-index: 100;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(8, 8, 8, .96);
+      border-top: 1px solid #262626;
+      backdrop-filter: blur(15px);
+      padding: 9px 10px;
+    }
 
-        /* NAVIGATION */
+    .nav {
+      max-width: 500px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
 
-        .bottom-nav {
-            position: fixed;
-            z-index: 100;
-            bottom: 0;
-            left: 0;
-            right: 0;
+    .nav button {
+      border: none;
+      background: transparent;
+      color: #666;
+      padding: 9px 5px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-            background: rgba(8, 8, 8, 0.96);
-            border-top: 1px solid #262626;
-            backdrop-filter: blur(15px);
+    .nav button.active {
+      color: #ff2020;
+    }
 
-            padding: 9px 10px;
-        }
+    .nav-icon {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 3px;
+    }
 
-        .nav {
-            max-width: 500px;
-            margin: auto;
-
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 5px;
-        }
-
-        .nav button {
-            border: none;
-            background: transparent;
-            color: #666;
-            padding: 9px 5px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .nav button.active {
-            color: #ff2020;
-        }
-
-        .nav-icon {
-            display: block;
-            font-size: 20px;
-            margin-bottom: 3px;
-        }
-
-        /* NOTIFICATION */
-
-        .notice {
-            margin-top: 18px;
-            padding: 14px;
-            border-radius: 15px;
-            background: #160909;
-            border: 1px solid #351010;
-            color: #aaa;
-            font-size: 13px;
-            line-height: 1.4;
-        }
-    </style>
+    .loading {
+      text-align: center;
+      color: #888;
+      padding: 20px;
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="app">
 
-    <div class="logo">
-        MELER
+  <div class="logo">MELER</div>
+
+  <div class="welcome" id="welcome">
+    Завантаження...
+  </div>
+
+  <div class="balance-card">
+
+    <div class="balance-title">
+      Ваш баланс
     </div>
 
-    <div class="balance-card">
-
-        <div class="balance-title">
-            Ваш баланс
-        </div>
-
-        <div>
-            <span class="balance" id="balance">0</span>
-            <span class="currency">MELER</span>
-        </div>
-
+    <div>
+      <span class="balance" id="balance">0</span>
+      <span class="currency">MELER</span>
     </div>
 
-    <div class="buttons">
+  </div>
 
-        <button class="button primary" onclick="showTasks()">
-            🎁 Заробити
-        </button>
+  <div class="buttons">
 
-        <button class="button" onclick="showGames()">
-            🎮 Грати
-        </button>
+    <button class="button primary" onclick="showTasks()">
+      🎁 Заробити
+    </button>
 
+    <button class="button" onclick="showGames()">
+      🎮 Грати
+    </button>
+
+  </div>
+
+  <div class="section" id="tasksSection">
+
+    <div class="section-title">
+      🔥 Завдання
     </div>
 
-    <div class="section">
+    <div class="task">
 
-        <div class="section-title">
-            🔥 Завдання
+      <div class="task-info">
+
+        <div class="task-title">
+          📢 Підписатися на канал
         </div>
 
-        <div class="task">
-
-            <div class="task-info">
-
-                <div class="task-title">
-                    📢 Підписатися на канал
-                </div>
-
-                <div class="task-reward">
-                    +100 MELER
-                </div>
-
-            </div>
-
-            <button class="task-button" onclick="completeDemoTask()">
-                Отримати
-            </button>
-
+        <div class="task-reward">
+          +100 MELER
         </div>
 
-    </div>
+      </div>
 
-    <div class="section">
-
-        <div class="section-title">
-            🎮 Мініігри
-        </div>
-
-        <div class="task">
-
-            <div class="task-info">
-
-                <div class="task-title">
-                    🎲 Dice
-                </div>
-
-                <div class="task-reward">
-                    Демо-гра
-                </div>
-
-            </div>
-
-            <button class="task-button" onclick="playDemoGame()">
-                Грати
-            </button>
-
-        </div>
+      <button
+        class="task-button"
+        id="taskButton"
+        onclick="completeTask()"
+      >
+        Отримати
+      </button>
 
     </div>
 
-    <div class="notice">
-        Виконуй завдання, отримуй MELER та використовуй їх у доступних розвагах і винагородах.
+  </div>
+
+  <div class="section" id="gamesSection">
+
+    <div class="section-title">
+      🎮 Мініігри
     </div>
+
+    <div class="task">
+
+      <div class="task-info">
+
+        <div class="task-title">
+          🎲 Dice
+        </div>
+
+        <div class="task-reward">
+          Демо-гра
+        </div>
+
+      </div>
+
+      <button
+        class="task-button"
+        onclick="playGame()"
+      >
+        Грати
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="notice">
+    Виконуй завдання, отримуй MELER та використовуй їх у доступних розвагах і винагородах.
+  </div>
+
+  <div class="status" id="status"></div>
 
 </div>
 
 <div class="bottom-nav">
 
-    <div class="nav">
+  <div class="nav">
 
-        <button class="active" onclick="home()">
-            <span class="nav-icon">🏠</span>
-            Головна
-        </button>
+    <button class="active" onclick="home()">
+      <span class="nav-icon">🏠</span>
+      Головна
+    </button>
 
-        <button onclick="showTasks()">
-            <span class="nav-icon">🎁</span>
-            Завдання
-        </button>
+    <button onclick="showTasks()">
+      <span class="nav-icon">🎁</span>
+      Завдання
+    </button>
 
-        <button onclick="showGames()">
-            <span class="nav-icon">🎮</span>
-            Ігри
-        </button>
+    <button onclick="showGames()">
+      <span class="nav-icon">🎮</span>
+      Ігри
+    </button>
 
-    </div>
+  </div>
 
 </div>
 
 <script>
 
-let balance = 0;
+  // ==========================================
+  // MELER / SUPABASE
+  // ==========================================
 
-function updateBalance() {
-    document.getElementById("balance").textContent = balance;
-}
+  const SUPABASE_URL =
+    "https://znguvxqhsvxmewkybpaw.supabase.co";
 
-function completeDemoTask() {
+  /*
+    ВАЖЛИВО:
+    Сюди потрібно вставити PUBLIC / ANONYMOUS
+    API key із Supabase.
+
+    НЕ вставляй сюди Service API key.
+  */
+
+  const SUPABASE_KEY =
+    "ВСТАВ_СЮДИ_PUBLISHABLE_АБО_ANONYMOUS_KEY";
+
+
+  const AUTH_FUNCTION =
+    SUPABASE_URL + "/functions/v1/meler-auth";
+
+
+  let balance = 0;
+  let telegramUser = null;
+
+
+  // ==========================================
+  // TELEGRAM
+  // ==========================================
+
+  if (window.Telegram && Telegram.WebApp) {
+
+    Telegram.WebApp.ready();
+
+    Telegram.WebApp.expand();
+
+    telegramUser = Telegram.WebApp.initDataUnsafe?.user || null;
+
+  }
+
+
+  // ==========================================
+  // UI
+  // ==========================================
+
+  function updateBalance() {
+
+    document.getElementById("balance").textContent =
+      Number(balance).toLocaleString("uk-UA");
+
+  }
+
+
+  function setStatus(text) {
+
+    document.getElementById("status").textContent = text;
+
+  }
+
+
+  // ==========================================
+  // AUTH
+  // ==========================================
+
+  async function loginUser() {
+
+    if (!telegramUser) {
+
+      document.getElementById("welcome").textContent =
+        "Відкрий MELER через Telegram";
+
+      setStatus("Telegram-користувача не знайдено");
+
+      return;
+
+    }
+
+
+    document.getElementById("welcome").textContent =
+      "Привіт, " +
+      (telegramUser.first_name || "користувач") +
+      " 👋";
+
+
+    try {
+
+      setStatus("Підключення...");
+
+
+      const response = await fetch(AUTH_FUNCTION, {
+
+        method: "POST",
+
+        headers: {
+
+          "Content-Type": "application/json",
+
+          "apikey": SUPABASE_KEY,
+
+          "Authorization":
+            "Bearer " + SUPABASE_KEY
+
+        },
+
+        body: JSON.stringify({
+
+          telegram_id: telegramUser.id,
+
+          username: telegramUser.username || null,
+
+          first_name: telegramUser.first_name || null,
+
+          last_name: telegramUser.last_name || null,
+
+          photo_url: telegramUser.photo_url || null
+
+        })
+
+      });
+
+
+      const data = await response.json();
+
+
+      if (!response.ok || !data.success) {
+
+        throw new Error(
+          data.error || "Помилка авторизації"
+        );
+
+      }
+
+
+      balance =
+        Number(data.user.balance || 0);
+
+
+      updateBalance();
+
+
+      setStatus("Готово ✓");
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      setStatus(
+        "Помилка підключення"
+      );
+
+    }
+
+  }
+
+
+  // ==========================================
+  // DEMO TASK
+  // ==========================================
+
+  async function completeTask() {
+
+    if (!telegramUser) {
+
+      alert("Відкрий MELER через Telegram.");
+
+      return;
+
+    }
+
 
     balance += 100;
 
     updateBalance();
 
-    alert("🔥 +100 MELER");
-}
 
-function playDemoGame() {
+    document.getElementById("taskButton").disabled = true;
+
+    document.getElementById("taskButton").textContent =
+      "Виконано";
+
+
+    alert("🔥 +100 MELER");
+
+  }
+
+
+  // ==========================================
+  // DEMO GAME
+  // ==========================================
+
+  function playGame() {
 
     if (balance < 10) {
-        alert("Потрібно мінімум 10 MELER.");
-        return;
+
+      alert("Потрібно мінімум 10 MELER.");
+
+      return;
+
     }
+
 
     balance -= 10;
 
-    const win = Math.random() > 0.5;
+
+    const win =
+      Math.random() > 0.5;
+
 
     if (win) {
-        balance += 20;
-        alert("🎉 Ви виграли 20 MELER!");
+
+      balance += 20;
+
+      alert("🎉 Ви виграли 20 MELER!");
+
     } else {
-        alert("😔 Не пощастило.");
+
+      alert("😔 Не пощастило.");
+
     }
 
+
     updateBalance();
-}
 
-function showTasks() {
-    alert("🎁 Тут будуть завдання.");
-}
+  }
 
-function showGames() {
-    alert("🎮 Тут будуть мініігри.");
-}
 
-function home() {
+  // ==========================================
+  // NAVIGATION
+  // ==========================================
+
+  function home() {
+
     window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+
+      top: 0,
+
+      behavior: "smooth"
+
     });
-}
 
-if (window.Telegram && Telegram.WebApp) {
-    Telegram.WebApp.ready();
-    Telegram.WebApp.expand();
-}
+  }
 
-updateBalance();
+
+  function showTasks() {
+
+    document.getElementById(
+      "tasksSection"
+    ).scrollIntoView({
+
+      behavior: "smooth"
+
+    });
+
+  }
+
+
+  function showGames() {
+
+    document.getElementById(
+      "gamesSection"
+    ).scrollIntoView({
+
+      behavior: "smooth"
+
+    });
+
+  }
+
+
+  // ==========================================
+  // START
+  // ==========================================
+
+  updateBalance();
+
+  loginUser();
 
 </script>
 
