@@ -16,8 +16,8 @@
         }
 
         body {
-            background: #0b0b0f;
-            color: white;
+            background: #080808;
+            color: #fff;
             font-family: Arial, sans-serif;
             min-height: 100vh;
         }
@@ -25,147 +25,205 @@
         .app {
             max-width: 500px;
             margin: auto;
-            padding: 20px;
+            padding: 20px 16px 100px;
         }
+
+        /* LOGO */
 
         .logo {
             text-align: center;
-            font-size: 30px;
-            font-weight: 800;
-            margin: 20px 0 30px;
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            margin: 15px 0 25px;
+            color: #ff1f1f;
         }
 
+        /* BALANCE */
+
         .balance-card {
-            background: linear-gradient(135deg, #191922, #101015);
-            border: 1px solid #292936;
-            border-radius: 22px;
-            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, #1a0808, #0e0e0e);
+            border: 1px solid #3b1111;
+            border-radius: 24px;
+            padding: 26px 20px;
             text-align: center;
-            margin-bottom: 20px;
+            box-shadow: 0 10px 35px rgba(255, 0, 0, 0.08);
+        }
+
+        .balance-card::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: #ff0000;
+            filter: blur(100px);
+            opacity: 0.12;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .balance-title {
-            color: #888894;
-            font-size: 14px;
+            position: relative;
+            color: #888;
+            font-size: 13px;
             margin-bottom: 10px;
         }
 
         .balance {
-            font-size: 38px;
-            font-weight: 800;
+            position: relative;
+            font-size: 42px;
+            font-weight: 900;
         }
 
         .currency {
-            font-size: 18px;
-            color: #8f8f9b;
+            position: relative;
+            color: #ff2a2a;
+            font-size: 16px;
+            font-weight: 800;
         }
+
+        /* BUTTONS */
 
         .buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
+            margin-top: 15px;
         }
 
         .button {
             border: none;
             border-radius: 16px;
-            padding: 18px 10px;
-            color: white;
-            background: #191922;
-            border: 1px solid #292936;
+            padding: 17px 10px;
             font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
+            font-weight: 800;
+            color: white;
+            background: #171717;
+            border: 1px solid #292929;
+        }
+
+        .button.primary {
+            background: #e91515;
+            border-color: #ff3030;
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.2);
         }
 
         .button:active {
             transform: scale(0.97);
         }
 
-        .button.primary {
-            background: #ffffff;
-            color: #000000;
-        }
+        /* SECTIONS */
 
         .section {
-            margin-top: 25px;
+            margin-top: 28px;
         }
 
         .section-title {
             font-size: 20px;
-            font-weight: 800;
+            font-weight: 900;
             margin-bottom: 12px;
         }
 
+        /* TASK */
+
         .task {
-            background: #15151c;
-            border: 1px solid #25252f;
-            border-radius: 18px;
-            padding: 17px;
-            margin-bottom: 10px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+
+            background: #111;
+            border: 1px solid #252525;
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 10px;
         }
 
         .task-info {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
         }
 
         .task-title {
-            font-weight: 700;
+            font-size: 15px;
+            font-weight: 800;
         }
 
         .task-reward {
-            color: #9b9ba7;
+            color: #ff2929;
             font-size: 13px;
-        }
-
-        .task-button {
-            border: none;
-            background: white;
-            color: black;
-            padding: 10px 14px;
-            border-radius: 12px;
             font-weight: 700;
         }
 
+        .task-button {
+            flex-shrink: 0;
+            border: none;
+            background: #e91515;
+            color: white;
+            padding: 11px 14px;
+            border-radius: 12px;
+            font-weight: 800;
+        }
+
+        /* NAVIGATION */
+
         .bottom-nav {
             position: fixed;
+            z-index: 100;
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(12, 12, 17, 0.96);
-            border-top: 1px solid #24242d;
-            display: flex;
-            justify-content: center;
-            padding: 12px 10px;
+
+            background: rgba(8, 8, 8, 0.96);
+            border-top: 1px solid #262626;
+            backdrop-filter: blur(15px);
+
+            padding: 9px 10px;
         }
 
         .nav {
-            width: 100%;
             max-width: 500px;
+            margin: auto;
+
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 5px;
         }
 
         .nav button {
             border: none;
             background: transparent;
-            color: #777783;
-            padding: 10px;
-            font-size: 13px;
+            color: #666;
+            padding: 9px 5px;
+            font-size: 12px;
+            font-weight: 700;
         }
 
         .nav button.active {
-            color: white;
+            color: #ff2020;
         }
 
-        .space {
-            height: 80px;
+        .nav-icon {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        /* NOTIFICATION */
+
+        .notice {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 15px;
+            background: #160909;
+            border: 1px solid #351010;
+            color: #aaa;
+            font-size: 13px;
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -179,6 +237,7 @@
     </div>
 
     <div class="balance-card">
+
         <div class="balance-title">
             Ваш баланс
         </div>
@@ -187,9 +246,11 @@
             <span class="balance" id="balance">0</span>
             <span class="currency">MELER</span>
         </div>
+
     </div>
 
     <div class="buttons">
+
         <button class="button primary" onclick="showTasks()">
             🎁 Заробити
         </button>
@@ -197,24 +258,27 @@
         <button class="button" onclick="showGames()">
             🎮 Грати
         </button>
+
     </div>
 
     <div class="section">
 
         <div class="section-title">
-            Завдання
+            🔥 Завдання
         </div>
 
         <div class="task">
 
             <div class="task-info">
+
                 <div class="task-title">
                     📢 Підписатися на канал
                 </div>
 
                 <div class="task-reward">
-                    Нагорода: +100 MELER
+                    +100 MELER
                 </div>
+
             </div>
 
             <button class="task-button" onclick="completeDemoTask()">
@@ -228,19 +292,21 @@
     <div class="section">
 
         <div class="section-title">
-            Мініігри
+            🎮 Мініігри
         </div>
 
         <div class="task">
 
             <div class="task-info">
+
                 <div class="task-title">
                     🎲 Dice
                 </div>
 
                 <div class="task-reward">
-                    Демонстраційна гра
+                    Демо-гра
                 </div>
+
             </div>
 
             <button class="task-button" onclick="playDemoGame()">
@@ -251,7 +317,9 @@
 
     </div>
 
-    <div class="space"></div>
+    <div class="notice">
+        Виконуй завдання, отримуй MELER та використовуй їх у доступних розвагах і винагородах.
+    </div>
 
 </div>
 
@@ -260,17 +328,17 @@
     <div class="nav">
 
         <button class="active" onclick="home()">
-            🏠<br>
+            <span class="nav-icon">🏠</span>
             Головна
         </button>
 
         <button onclick="showTasks()">
-            🎁<br>
-            Заробити
+            <span class="nav-icon">🎁</span>
+            Завдання
         </button>
 
         <button onclick="showGames()">
-            🎮<br>
+            <span class="nav-icon">🎮</span>
             Ігри
         </button>
 
@@ -280,63 +348,63 @@
 
 <script>
 
-    let balance = 0;
+let balance = 0;
 
-    function updateBalance() {
-        document.getElementById("balance").textContent = balance;
+function updateBalance() {
+    document.getElementById("balance").textContent = balance;
+}
+
+function completeDemoTask() {
+
+    balance += 100;
+
+    updateBalance();
+
+    alert("🔥 +100 MELER");
+}
+
+function playDemoGame() {
+
+    if (balance < 10) {
+        alert("Потрібно мінімум 10 MELER.");
+        return;
     }
 
-    function completeDemoTask() {
+    balance -= 10;
 
-        balance += 100;
+    const win = Math.random() > 0.5;
 
-        updateBalance();
-
-        alert("🎉 Ви отримали +100 MELER!");
-    }
-
-    function playDemoGame() {
-
-        if (balance < 10) {
-            alert("Потрібно мінімум 10 MELER.");
-            return;
-        }
-
-        balance -= 10;
-
-        const win = Math.random() > 0.5;
-
-        if (win) {
-            balance += 20;
-            alert("🎉 Ви виграли 20 MELER!");
-        } else {
-            alert("😔 Цього разу не пощастило.");
-        }
-
-        updateBalance();
-    }
-
-    function showTasks() {
-        alert("🎁 Тут будуть завдання за підписку на Telegram-канали.");
-    }
-
-    function showGames() {
-        alert("🎮 Тут будуть мініігри.");
-    }
-
-    function home() {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    }
-
-    if (window.Telegram && Telegram.WebApp) {
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand();
+    if (win) {
+        balance += 20;
+        alert("🎉 Ви виграли 20 MELER!");
+    } else {
+        alert("😔 Не пощастило.");
     }
 
     updateBalance();
+}
+
+function showTasks() {
+    alert("🎁 Тут будуть завдання.");
+}
+
+function showGames() {
+    alert("🎮 Тут будуть мініігри.");
+}
+
+function home() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+if (window.Telegram && Telegram.WebApp) {
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand();
+}
+
+updateBalance();
 
 </script>
 
