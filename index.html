@@ -1,249 +1,224 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  >
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>MELER</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <title>MELER</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+body{
+  background:#080808;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+button{font-family:inherit}
 
-    body {
-      background: #080808;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-    }
+.app{
+  max-width:500px;
+  margin:auto;
+  padding:20px 16px 100px;
+}
 
-    button {
-      font-family: inherit;
-    }
+.logo{
+  text-align:center;
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:4px;
+  margin:15px 0 8px;
+  color:#ff1f1f;
+}
 
-    .app {
-      max-width: 500px;
-      margin: auto;
-      padding: 20px 16px 100px;
-    }
+.welcome{
+  text-align:center;
+  color:#888;
+  font-size:14px;
+  margin-bottom:24px;
+}
 
-    .logo {
-      text-align: center;
-      font-size: 34px;
-      font-weight: 900;
-      letter-spacing: 4px;
-      margin: 15px 0 8px;
-      color: #ff1f1f;
-    }
+.balance-card{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(145deg,#1a0808,#0e0e0e);
+  border:1px solid #3b1111;
+  border-radius:24px;
+  padding:28px 20px;
+  text-align:center;
+  box-shadow:0 10px 35px rgba(255,0,0,.08);
+}
 
-    .welcome {
-      text-align: center;
-      color: #888;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
+.balance-card:before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  background:#ff0000;
+  filter:blur(100px);
+  opacity:.12;
+  top:-100px;
+  left:50%;
+  transform:translateX(-50%);
+}
 
-    .balance-card {
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(145deg, #1a0808, #0e0e0e);
-      border: 1px solid #3b1111;
-      border-radius: 24px;
-      padding: 28px 20px;
-      text-align: center;
-      box-shadow: 0 10px 35px rgba(255, 0, 0, .08);
-    }
+.balance-title{
+  position:relative;
+  color:#888;
+  font-size:13px;
+  margin-bottom:10px;
+}
 
-    .balance-card::before {
-      content: "";
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      background: #ff0000;
-      filter: blur(100px);
-      opacity: .12;
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+.balance{
+  position:relative;
+  font-size:42px;
+  font-weight:900;
+}
 
-    .balance-title {
-      position: relative;
-      color: #888;
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
+.currency{
+  position:relative;
+  color:#ff2a2a;
+  font-size:16px;
+  font-weight:800;
+}
 
-    .balance {
-      position: relative;
-      font-size: 42px;
-      font-weight: 900;
-    }
+.buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:15px;
+}
 
-    .currency {
-      position: relative;
-      color: #ff2a2a;
-      font-size: 16px;
-      font-weight: 800;
-    }
+.button{
+  border:none;
+  border-radius:16px;
+  padding:17px 10px;
+  font-size:15px;
+  font-weight:800;
+  color:white;
+  background:#171717;
+  border:1px solid #292929;
+}
 
-    .buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 15px;
-    }
+.button.primary{
+  background:#e91515;
+  border-color:#ff3030;
+  box-shadow:0 8px 25px rgba(255,0,0,.2);
+}
 
-    .button {
-      border: none;
-      border-radius: 16px;
-      padding: 17px 10px;
-      font-size: 15px;
-      font-weight: 800;
-      color: white;
-      background: #171717;
-      border: 1px solid #292929;
-      cursor: pointer;
-    }
+.section{
+  margin-top:28px;
+}
 
-    .button.primary {
-      background: #e91515;
-      border-color: #ff3030;
-      box-shadow: 0 8px 25px rgba(255, 0, 0, .2);
-    }
+.section-title{
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:12px;
+}
 
-    .button:active {
-      transform: scale(.97);
-    }
+.task{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  background:#111;
+  border:1px solid #252525;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:10px;
+}
 
-    .section {
-      margin-top: 28px;
-    }
+.task-info{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
 
-    .section-title {
-      font-size: 20px;
-      font-weight: 900;
-      margin-bottom: 12px;
-    }
+.task-title{
+  font-size:15px;
+  font-weight:800;
+}
 
-    .task {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      background: #111;
-      border: 1px solid #252525;
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 10px;
-    }
+.task-reward{
+  color:#ff2929;
+  font-size:13px;
+  font-weight:700;
+}
 
-    .task-info {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+.task-button{
+  flex-shrink:0;
+  border:none;
+  background:#e91515;
+  color:white;
+  padding:11px 14px;
+  border-radius:12px;
+  font-weight:800;
+}
 
-    .task-title {
-      font-size: 15px;
-      font-weight: 800;
-    }
+.task-button:disabled{
+  background:#333;
+  color:#777;
+}
 
-    .task-reward {
-      color: #ff2929;
-      font-size: 13px;
-      font-weight: 700;
-    }
+.notice{
+  margin-top:18px;
+  padding:14px;
+  border-radius:15px;
+  background:#160909;
+  border:1px solid #351010;
+  color:#aaa;
+  font-size:13px;
+  line-height:1.4;
+}
 
-    .task-button {
-      flex-shrink: 0;
-      border: none;
-      background: #e91515;
-      color: white;
-      padding: 11px 14px;
-      border-radius: 12px;
-      font-weight: 800;
-      cursor: pointer;
-    }
+.status{
+  text-align:center;
+  color:#777;
+  font-size:12px;
+  margin-top:12px;
+  min-height:18px;
+}
 
-    .task-button:disabled {
-      opacity: .5;
-      cursor: default;
-    }
+.bottom-nav{
+  position:fixed;
+  z-index:100;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(8,8,8,.96);
+  border-top:1px solid #262626;
+  backdrop-filter:blur(15px);
+  padding:9px 10px;
+}
 
-    .notice {
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 15px;
-      background: #160909;
-      border: 1px solid #351010;
-      color: #aaa;
-      font-size: 13px;
-      line-height: 1.4;
-    }
+.nav{
+  max-width:500px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+}
 
-    .status {
-      text-align: center;
-      margin-top: 14px;
-      color: #777;
-      font-size: 12px;
-      min-height: 16px;
-    }
+.nav button{
+  border:none;
+  background:transparent;
+  color:#666;
+  padding:9px 5px;
+  font-size:12px;
+  font-weight:700;
+}
 
-    .bottom-nav {
-      position: fixed;
-      z-index: 100;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(8, 8, 8, .96);
-      border-top: 1px solid #262626;
-      backdrop-filter: blur(15px);
-      padding: 9px 10px;
-    }
+.nav button.active{
+  color:#ff2020;
+}
 
-    .nav {
-      max-width: 500px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 5px;
-    }
-
-    .nav button {
-      border: none;
-      background: transparent;
-      color: #666;
-      padding: 9px 5px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .nav button.active {
-      color: #ff2020;
-    }
-
-    .nav-icon {
-      display: block;
-      font-size: 20px;
-      margin-bottom: 3px;
-    }
-
-    .loading {
-      text-align: center;
-      color: #888;
-      padding: 20px;
-    }
-  </style>
+.nav-icon{
+  display:block;
+  font-size:20px;
+  margin-bottom:3px;
+}
+</style>
 </head>
 
 <body>
@@ -377,284 +352,325 @@
 
 <script>
 
-  // ==========================================
-  // MELER / SUPABASE
-  // ==========================================
+const SUPABASE_URL =
+"https://znguvxqhsvxmewkybpaw.supabase.co";
 
-  const SUPABASE_URL =
-    "https://znguvxqhsvxmewkybpaw.supabase.co";
+const SUPABASE_KEY =
+"ВСТАВ_ТУТ_СВІЙ_PUBLISHABLE_АБО_ANONYMOUS_KEY";
 
-  /*
-    ВАЖЛИВО:
-    Сюди потрібно вставити PUBLIC / ANONYMOUS
-    API key із Supabase.
+const AUTH_FUNCTION =
+SUPABASE_URL + "/functions/v1/meler-auth";
 
-    НЕ вставляй сюди Service API key.
-  */
-
-  const SUPABASE_KEY =
-    "ВСТАВ_СЮДИ_PUBLISHABLE_АБО_ANONYMOUS_KEY";
+let balance = 0;
+let telegramUser = null;
+let currentTaskId = null;
 
 
-  const AUTH_FUNCTION =
-    SUPABASE_URL + "/functions/v1/meler-auth";
+// ================================
+// TELEGRAM
+// ================================
+
+if(window.Telegram && Telegram.WebApp){
+
+  Telegram.WebApp.ready();
+  Telegram.WebApp.expand();
+
+  telegramUser =
+    Telegram.WebApp.initDataUnsafe?.user || null;
+
+}
 
 
-  let balance = 0;
-  let telegramUser = null;
+// ================================
+// UI
+// ================================
+
+function updateBalance(){
+
+  document.getElementById("balance").textContent =
+    Number(balance).toLocaleString("uk-UA");
+
+}
 
 
-  // ==========================================
-  // TELEGRAM
-  // ==========================================
+function status(text){
 
-  if (window.Telegram && Telegram.WebApp) {
+  document.getElementById("status").textContent =
+    text;
 
-    Telegram.WebApp.ready();
-
-    Telegram.WebApp.expand();
-
-    telegramUser = Telegram.WebApp.initDataUnsafe?.user || null;
-
-  }
+}
 
 
-  // ==========================================
-  // UI
-  // ==========================================
+// ================================
+// LOGIN
+// ================================
 
-  function updateBalance() {
+async function login(){
 
-    document.getElementById("balance").textContent =
-      Number(balance).toLocaleString("uk-UA");
-
-  }
-
-
-  function setStatus(text) {
-
-    document.getElementById("status").textContent = text;
-
-  }
-
-
-  // ==========================================
-  // AUTH
-  // ==========================================
-
-  async function loginUser() {
-
-    if (!telegramUser) {
-
-      document.getElementById("welcome").textContent =
-        "Відкрий MELER через Telegram";
-
-      setStatus("Telegram-користувача не знайдено");
-
-      return;
-
-    }
-
+  if(!telegramUser){
 
     document.getElementById("welcome").textContent =
-      "Привіт, " +
-      (telegramUser.first_name || "користувач") +
-      " 👋";
+      "Відкрий MELER через Telegram";
 
+    return;
 
-    try {
+  }
 
-      setStatus("Підключення...");
+  document.getElementById("welcome").textContent =
+    "Привіт, " +
+    (telegramUser.first_name || "користувач") +
+    " 👋";
 
+  try{
 
-      const response = await fetch(AUTH_FUNCTION, {
+    status("Підключення...");
 
-        method: "POST",
+    const response =
+      await fetch(AUTH_FUNCTION,{
 
-        headers: {
+        method:"POST",
 
-          "Content-Type": "application/json",
-
-          "apikey": SUPABASE_KEY,
-
-          "Authorization":
-            "Bearer " + SUPABASE_KEY
-
+        headers:{
+          "Content-Type":"application/json",
+          "apikey":SUPABASE_KEY,
+          "Authorization":"Bearer " + SUPABASE_KEY
         },
 
-        body: JSON.stringify({
+        body:JSON.stringify({
 
-          telegram_id: telegramUser.id,
-
-          username: telegramUser.username || null,
-
-          first_name: telegramUser.first_name || null,
-
-          last_name: telegramUser.last_name || null,
-
-          photo_url: telegramUser.photo_url || null
+          telegram_id:telegramUser.id,
+          username:telegramUser.username || null,
+          first_name:telegramUser.first_name || null,
+          last_name:telegramUser.last_name || null,
+          photo_url:telegramUser.photo_url || null,
+          action:"login"
 
         })
 
       });
 
 
-      const data = await response.json();
+    const data =
+      await response.json();
 
 
-      if (!response.ok || !data.success) {
+    if(!response.ok || !data.success){
 
-        throw new Error(
-          data.error || "Помилка авторизації"
-        );
-
-      }
-
-
-      balance =
-        Number(data.user.balance || 0);
-
-
-      updateBalance();
-
-
-      setStatus("Готово ✓");
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      setStatus(
-        "Помилка підключення"
+      throw new Error(
+        data.error || "Помилка авторизації"
       );
 
     }
 
-  }
 
-
-  // ==========================================
-  // DEMO TASK
-  // ==========================================
-
-  async function completeTask() {
-
-    if (!telegramUser) {
-
-      alert("Відкрий MELER через Telegram.");
-
-      return;
-
-    }
-
-
-    balance += 100;
+    balance =
+      Number(data.user.balance || 0);
 
     updateBalance();
 
+    status("Підключено ✓");
 
-    document.getElementById("taskButton").disabled = true;
+  }
+  catch(error){
 
-    document.getElementById("taskButton").textContent =
-      "Виконано";
+    console.error(error);
 
-
-    alert("🔥 +100 MELER");
+    status("Помилка підключення");
 
   }
 
+}
 
-  // ==========================================
-  // DEMO GAME
-  // ==========================================
 
-  function playGame() {
+// ================================
+// TASK
+// ================================
 
-    if (balance < 10) {
+async function completeTask(){
 
-      alert("Потрібно мінімум 10 MELER.");
+  if(!telegramUser){
 
-      return;
+    alert("Відкрий MELER через Telegram.");
+
+    return;
+
+  }
+
+  if(!currentTaskId){
+
+    /*
+      Наше перше завдання має id 1,
+      якщо воно було створене першим.
+    */
+
+    currentTaskId = 1;
+
+  }
+
+  const button =
+    document.getElementById("taskButton");
+
+  button.disabled = true;
+
+  button.textContent = "Обробка...";
+
+  try{
+
+    const response =
+      await fetch(AUTH_FUNCTION,{
+
+        method:"POST",
+
+        headers:{
+          "Content-Type":"application/json",
+          "apikey":SUPABASE_KEY,
+          "Authorization":"Bearer " + SUPABASE_KEY
+        },
+
+        body:JSON.stringify({
+
+          telegram_id:telegramUser.id,
+          action:"complete_task",
+          task_id:currentTaskId
+
+        })
+
+      });
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok || !data.success){
+
+      throw new Error(
+        data.error || "Не вдалося виконати завдання"
+      );
 
     }
 
 
-    balance -= 10;
-
-
-    const win =
-      Math.random() > 0.5;
-
-
-    if (win) {
-
-      balance += 20;
-
-      alert("🎉 Ви виграли 20 MELER!");
-
-    } else {
-
-      alert("😔 Не пощастило.");
-
-    }
-
+    balance =
+      Number(data.balance);
 
     updateBalance();
 
-  }
+    button.textContent =
+      "Виконано ✓";
 
+    alert(
+      "🔥 +" +
+      data.reward +
+      " MELER"
+    );
 
-  // ==========================================
-  // NAVIGATION
-  // ==========================================
-
-  function home() {
-
-    window.scrollTo({
-
-      top: 0,
-
-      behavior: "smooth"
-
-    });
+    status("Баланс збережено ✓");
 
   }
+  catch(error){
 
+    console.error(error);
 
-  function showTasks() {
+    button.disabled = false;
 
-    document.getElementById(
-      "tasksSection"
-    ).scrollIntoView({
+    button.textContent =
+      "Отримати";
 
-      behavior: "smooth"
-
-    });
+    alert(
+      error.message
+    );
 
   }
 
+}
 
-  function showGames() {
 
-    document.getElementById(
-      "gamesSection"
-    ).scrollIntoView({
+// ================================
+// DEMO GAME
+// ================================
 
-      behavior: "smooth"
+function playGame(){
 
-    });
+  if(balance < 10){
+
+    alert(
+      "Потрібно мінімум 10 MELER."
+    );
+
+    return;
 
   }
 
+  balance -= 10;
 
-  // ==========================================
-  // START
-  // ==========================================
+  const win =
+    Math.random() > 0.5;
+
+  if(win){
+
+    balance += 20;
+
+    alert(
+      "🎉 Ви виграли 20 MELER!"
+    );
+
+  }else{
+
+    alert(
+      "😔 Не пощастило."
+    );
+
+  }
 
   updateBalance();
 
-  loginUser();
+}
+
+
+// ================================
+// NAVIGATION
+// ================================
+
+function home(){
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function showTasks(){
+
+  document
+    .getElementById("tasksSection")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+}
+
+
+function showGames(){
+
+  document
+    .getElementById("gamesSection")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+}
+
+
+// ================================
+// START
+// ================================
+
+updateBalance();
+
+login();
 
 </script>
 
