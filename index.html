@@ -1,1 +1,344 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+    <title>MELER</title>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #0b0b0f;
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        .app {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 800;
+            margin: 20px 0 30px;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, #191922, #101015);
+            border: 1px solid #292936;
+            border-radius: 22px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .balance-title {
+            color: #888894;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .balance {
+            font-size: 38px;
+            font-weight: 800;
+        }
+
+        .currency {
+            font-size: 18px;
+            color: #8f8f9b;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .button {
+            border: none;
+            border-radius: 16px;
+            padding: 18px 10px;
+            color: white;
+            background: #191922;
+            border: 1px solid #292936;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .button:active {
+            transform: scale(0.97);
+        }
+
+        .button.primary {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        .section {
+            margin-top: 25px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .task {
+            background: #15151c;
+            border: 1px solid #25252f;
+            border-radius: 18px;
+            padding: 17px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .task-title {
+            font-weight: 700;
+        }
+
+        .task-reward {
+            color: #9b9ba7;
+            font-size: 13px;
+        }
+
+        .task-button {
+            border: none;
+            background: white;
+            color: black;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(12, 12, 17, 0.96);
+            border-top: 1px solid #24242d;
+            display: flex;
+            justify-content: center;
+            padding: 12px 10px;
+        }
+
+        .nav {
+            width: 100%;
+            max-width: 500px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .nav button {
+            border: none;
+            background: transparent;
+            color: #777783;
+            padding: 10px;
+            font-size: 13px;
+        }
+
+        .nav button.active {
+            color: white;
+        }
+
+        .space {
+            height: 80px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <div class="logo">
+        MELER
+    </div>
+
+    <div class="balance-card">
+        <div class="balance-title">
+            Ваш баланс
+        </div>
+
+        <div>
+            <span class="balance" id="balance">0</span>
+            <span class="currency">MELER</span>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button class="button primary" onclick="showTasks()">
+            🎁 Заробити
+        </button>
+
+        <button class="button" onclick="showGames()">
+            🎮 Грати
+        </button>
+    </div>
+
+    <div class="section">
+
+        <div class="section-title">
+            Завдання
+        </div>
+
+        <div class="task">
+
+            <div class="task-info">
+                <div class="task-title">
+                    📢 Підписатися на канал
+                </div>
+
+                <div class="task-reward">
+                    Нагорода: +100 MELER
+                </div>
+            </div>
+
+            <button class="task-button" onclick="completeDemoTask()">
+                Отримати
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <div class="section-title">
+            Мініігри
+        </div>
+
+        <div class="task">
+
+            <div class="task-info">
+                <div class="task-title">
+                    🎲 Dice
+                </div>
+
+                <div class="task-reward">
+                    Демонстраційна гра
+                </div>
+            </div>
+
+            <button class="task-button" onclick="playDemoGame()">
+                Грати
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="space"></div>
+
+</div>
+
+<div class="bottom-nav">
+
+    <div class="nav">
+
+        <button class="active" onclick="home()">
+            🏠<br>
+            Головна
+        </button>
+
+        <button onclick="showTasks()">
+            🎁<br>
+            Заробити
+        </button>
+
+        <button onclick="showGames()">
+            🎮<br>
+            Ігри
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+    let balance = 0;
+
+    function updateBalance() {
+        document.getElementById("balance").textContent = balance;
+    }
+
+    function completeDemoTask() {
+
+        balance += 100;
+
+        updateBalance();
+
+        alert("🎉 Ви отримали +100 MELER!");
+    }
+
+    function playDemoGame() {
+
+        if (balance < 10) {
+            alert("Потрібно мінімум 10 MELER.");
+            return;
+        }
+
+        balance -= 10;
+
+        const win = Math.random() > 0.5;
+
+        if (win) {
+            balance += 20;
+            alert("🎉 Ви виграли 20 MELER!");
+        } else {
+            alert("😔 Цього разу не пощастило.");
+        }
+
+        updateBalance();
+    }
+
+    function showTasks() {
+        alert("🎁 Тут будуть завдання за підписку на Telegram-канали.");
+    }
+
+    function showGames() {
+        alert("🎮 Тут будуть мініігри.");
+    }
+
+    function home() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+    if (window.Telegram && Telegram.WebApp) {
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+    }
+
+    updateBalance();
+
+</script>
+
+</body>
+</html>
