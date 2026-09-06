@@ -2,6 +2,7 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -25,44 +26,56 @@
       min-height: 100vh;
     }
 
+    button {
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
     .app {
       max-width: 520px;
       margin: auto;
       padding: 18px 16px 100px;
     }
 
+    /* HEADER */
+
     .header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       margin-bottom: 18px;
     }
 
     .logo {
       font-size: 28px;
       font-weight: 900;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
     }
 
     .balance-box {
       background: #151515;
       border: 1px solid #292929;
       border-radius: 14px;
-      padding: 9px 13px;
+      padding: 8px 13px;
       text-align: right;
     }
 
     .balance-label {
-      color: #777;
-      font-size: 10px;
+      color: #666;
+      font-size: 9px;
+      letter-spacing: 1px;
     }
 
     .balance {
       color: #ff2020;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 900;
       margin-top: 2px;
     }
+
+    /* PAGES */
 
     .page {
       display: none;
@@ -72,18 +85,31 @@
       display: block;
     }
 
+    /* HERO */
+
     .hero {
-      background: linear-gradient(145deg, #1a1a1a, #0e0e0e);
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(255, 30, 30, .18),
+          transparent 40%
+        ),
+        linear-gradient(
+          145deg,
+          #191919,
+          #0d0d0d
+        );
+
       border: 1px solid #292929;
-      border-radius: 22px;
-      padding: 20px;
+      border-radius: 23px;
+      padding: 23px;
       margin-bottom: 18px;
     }
 
     .hero-title {
-      font-size: 25px;
+      font-size: 27px;
       font-weight: 900;
-      margin-bottom: 8px;
+      margin-bottom: 9px;
     }
 
     .hero-text {
@@ -92,19 +118,72 @@
       line-height: 1.5;
     }
 
+    .hero-balance {
+      margin-top: 20px;
+      font-size: 32px;
+      font-weight: 900;
+      color: #ff2020;
+    }
+
+    .hero-balance-label {
+      color: #666;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    /* TITLES */
+
     .section-title {
       font-size: 21px;
       font-weight: 900;
-      margin: 20px 0 12px;
+      margin: 22px 0 12px;
     }
+
+    /* QUICK CARDS */
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .quick-card {
+      background: #131313;
+      border: 1px solid #292929;
+      border-radius: 17px;
+      padding: 17px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .quick-card:active {
+      transform: scale(.97);
+    }
+
+    .quick-icon {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+
+    .quick-title {
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .quick-text {
+      color: #666;
+      font-size: 11px;
+      margin-top: 5px;
+    }
+
+    /* TASKS */
 
     .task {
       background: #131313;
       border: 1px solid #292929;
       border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 12px;
-      transition: .2s;
+      padding: 17px;
+      margin-bottom: 11px;
     }
 
     .task-title {
@@ -133,20 +212,20 @@
       font-weight: 900;
     }
 
-    button {
-      border: 0;
-      border-radius: 12px;
-      padding: 11px 15px;
+    .red-button {
       background: #ff2020;
       color: #fff;
+      border-radius: 12px;
+      padding: 11px 15px;
       font-size: 13px;
       font-weight: 800;
-      cursor: pointer;
     }
 
-    button:disabled {
+    .red-button:disabled {
       opacity: .5;
     }
+
+    /* EMPTY */
 
     .empty {
       background: #111;
@@ -158,8 +237,193 @@
       line-height: 1.5;
     }
 
+    /* GAMES */
+
+    .game-card {
+      background:
+        linear-gradient(
+          145deg,
+          #181818,
+          #0e0e0e
+        );
+
+      border: 1px solid #292929;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+
+    .game-icon {
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+    .game-name {
+      font-size: 19px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .game-description {
+      color: #777;
+      font-size: 13px;
+      line-height: 1.45;
+      margin-bottom: 15px;
+    }
+
+    .game-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .game-limit {
+      color: #777;
+      font-size: 11px;
+    }
+
+    .game-button {
+      background: #ff2020;
+      color: white;
+      padding: 11px 17px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    /* GAME MODAL */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .88);
+      z-index: 500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 430px;
+      background: #121212;
+      border: 1px solid #303030;
+      border-radius: 24px;
+      padding: 22px;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .modal-title {
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .close-button {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #222;
+      color: #aaa;
+      font-size: 20px;
+    }
+
+    .demo-game {
+      text-align: center;
+    }
+
+    .demo-icon {
+      font-size: 70px;
+      margin: 10px 0 15px;
+    }
+
+    .demo-balance {
+      color: #ff2020;
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 15px;
+    }
+
+    .demo-button {
+      width: 100%;
+      background: #ff2020;
+      color: #fff;
+      border-radius: 14px;
+      padding: 15px;
+      font-size: 15px;
+      font-weight: 900;
+      margin-top: 10px;
+    }
+
+    .demo-result {
+      min-height: 25px;
+      margin-top: 15px;
+      font-weight: 800;
+    }
+
+    /* SHOP */
+
+    .reward-card {
+      background: #131313;
+      border: 1px solid #292929;
+      border-radius: 18px;
+      padding: 17px;
+      margin-bottom: 11px;
+    }
+
+    .reward-title {
+      font-size: 17px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .reward-description {
+      color: #777;
+      font-size: 13px;
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+
+    .reward-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .reward-cost {
+      color: #ff2020;
+      font-weight: 900;
+      font-size: 15px;
+    }
+
+    .stock {
+      color: #666;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    /* PROFILE */
+
     .profile-card {
-      background: linear-gradient(145deg, #171717, #0d0d0d);
+      background:
+        linear-gradient(
+          145deg,
+          #171717,
+          #0d0d0d
+        );
+
       border: 1px solid #292929;
       border-radius: 22px;
       padding: 20px;
@@ -198,6 +462,7 @@
       padding: 13px 0;
       border-top: 1px solid #252525;
       font-size: 14px;
+      gap: 15px;
     }
 
     .info-label {
@@ -206,27 +471,10 @@
 
     .info-value {
       font-weight: 700;
+      text-align: right;
     }
 
-    .profile-balance {
-      background: #111;
-      border: 1px solid #282828;
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 18px;
-    }
-
-    .profile-balance-label {
-      color: #777;
-      font-size: 12px;
-      margin-bottom: 5px;
-    }
-
-    .profile-balance-value {
-      color: #ff2020;
-      font-size: 28px;
-      font-weight: 900;
-    }
+    /* TRANSACTIONS */
 
     .transaction {
       background: #131313;
@@ -234,9 +482,11 @@
       border-radius: 15px;
       padding: 14px;
       margin-bottom: 9px;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
     }
 
     .transaction-left {
@@ -259,40 +509,54 @@
       color: #39d353;
       font-weight: 900;
       font-size: 15px;
+      white-space: nowrap;
     }
+
+    /* NAVIGATION */
 
     .nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 72px;
-      background: rgba(10, 10, 10, .96);
+
+      height: 74px;
+
+      background: rgba(10, 10, 10, .97);
       border-top: 1px solid #252525;
+
       display: flex;
       justify-content: center;
+
       z-index: 100;
     }
 
     .nav-inner {
       width: 100%;
       max-width: 520px;
+
       display: flex;
-      justify-content: space-around;
       align-items: center;
+      justify-content: space-around;
     }
 
     .nav-item {
-      width: 33.33%;
+      width: 20%;
       text-align: center;
+
       color: #666;
-      font-size: 11px;
+
+      font-size: 10px;
+
       cursor: pointer;
-      padding: 10px 0;
+
+      padding: 8px 0;
+
+      transition: .2s;
     }
 
     .nav-icon {
-      font-size: 21px;
+      font-size: 20px;
       margin-bottom: 4px;
     }
 
@@ -300,24 +564,79 @@
       color: #ff2020;
     }
 
+    /* STATUS */
+
     .status {
       position: fixed;
-      bottom: 85px;
+
+      bottom: 88px;
       left: 50%;
+
       transform: translateX(-50%);
+
       background: #191919;
       border: 1px solid #333;
+
       border-radius: 13px;
+
       padding: 10px 16px;
+
       font-size: 13px;
       color: #ddd;
-      z-index: 200;
+
+      z-index: 700;
+
       display: none;
+
       white-space: nowrap;
+
+      max-width: calc(100vw - 30px);
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .status.show {
       display: block;
+    }
+
+    /* BALANCE CARD */
+
+    .balance-card {
+      background: #111;
+      border: 1px solid #292929;
+      border-radius: 19px;
+      padding: 18px;
+    }
+
+    .balance-card-label {
+      color: #666;
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+
+    .balance-card-value {
+      color: #ff2020;
+      font-size: 29px;
+      font-weight: 900;
+    }
+
+    @media (max-width: 380px) {
+
+      .nav-item {
+        font-size: 9px;
+      }
+
+      .nav-icon {
+        font-size: 18px;
+      }
+
+      .logo {
+        font-size: 25px;
+      }
+
+      .balance {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -326,6 +645,8 @@
 
 <div class="app">
 
+  <!-- HEADER -->
+
   <div class="header">
 
     <div class="logo">
@@ -333,6 +654,7 @@
     </div>
 
     <div class="balance-box">
+
       <div class="balance-label">
         BALANCE
       </div>
@@ -343,12 +665,13 @@
       >
         0 MELER
       </div>
+
     </div>
 
   </div>
 
 
-  <!-- ================= HOME ================= -->
+  <!-- HOME -->
 
   <div
     id="homePage"
@@ -362,24 +685,17 @@
       </div>
 
       <div class="hero-text">
-        Виконуй завдання, отримуй MELER
-        та використовуй їх усередині платформи.
+        Виконуй завдання, грай у демо-ігри
+        та обмінюй накопичені MELER
+        на доступні нагороди.
       </div>
 
-    </div>
-
-    <div class="section-title">
-      MELER
-    </div>
-
-    <div class="profile-balance">
-
-      <div class="profile-balance-label">
-        Твій баланс
+      <div class="hero-balance-label">
+        ТВОЄ ЗАРАЗ
       </div>
 
       <div
-        class="profile-balance-value"
+        class="hero-balance"
         id="homeBalance"
       >
         0 MELER
@@ -387,10 +703,99 @@
 
     </div>
 
+
+    <div class="section-title">
+      Швидкий доступ
+    </div>
+
+
+    <div class="quick-grid">
+
+      <div
+        class="quick-card"
+        onclick="openPage('tasksPage')"
+      >
+
+        <div class="quick-icon">
+          📋
+        </div>
+
+        <div class="quick-title">
+          Завдання
+        </div>
+
+        <div class="quick-text">
+          Заробляй MELER
+        </div>
+
+      </div>
+
+
+      <div
+        class="quick-card"
+        onclick="openPage('gamesPage')"
+      >
+
+        <div class="quick-icon">
+          🎮
+        </div>
+
+        <div class="quick-title">
+          Ігри
+        </div>
+
+        <div class="quick-text">
+          Грай за MELER
+        </div>
+
+      </div>
+
+
+      <div
+        class="quick-card"
+        onclick="openPage('shopPage')"
+      >
+
+        <div class="quick-icon">
+          🎁
+        </div>
+
+        <div class="quick-title">
+          Магазин
+        </div>
+
+        <div class="quick-text">
+          Обмінюй MELER
+        </div>
+
+      </div>
+
+
+      <div
+        class="quick-card"
+        onclick="openPage('profilePage')"
+      >
+
+        <div class="quick-icon">
+          👤
+        </div>
+
+        <div class="quick-title">
+          Профіль
+        </div>
+
+        <div class="quick-text">
+          Твій акаунт
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 
 
-  <!-- ================= TASKS ================= -->
+  <!-- TASKS -->
 
   <div
     id="tasksPage"
@@ -402,15 +807,142 @@
     </div>
 
     <div id="tasks">
+
       <div class="empty">
         Завантаження...
       </div>
+
     </div>
 
   </div>
 
 
-  <!-- ================= PROFILE ================= -->
+  <!-- GAMES -->
+
+  <div
+    id="gamesPage"
+    class="page"
+  >
+
+    <div class="section-title">
+      Ігри
+    </div>
+
+    <div class="game-card">
+
+      <div class="game-icon">
+        🎯
+      </div>
+
+      <div class="game-name">
+        Lucky Click
+      </div>
+
+      <div class="game-description">
+        Демо-гра MELER.
+        Використовуй внутрішню валюту
+        та спробуй отримати випадковий результат.
+      </div>
+
+      <div class="game-bottom">
+
+        <div class="game-limit">
+          Мін. ставка: 10 MELER
+        </div>
+
+        <button
+          class="game-button"
+          onclick="openGame()"
+        >
+          Грати
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="game-card">
+
+      <div class="game-icon">
+        🎰
+      </div>
+
+      <div class="game-name">
+        MELER Slots
+      </div>
+
+      <div class="game-description">
+        Демонстраційний слот
+        з внутрішньою валютою MELER.
+      </div>
+
+      <div class="game-bottom">
+
+        <div class="game-limit">
+          Демо
+        </div>
+
+        <button
+          class="game-button"
+          onclick="openGame()"
+        >
+          Грати
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="empty">
+      🎮 Нові ігри скоро з'являться.
+    </div>
+
+  </div>
+
+
+  <!-- SHOP -->
+
+  <div
+    id="shopPage"
+    class="page"
+  >
+
+    <div class="section-title">
+      Магазин
+    </div>
+
+    <div class="balance-card">
+
+      <div class="balance-card-label">
+        ДОСТУПНО
+      </div>
+
+      <div
+        class="balance-card-value"
+        id="shopBalance"
+      >
+        0 MELER
+      </div>
+
+    </div>
+
+    <div
+      id="rewards"
+      style="margin-top: 14px;"
+    >
+
+      <div class="empty">
+        Завантаження нагород...
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- PROFILE -->
 
   <div
     id="profilePage"
@@ -504,7 +1036,7 @@
 </div>
 
 
-<!-- ================= NAVIGATION ================= -->
+<!-- NAVIGATION -->
 
 <div class="nav">
 
@@ -513,6 +1045,7 @@
     <div
       class="nav-item active"
       data-page="homePage"
+      onclick="openPage('homePage')"
     >
 
       <div class="nav-icon">
@@ -527,6 +1060,7 @@
     <div
       class="nav-item"
       data-page="tasksPage"
+      onclick="openPage('tasksPage')"
     >
 
       <div class="nav-icon">
@@ -540,7 +1074,38 @@
 
     <div
       class="nav-item"
+      data-page="gamesPage"
+      onclick="openPage('gamesPage')"
+    >
+
+      <div class="nav-icon">
+        🎮
+      </div>
+
+      Ігри
+
+    </div>
+
+
+    <div
+      class="nav-item"
+      data-page="shopPage"
+      onclick="openPage('shopPage')"
+    >
+
+      <div class="nav-icon">
+        🎁
+      </div>
+
+      Магазин
+
+    </div>
+
+
+    <div
+      class="nav-item"
       data-page="profilePage"
+      onclick="openPage('profilePage')"
     >
 
       <div class="nav-icon">
@@ -556,6 +1121,69 @@
 </div>
 
 
+<!-- GAME MODAL -->
+
+<div
+  id="gameModal"
+  class="modal"
+>
+
+  <div class="modal-card">
+
+    <div class="modal-header">
+
+      <div class="modal-title">
+        🎯 Lucky Click
+      </div>
+
+      <button
+        class="close-button"
+        onclick="closeGame()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="demo-game">
+
+      <div class="demo-icon">
+        🎯
+      </div>
+
+      <div
+        class="demo-balance"
+        id="gameBalance"
+      >
+        0 MELER
+      </div>
+
+      <div style="color:#777;font-size:13px;">
+        Демо-режим внутрішньої валюти MELER
+      </div>
+
+      <button
+        class="demo-button"
+        onclick="playDemo()"
+      >
+        ГРАТИ — 10 MELER
+      </button>
+
+      <div
+        class="demo-result"
+        id="gameResult"
+      ></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- STATUS -->
+
 <div
   id="status"
   class="status"
@@ -570,25 +1198,30 @@ const tg =
     ? window.Telegram.WebApp
     : null;
 
+
 if (tg) {
+
   tg.ready();
+
   tg.expand();
+
 }
 
+
+/* SUPABASE */
 
 const SUPABASE_URL =
   "https://znguvxqhsvxmewkybpaw.supabase.co";
 
 
 /*
-  ВСТАВ СЮДИ СВІЙ СТАРИЙ
-  PUBLISHABLE / ANONYMOUS KEY.
+  ВСТАВ СЮДИ СВІЙ PUBLISHABLE / ANON KEY.
 
   НЕ ВСТАВЛЯЙ SERVICE API KEY.
 */
 
 const SUPABASE_KEY =
-  "sb_publishable_FVOO6zTiLHNc7PE_AWcUNQ_jNI5W2PR";
+  "ВСТАВ_СВІЙ_ЗБЕРЕЖЕНИЙ_KEY";
 
 
 const AUTH_FUNCTION =
@@ -603,11 +1236,7 @@ const CHANNEL =
 let currentUser = null;
 
 
-/*
-=========================
-API
-=========================
-*/
+/* API */
 
 async function api(body) {
 
@@ -655,11 +1284,7 @@ async function api(body) {
 }
 
 
-/*
-=========================
-STATUS
-=========================
-*/
+/* STATUS */
 
 function showStatus(text) {
 
@@ -668,8 +1293,10 @@ function showStatus(text) {
       "status"
     );
 
+
   element.textContent =
     text;
+
 
   element.classList.add(
     "show"
@@ -683,14 +1310,95 @@ function showStatus(text) {
     );
 
   }, 2500);
+
 }
 
 
-/*
-=========================
-LOGIN
-=========================
-*/
+/* NAVIGATION */
+
+function openPage(pageId) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
+
+      page.classList.remove(
+        "active"
+      );
+
+    });
+
+
+  const page =
+    document.getElementById(
+      pageId
+    );
+
+
+  if (page) {
+
+    page.classList.add(
+      "active"
+    );
+
+  }
+
+
+  document
+    .querySelectorAll(".nav-item")
+    .forEach(item => {
+
+      item.classList.remove(
+        "active"
+      );
+
+      if (
+        item.dataset.page ===
+        pageId
+      ) {
+
+        item.classList.add(
+          "active"
+        );
+
+      }
+
+    });
+
+
+  if (
+    pageId ===
+    "profilePage"
+  ) {
+
+    loadTransactions();
+
+  }
+
+
+  if (
+    pageId ===
+    "shopPage"
+  ) {
+
+    loadRewards();
+
+  }
+
+
+  if (
+    pageId ===
+    "gamesPage"
+  ) {
+
+    updateGameBalance();
+
+  }
+
+}
+
+
+/* LOGIN */
 
 async function login() {
 
@@ -704,6 +1412,7 @@ async function login() {
     );
 
     return;
+
   }
 
 
@@ -721,6 +1430,7 @@ async function login() {
     );
 
     return;
+
   }
 
 
@@ -760,9 +1470,14 @@ async function login() {
 
     updateProfile();
 
+    updateBalance();
+
     await loadTasks();
 
     await loadTransactions();
+
+    await loadRewards();
+
 
   } catch (error) {
 
@@ -771,15 +1486,13 @@ async function login() {
     showStatus(
       error.message
     );
+
   }
+
 }
 
 
-/*
-=========================
-UPDATE PROFILE
-=========================
-*/
+/* PROFILE */
 
 function updateProfile() {
 
@@ -819,9 +1532,6 @@ function updateProfile() {
     currentUser.telegram_id;
 
 
-  updateBalance();
-
-
   const avatar =
     document.getElementById(
       "avatar"
@@ -842,16 +1552,16 @@ function updateProfile() {
 
     avatar.style.display =
       "none";
+
   }
+
+
+  updateBalance();
 
 }
 
 
-/*
-=========================
-BALANCE
-=========================
-*/
+/* BALANCE */
 
 function updateBalance() {
 
@@ -881,14 +1591,21 @@ function updateBalance() {
   ).textContent =
     balance +
     " MELER";
+
+
+  document.getElementById(
+    "shopBalance"
+  ).textContent =
+    balance +
+    " MELER";
+
+
+  updateGameBalance();
+
 }
 
 
-/*
-=========================
-LOAD TASKS
-=========================
-*/
+/* TASKS */
 
 async function loadTasks() {
 
@@ -929,9 +1646,11 @@ async function loadTasks() {
       result.tasks || []
     );
 
+
   } catch (error) {
 
     console.error(error);
+
 
     container.innerHTML =
       `
@@ -939,15 +1658,11 @@ async function loadTasks() {
           Не вдалося завантажити завдання.
         </div>
       `;
+
   }
+
 }
 
-
-/*
-=========================
-RENDER TASKS
-=========================
-*/
 
 function renderTasks(tasks) {
 
@@ -975,6 +1690,7 @@ function renderTasks(tasks) {
       `;
 
     return;
+
   }
 
 
@@ -1020,6 +1736,7 @@ function renderTasks(tasks) {
           </div>
 
           <button
+            class="red-button"
             onclick="startTask(
               ${Number(task.id)},
               this
@@ -1038,14 +1755,11 @@ function renderTasks(tasks) {
     );
 
   });
+
 }
 
 
-/*
-=========================
-START TASK
-=========================
-*/
+/* START TASK */
 
 function startTask(
   taskId,
@@ -1089,14 +1803,11 @@ function startTask(
         );
 
   }, 700);
+
 }
 
 
-/*
-=========================
-CHECK SUBSCRIPTION
-=========================
-*/
+/* CHECK SUBSCRIPTION */
 
 async function checkSubscription(
   taskId,
@@ -1140,7 +1851,9 @@ async function checkSubscription(
         "❌ Спочатку підпишись на канал"
       );
 
+
       return;
+
     }
 
 
@@ -1168,6 +1881,7 @@ async function checkSubscription(
       );
 
       return;
+
     }
 
 
@@ -1192,6 +1906,7 @@ async function checkSubscription(
 
     await loadTransactions();
 
+
   } catch (error) {
 
     console.error(error);
@@ -1206,6 +1921,7 @@ async function checkSubscription(
       );
 
       return;
+
     }
 
 
@@ -1220,15 +1936,13 @@ async function checkSubscription(
     showStatus(
       error.message
     );
+
   }
+
 }
 
 
-/*
-=========================
-REMOVE TASK
-=========================
-*/
+/* REMOVE TASK */
 
 function removeTask(
   taskId
@@ -1249,8 +1963,10 @@ function removeTask(
   element.style.opacity =
     "0";
 
+
   element.style.transform =
     "scale(.95)";
+
 
   element.style.transition =
     ".2s";
@@ -1281,17 +1997,15 @@ function removeTask(
             Нові завдання з'являться пізніше.
           </div>
         `;
+
     }
 
   }, 200);
+
 }
 
 
-/*
-=========================
-LOAD TRANSACTIONS
-=========================
-*/
+/* TRANSACTIONS */
 
 async function loadTransactions() {
 
@@ -1325,9 +2039,11 @@ async function loadTransactions() {
       []
     );
 
+
   } catch (error) {
 
     console.error(error);
+
 
     container.innerHTML =
       `
@@ -1335,15 +2051,11 @@ async function loadTransactions() {
           Не вдалося завантажити історію.
         </div>
       `;
+
   }
+
 }
 
-
-/*
-=========================
-RENDER TRANSACTIONS
-=========================
-*/
 
 function renderTransactions(
   transactions
@@ -1371,6 +2083,7 @@ function renderTransactions(
       `;
 
     return;
+
   }
 
 
@@ -1429,14 +2142,11 @@ function renderTransactions(
 
     }
   );
+
 }
 
 
-/*
-=========================
-TRANSACTION TITLE
-=========================
-*/
+/* TRANSACTION TITLE */
 
 function transactionTitle(
   type
@@ -1448,18 +2158,396 @@ function transactionTitle(
   ) {
 
     return "Виконання завдання";
+
   }
 
 
   return "Нарахування MELER";
+
+}
+
+
+/* SHOP */
+
+async function loadRewards() {
+
+  if (!currentUser) {
+    return;
+  }
+
+
+  const container =
+    document.getElementById(
+      "rewards"
+    );
+
+
+  try {
+
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/rewards?select=id,title,description,cost,stock,is_active&is_active=eq.true&order=id.asc",
+        {
+          headers: {
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              SUPABASE_KEY
+          }
+        }
+      );
+
+
+    if (!response.ok) {
+      throw new Error(
+        "Не вдалося завантажити магазин"
+      );
+    }
+
+
+    const rewards =
+      await response.json();
+
+
+    renderRewards(
+      rewards || []
+    );
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    container.innerHTML =
+      `
+        <div class="empty">
+          Магазин поки порожній.
+          <br><br>
+          Додай нагороди в Supabase.
+        </div>
+      `;
+
+  }
+
+}
+
+
+/* RENDER REWARDS */
+
+function renderRewards(
+  rewards
+) {
+
+  const container =
+    document.getElementById(
+      "rewards"
+    );
+
+
+  container.innerHTML =
+    "";
+
+
+  if (
+    rewards.length === 0
+  ) {
+
+    container.innerHTML =
+      `
+        <div class="empty">
+          🎁 Нагород поки немає.
+          <br><br>
+          Нові нагороди з'являться пізніше.
+        </div>
+      `;
+
+    return;
+
+  }
+
+
+  rewards.forEach(reward => {
+
+    const element =
+      document.createElement(
+        "div"
+      );
+
+
+    element.className =
+      "reward-card";
+
+
+    element.innerHTML =
+      `
+
+        <div class="reward-title">
+          ${escapeHtml(
+            reward.title
+          )}
+        </div>
+
+        <div class="reward-description">
+          ${escapeHtml(
+            reward.description ||
+            ""
+          )}
+        </div>
+
+        <div class="reward-bottom">
+
+          <div>
+
+            <div class="reward-cost">
+              ${Number(
+                reward.cost
+              )} MELER
+            </div>
+
+            <div class="stock">
+              ${Number(
+                reward.stock
+              ) > 0
+                ? "Є в наявності"
+                : "Немає в наявності"}
+            </div>
+
+          </div>
+
+          <button
+            class="red-button"
+            onclick="redeemReward(
+              ${Number(reward.id)},
+              ${Number(reward.cost)},
+              ${Number(reward.stock)}
+            )"
+            ${Number(reward.stock) <= 0 ? "disabled" : ""}
+          >
+            Обміняти
+          </button>
+
+        </div>
+
+      `;
+
+
+    container.appendChild(
+      element
+    );
+
+  });
+
 }
 
 
 /*
-=========================
-DATE
-=========================
+  Нагорода поки що показує повідомлення.
+  Реальне списання балансу краще робити
+  через окрему захищену Edge Function/RPC,
+  а не напряму з браузера.
 */
+
+async function redeemReward(
+  rewardId,
+  cost,
+  stock
+) {
+
+  if (!currentUser) {
+    return;
+  }
+
+
+  const balance =
+    Number(
+      currentUser.balance || 0
+    );
+
+
+  if (
+    stock <= 0
+  ) {
+
+    showStatus(
+      "Нагороди немає в наявності"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    balance < cost
+  ) {
+
+    showStatus(
+      "❌ Недостатньо MELER"
+    );
+
+    return;
+
+  }
+
+
+  showStatus(
+    "🎁 Система обміну буде доступна після підключення виплат"
+  );
+
+}
+
+
+/* GAME */
+
+function openGame() {
+
+  if (!currentUser) {
+
+    showStatus(
+      "Завантаження профілю..."
+    );
+
+    return;
+
+  }
+
+
+  updateGameBalance();
+
+
+  document
+    .getElementById(
+      "gameResult"
+    )
+    .textContent =
+    "";
+
+
+  document
+    .getElementById(
+      "gameModal"
+    )
+    .classList.add(
+      "show"
+    );
+
+}
+
+
+function closeGame() {
+
+  document
+    .getElementById(
+      "gameModal"
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+function updateGameBalance() {
+
+  if (!currentUser) {
+    return;
+  }
+
+
+  const balance =
+    Number(
+      currentUser.balance || 0
+    );
+
+
+  const element =
+    document.getElementById(
+      "gameBalance"
+    );
+
+
+  if (element) {
+
+    element.textContent =
+      balance +
+      " MELER";
+
+  }
+
+}
+
+
+/*
+  Демо-гра тільки локально.
+  Вона НЕ змінює баланс Supabase.
+*/
+
+function playDemo() {
+
+  if (!currentUser) {
+    return;
+  }
+
+
+  const balance =
+    Number(
+      currentUser.balance || 0
+    );
+
+
+  const result =
+    document.getElementById(
+      "gameResult"
+    );
+
+
+  if (
+    balance < 10
+  ) {
+
+    result.textContent =
+      "❌ Недостатньо MELER";
+
+    result.style.color =
+      "#ff2020";
+
+    return;
+
+  }
+
+
+  const random =
+    Math.random();
+
+
+  if (
+    random < .35
+  ) {
+
+    result.textContent =
+      "🎉 Виграш у демо-режимі!";
+
+    result.style.color =
+      "#39d353";
+
+  } else {
+
+    result.textContent =
+      "😔 Цього разу не пощастило";
+
+    result.style.color =
+      "#ff2020";
+
+  }
+
+}
+
+
+/* HELPERS */
 
 function formatDate(
   value
@@ -1485,123 +2573,68 @@ function formatDate(
       minute: "2-digit"
     }
   );
+
 }
 
-
-/*
-=========================
-ESCAPE HTML
-=========================
-*/
 
 function escapeHtml(
   value
 ) {
 
   return String(value)
+
     .replace(
       /&/g,
       "&amp;"
     )
+
     .replace(
       /</g,
       "&lt;"
     )
+
     .replace(
       />/g,
       "&gt;"
     )
+
     .replace(
       /"/g,
       "&quot;"
     )
+
     .replace(
       /'/g,
       "&#039;"
     );
+
 }
 
 
-/*
-=========================
-NAVIGATION
-=========================
-*/
+/* CLOSE MODAL ON BACKGROUND */
 
 document
-  .querySelectorAll(
-    ".nav-item"
+  .getElementById(
+    "gameModal"
   )
-  .forEach(item => {
+  .addEventListener(
+    "click",
+    event => {
 
-    item.addEventListener(
-      "click",
-      async () => {
+      if (
+        event.target.id ===
+        "gameModal"
+      ) {
 
-        const pageId =
-          item.dataset.page;
-
-
-        document
-          .querySelectorAll(
-            ".page"
-          )
-          .forEach(page => {
-
-            page.classList.remove(
-              "active"
-            );
-
-          });
-
-
-        document
-          .getElementById(
-            pageId
-          )
-          .classList.add(
-            "active"
-          );
-
-
-        document
-          .querySelectorAll(
-            ".nav-item"
-          )
-          .forEach(nav => {
-
-            nav.classList.remove(
-              "active"
-            );
-
-          });
-
-
-        item.classList.add(
-          "active"
-        );
-
-
-        if (
-          pageId ===
-          "profilePage"
-        ) {
-
-          await loadTransactions();
-        }
+        closeGame();
 
       }
 
-    );
+    }
+  );
 
-  });
 
-
-/*
-=========================
-START
-=========================
-*/
+/* START */
 
 login();
 
