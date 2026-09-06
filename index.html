@@ -1,836 +1,883 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>MELER</title>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <title>MELER</title>
 
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-body{
-  background:#080808;
-  color:#fff;
-  font-family:Arial,sans-serif;
-  min-height:100vh;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-button{font-family:inherit}
+    body {
+      background: #080808;
+      color: white;
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+    }
 
-.app{
-  max-width:500px;
-  margin:auto;
-  padding:20px 16px 100px;
-}
+    .app {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 20px 16px 100px;
+    }
 
-.logo{
-  text-align:center;
-  font-size:34px;
-  font-weight:900;
-  letter-spacing:4px;
-  margin:15px 0 8px;
-  color:#ff1f1f;
-}
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
 
-.welcome{
-  text-align:center;
-  color:#888;
-  font-size:14px;
-  margin-bottom:24px;
-}
+    .logo {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
 
-.balance-card{
-  background:linear-gradient(145deg,#1a0808,#0e0e0e);
-  border:1px solid #3b1111;
-  border-radius:24px;
-  padding:28px 20px;
-  text-align:center;
-}
+    .balance {
+      background: #151515;
+      border: 1px solid #292929;
+      border-radius: 14px;
+      padding: 10px 14px;
+      text-align: right;
+    }
 
-.balance-title{
-  color:#888;
-  font-size:13px;
-  margin-bottom:10px;
-}
+    .balance-label {
+      font-size: 11px;
+      color: #888;
+    }
 
-.balance{
-  font-size:42px;
-  font-weight:900;
-}
+    .balance-value {
+      color: #ff1f1f;
+      font-size: 18px;
+      font-weight: 800;
+    }
 
-.currency{
-  color:#ff2a2a;
-  font-size:16px;
-  font-weight:800;
-}
+    .profile {
+      background: linear-gradient(
+        145deg,
+        #171717,
+        #0d0d0d
+      );
+      border: 1px solid #292929;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
 
-.buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:15px;
-}
+    .profile-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-.button{
-  border:none;
-  border-radius:16px;
-  padding:17px 10px;
-  font-size:15px;
-  font-weight:800;
-  color:white;
-  background:#171717;
-  border:1px solid #292929;
-}
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #222;
+    }
 
-.button.primary{
-  background:#e91515;
-  border-color:#ff3030;
-}
+    .name {
+      font-size: 18px;
+      font-weight: 800;
+    }
 
-.section{
-  margin-top:28px;
-}
+    .username {
+      margin-top: 4px;
+      color: #888;
+      font-size: 13px;
+    }
 
-.section-title{
-  font-size:20px;
-  font-weight:900;
-  margin-bottom:12px;
-}
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 22px 0 12px;
+    }
 
-.task{
-  background:#111;
-  border:1px solid #252525;
-  border-radius:18px;
-  padding:16px;
-  margin-bottom:10px;
-}
+    .task {
+      background: #131313;
+      border: 1px solid #292929;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
 
-.task-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
+    .task-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
 
-.task-info{
-  min-width:0;
-}
+    .task-description {
+      color: #888;
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
 
-.task-title{
-  font-size:15px;
-  font-weight:800;
-}
+    .task-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
 
-.task-description{
-  color:#777;
-  font-size:12px;
-  margin-top:6px;
-}
+    .reward {
+      color: #ff3030;
+      font-weight: 800;
+      font-size: 15px;
+    }
 
-.task-reward{
-  color:#ff2929;
-  font-size:13px;
-  font-weight:700;
-  margin-top:6px;
-}
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 11px 16px;
+      background: #ff2020;
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
 
-.task-button{
-  width:100%;
-  margin-top:14px;
-  border:none;
-  background:#e91515;
-  color:white;
-  padding:13px;
-  border-radius:12px;
-  font-weight:800;
-}
+    button:disabled {
+      opacity: 0.5;
+    }
 
-.task-button:disabled{
-  background:#333;
-  color:#777;
-}
+    .empty {
+      text-align: center;
+      padding: 35px 15px;
+      background: #111;
+      border: 1px solid #252525;
+      border-radius: 18px;
+      color: #777;
+      line-height: 1.5;
+    }
 
-.empty{
-  text-align:center;
-  padding:25px;
-  color:#666;
-  background:#111;
-  border:1px solid #222;
-  border-radius:18px;
-}
+    .status {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #151515;
+      border: 1px solid #303030;
+      border-radius: 14px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: #aaa;
+      z-index: 100;
+      display: none;
+    }
 
-.status{
-  text-align:center;
-  color:#777;
-  font-size:12px;
-  margin-top:15px;
-  min-height:18px;
-}
-
-.notice{
-  margin-top:18px;
-  padding:14px;
-  border-radius:15px;
-  background:#160909;
-  border:1px solid #351010;
-  color:#aaa;
-  font-size:13px;
-  line-height:1.4;
-}
-
-.bottom-nav{
-  position:fixed;
-  z-index:100;
-  bottom:0;
-  left:0;
-  right:0;
-  background:rgba(8,8,8,.96);
-  border-top:1px solid #262626;
-  backdrop-filter:blur(15px);
-  padding:9px 10px;
-}
-
-.nav{
-  max-width:500px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-}
-
-.nav button{
-  border:none;
-  background:transparent;
-  color:#666;
-  padding:9px 5px;
-  font-size:12px;
-  font-weight:700;
-}
-
-.nav button.active{
-  color:#ff2020;
-}
-
-.nav-icon{
-  display:block;
-  font-size:20px;
-  margin-bottom:3px;
-}
-</style>
+    .status.show {
+      display: block;
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="app">
 
-<div class="logo">MELER</div>
+  <div class="header">
+    <div class="logo">MELER</div>
 
-<div class="welcome" id="welcome">
-Підключення...
-</div>
+    <div class="balance">
+      <div class="balance-label">
+        BALANCE
+      </div>
 
-<div class="balance-card">
+      <div
+        class="balance-value"
+        id="balance"
+      >
+        0 MELER
+      </div>
+    </div>
+  </div>
 
-<div class="balance-title">
-Ваш баланс
-</div>
+  <div class="profile">
 
-<div>
-<span class="balance" id="balance">0</span>
-<span class="currency"> MELER</span>
-</div>
+    <div class="profile-top">
 
-</div>
+      <img
+        id="avatar"
+        class="avatar"
+        src=""
+        alt=""
+      >
 
-<div class="buttons">
+      <div>
+        <div
+          id="name"
+          class="name"
+        >
+          Користувач
+        </div>
 
-<button class="button primary" onclick="showTasks()">
-🎁 Заробити
-</button>
+        <div
+          id="username"
+          class="username"
+        >
+          Telegram
+        </div>
+      </div>
 
-<button class="button" onclick="showGames()">
-🎮 Грати
-</button>
+    </div>
 
-</div>
+  </div>
 
+  <div class="section-title">
+    Завдання
+  </div>
 
-<div class="section" id="tasksSection">
-
-<div class="section-title">
-🔥 Завдання
-</div>
-
-<div id="tasksList">
-
-<div class="empty">
-Завантаження завдань...
-</div>
-
-</div>
-
-</div>
-
-
-<div class="section" id="gamesSection">
-
-<div class="section-title">
-🎮 Мініігри
-</div>
-
-<div class="task">
-
-<div class="task-top">
-
-<div class="task-info">
-
-<div class="task-title">
-🎲 Dice
-</div>
-
-<div class="task-description">
-Демо-гра
-</div>
+  <div id="tasks"></div>
 
 </div>
 
-</div>
-
-<button class="task-button" onclick="playGame()">
-Грати
-</button>
-
-</div>
-
-</div>
-
-
-<div class="notice">
-
-Виконуй завдання, отримуй MELER
-та використовуй їх у доступних
-розвагах і винагородах.
-
-</div>
-
-<div class="status" id="status"></div>
-
-</div>
-
-
-<div class="bottom-nav">
-
-<div class="nav">
-
-<button class="active" onclick="home()">
-<span class="nav-icon">🏠</span>
-Головна
-</button>
-
-<button onclick="showTasks()">
-<span class="nav-icon">🎁</span>
-Завдання
-</button>
-
-<button onclick="showGames()">
-<span class="nav-icon">🎮</span>
-Ігри
-</button>
-
-</div>
-
-</div>
-
+<div
+  id="status"
+  class="status"
+></div>
 
 <script>
 
+const tg =
+  window.Telegram &&
+  window.Telegram.WebApp
+    ? window.Telegram.WebApp
+    : null;
+
+if (tg) {
+  tg.ready();
+  tg.expand();
+}
+
 const SUPABASE_URL =
-"https://znguvxqhsvxmewkybpaw.supabase.co";
+  "https://znguvxqhsvxmewkybpaw.supabase.co";
+
+/*
+  ВСТАВ СЮДИ СВІЙ PUBLISHABLE
+  АБО ANONYMOUS KEY.
+
+  НЕ ВСТАВЛЯЙ SERVICE ROLE KEY.
+*/
 
 const SUPABASE_KEY =
-"sb_publishable_FVOO6zTiLHNc7PE_AWcUNQ_jNI5W2PR";
+  "ТУТ_ТВІЙ_PUBLISHABLE_АБО_ANONYMOUS_KEY";
 
 const AUTH_FUNCTION =
-SUPABASE_URL +
-"/functions/v1/meler-auth";
+  SUPABASE_URL +
+  "/functions/v1/meler-auth";
 
 const CHANNEL =
-"https://t.me/smertyVnischite";
+  "https://t.me/smertyVnischite";
 
-let telegramUser = null;
-let balance = 0;
-let tasks = [];
+let currentUser = null;
 
+async function api(body) {
 
-// =====================================
-// TELEGRAM
-// =====================================
+  const response = await fetch(
+    AUTH_FUNCTION,
+    {
+      method: "POST",
 
-function initTelegram(){
+      headers: {
+        "Content-Type":
+          "application/json",
 
-if(!window.Telegram || !Telegram.WebApp){
+        "apikey":
+          SUPABASE_KEY
+      },
 
-document.getElementById("welcome").textContent =
-"Відкрий MELER через Telegram";
+      body:
+        JSON.stringify(body)
+    }
+  );
 
-return false;
+  const data =
+    await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      data.error ||
+      "Помилка сервера"
+    );
+  }
+
+  return data;
 }
 
-Telegram.WebApp.ready();
-Telegram.WebApp.expand();
+/*
+  =========================
+  STATUS
+  =========================
+*/
 
-telegramUser =
-Telegram.WebApp.initDataUnsafe?.user || null;
+function showStatus(text) {
 
-if(!telegramUser){
+  const element =
+    document.getElementById(
+      "status"
+    );
 
-document.getElementById("welcome").textContent =
-"Користувач Telegram не знайдений";
+  element.textContent = text;
+  element.classList.add("show");
 
-return false;
+  setTimeout(() => {
+    element.classList.remove(
+      "show"
+    );
+  }, 2500);
 }
 
-return true;
+/*
+  =========================
+  LOGIN
+  =========================
+*/
+
+async function login() {
+
+  if (!tg || !tg.initDataUnsafe) {
+    showStatus(
+      "Відкрий MELER через Telegram"
+    );
+
+    return;
+  }
+
+  const user =
+    tg.initDataUnsafe.user;
+
+  if (!user || !user.id) {
+    showStatus(
+      "Telegram-користувача не знайдено"
+    );
+
+    return;
+  }
+
+  try {
+
+    const result =
+      await api({
+
+        telegram_id:
+          user.id,
+
+        username:
+          user.username ||
+          null,
+
+        first_name:
+          user.first_name ||
+          null,
+
+        last_name:
+          user.last_name ||
+          null,
+
+        photo_url:
+          user.photo_url ||
+          null,
+
+        action:
+          "login"
+      });
+
+    currentUser =
+      result.user;
+
+    updateProfile();
+
+    await loadTasks();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showStatus(
+      error.message
+    );
+  }
 }
 
+/*
+  =========================
+  PROFILE
+  =========================
+*/
 
-// =====================================
-// STATUS
-// =====================================
+function updateProfile() {
 
-function setStatus(text){
+  if (!currentUser) {
+    return;
+  }
 
-document.getElementById("status").textContent =
-text;
+  const name =
+    [
+      currentUser.first_name,
+      currentUser.last_name
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+  document.getElementById(
+    "name"
+  ).textContent =
+    name ||
+    "Користувач";
+
+  document.getElementById(
+    "username"
+  ).textContent =
+    currentUser.username
+      ? "@" +
+        currentUser.username
+      : "Telegram";
+
+  document.getElementById(
+    "balance"
+  ).textContent =
+    Number(
+      currentUser.balance || 0
+    ) +
+    " MELER";
+
+  const avatar =
+    document.getElementById(
+      "avatar"
+    );
+
+  if (currentUser.photo_url) {
+
+    avatar.src =
+      currentUser.photo_url;
+
+  } else {
+
+    avatar.style.display =
+      "none";
+  }
+}
+
+/*
+  =========================
+  LOAD TASKS
+  =========================
+*/
+
+async function loadTasks() {
+
+  if (!currentUser) {
+    return;
+  }
+
+  const container =
+    document.getElementById(
+      "tasks"
+    );
+
+  container.innerHTML = "";
+
+  try {
+
+    const result =
+      await api({
+
+        telegram_id:
+          currentUser.telegram_id,
+
+        action:
+          "get_tasks"
+      });
+
+    const tasks =
+      result.tasks || [];
+
+    renderTasks(tasks);
+
+  } catch (error) {
+
+    console.error(error);
+
+    container.innerHTML = `
+      <div class="empty">
+        Не вдалося завантажити завдання.
+      </div>
+    `;
+  }
+}
+
+/*
+  =========================
+  RENDER TASKS
+  =========================
+*/
+
+function renderTasks(tasks) {
+
+  const container =
+    document.getElementById(
+      "tasks"
+    );
+
+  container.innerHTML = "";
+
+  /*
+    Якщо завдань більше немає —
+    показуємо повідомлення.
+  */
+
+  if (tasks.length === 0) {
+
+    container.innerHTML = `
+      <div class="empty">
+        🎉 Усі доступні завдання виконано!<br><br>
+        Нові завдання з'являться тут пізніше.
+      </div>
+    `;
+
+    return;
+  }
+
+  tasks.forEach(task => {
+
+    const element =
+      document.createElement(
+        "div"
+      );
+
+    element.className =
+      "task";
+
+    element.id =
+      "task-" + task.id;
+
+    element.innerHTML = `
+
+      <div class="task-title">
+        ${escapeHtml(
+          task.title
+        )}
+      </div>
+
+      <div class="task-description">
+        ${escapeHtml(
+          task.description ||
+          ""
+        )}
+      </div>
+
+      <div class="task-bottom">
+
+        <div class="reward">
+          +${Number(
+            task.reward
+          )} MELER
+        </div>
+
+        <button
+          onclick="startTask(
+            ${Number(task.id)},
+            this
+          )"
+        >
+          Підписатися
+        </button>
+
+      </div>
+    `;
+
+    container.appendChild(
+      element
+    );
+  });
+}
+
+/*
+  =========================
+  START TASK
+  =========================
+*/
+
+async function startTask(
+  taskId,
+  button
+) {
+
+  button.disabled = true;
+
+  /*
+    Відкриваємо канал
+  */
+
+  if (tg) {
+
+    tg.openTelegramLink(
+      CHANNEL
+    );
+
+  } else {
+
+    window.open(
+      CHANNEL,
+      "_blank"
+    );
+  }
+
+  /*
+    Через невелику паузу
+    змінюємо кнопку
+  */
+
+  setTimeout(() => {
+
+    button.disabled = false;
+
+    button.textContent =
+      "Перевірити підписку";
+
+    button.onclick =
+      () => checkSubscription(
+        taskId,
+        button
+      );
+
+  }, 700);
 
 }
 
-
-// =====================================
-// BALANCE
-// =====================================
-
-function updateBalance(){
-
-document.getElementById("balance").textContent =
-Number(balance).toLocaleString("uk-UA");
-
-}
-
-
-// =====================================
-// API
-// =====================================
-
-async function api(body){
-
-const response =
-await fetch(
-AUTH_FUNCTION,
-{
-method:"POST",
-
-headers:{
-"Content-Type":"application/json",
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer "+SUPABASE_KEY
-},
-
-body:JSON.stringify(body)
-}
-);
-
-const data =
-await response.json();
-
-if(!response.ok || !data.success){
-
-throw new Error(
-data.error || "Помилка сервера"
-);
-
-}
-
-return data;
-}
-
-
-// =====================================
-// LOGIN
-// =====================================
-
-async function login(){
-
-if(!initTelegram()) return;
-
-document.getElementById("welcome").textContent =
-"Привіт, "+
-(telegramUser.first_name || "користувач")+
-" 👋";
-
-try{
-
-setStatus("Підключення...");
-
-const data =
-await api({
-
-telegram_id:telegramUser.id,
-
-username:
-telegramUser.username || null,
-
-first_name:
-telegramUser.first_name || null,
-
-last_name:
-telegramUser.last_name || null,
-
-photo_url:
-telegramUser.photo_url || null,
-
-action:"login"
-
-});
-
-balance =
-Number(data.user.balance || 0);
-
-updateBalance();
-
-setStatus("Підключено ✓");
-
-await loadTasks();
-
-}
-catch(error){
-
-console.error(error);
-
-setStatus(
-"Помилка: "+error.message
-);
-
-}
-
-}
-
-
-// =====================================
-// LOAD TASKS
-// =====================================
-
-async function loadTasks(){
-
-const list =
-document.getElementById("tasksList");
-
-list.innerHTML =
-'<div class="empty">Завантаження...</div>';
-
-try{
-
-const data =
-await api({
-
-telegram_id:
-telegramUser.id,
-
-action:"get_tasks"
-
-});
-
-tasks =
-data.tasks || [];
-
-renderTasks();
-
-}
-catch(error){
-
-console.error(error);
-
-list.innerHTML =
-'<div class="empty">Не вдалося завантажити завдання</div>';
-
-}
-
-}
-
-
-// =====================================
-// RENDER TASKS
-// =====================================
-
-function renderTasks(){
-
-const list =
-document.getElementById("tasksList");
-
-if(!tasks.length){
-
-list.innerHTML =
-'<div class="empty">Наразі немає доступних завдань</div>';
-
-return;
-}
-
-list.innerHTML = "";
-
-tasks.forEach(task => {
-
-const item =
-document.createElement("div");
-
-item.className = "task";
-
-item.innerHTML = `
-
-<div class="task-top">
-
-<div class="task-info">
-
-<div class="task-title">
-${escapeHtml(task.title)}
-</div>
-
-<div class="task-description">
-${escapeHtml(task.description || "")}
-</div>
-
-<div class="task-reward">
-+${Number(task.reward)} MELER
-</div>
-
-</div>
-
-</div>
-
-<button
-class="task-button"
-onclick="startTask(${Number(task.id)}, this)">
-
-Підписатися
-
-</button>
-
-`;
-
-list.appendChild(item);
-
-});
-
-}
-
-
-// =====================================
-// START TASK
-// =====================================
-
-function startTask(taskId, button){
-
-button.disabled = true;
-
-button.textContent =
-"Відкриваємо...";
-
-if(
-window.Telegram &&
-Telegram.WebApp
-){
-
-Telegram.WebApp.openTelegramLink(
-CHANNEL
-);
-
-}
-else{
-
-window.open(
-CHANNEL,
-"_blank"
-);
-
-}
-
-setTimeout(
-function(){
-
-button.disabled = false;
-
-button.textContent =
-"Перевірити підписку";
-
-button.onclick =
-function(){
-
-checkSubscription(
-taskId,
-button
-);
-
-};
-
-},
-1200
-);
-
-}
-
-
-// =====================================
-// CHECK SUBSCRIPTION
-// =====================================
+/*
+  =========================
+  CHECK SUBSCRIPTION
+  =========================
+*/
 
 async function checkSubscription(
-taskId,
-button
-){
+  taskId,
+  button
+) {
 
-button.disabled = true;
+  button.disabled = true;
 
-button.textContent =
-"Перевірка...";
+  button.textContent =
+    "Перевіряємо...";
 
-try{
+  try {
 
-const check =
-await api({
+    /*
+      Спочатку перевіряємо,
+      чи є підписка.
+    */
 
-telegram_id:
-telegramUser.id,
+    const check =
+      await api({
 
-action:
-"check_subscription"
+        telegram_id:
+          currentUser.telegram_id,
 
-});
+        action:
+          "check_subscription"
+      });
 
-if(!check.subscribed){
+    if (!check.subscribed) {
 
-throw new Error(
-"Ти ще не підписався на канал"
-);
+      button.disabled =
+        false;
 
+      button.textContent =
+        "Перевірити підписку";
+
+      showStatus(
+        "❌ Ти ще не підписаний на канал"
+      );
+
+      return;
+    }
+
+    /*
+      Підписка є.
+      Намагаємося виконати завдання.
+    */
+
+    const result =
+      await api({
+
+        telegram_id:
+          currentUser.telegram_id,
+
+        action:
+          "complete_task",
+
+        task_id:
+          taskId
+      });
+
+    if (
+      result.already_completed
+    ) {
+
+      /*
+        Навіть якщо користувач
+        якимось чином повторив запит —
+        завдання прибираємо.
+      */
+
+      removeTask(
+        taskId
+      );
+
+      return;
+    }
+
+    if (!result.success) {
+
+      throw new Error(
+        result.error ||
+        "Не вдалося виконати завдання"
+      );
+    }
+
+    /*
+      Оновлюємо баланс
+    */
+
+    currentUser.balance =
+      result.balance;
+
+    updateProfile();
+
+    showStatus(
+      "🎉 +" +
+      result.reward +
+      " MELER"
+    );
+
+    /*
+      ГОЛОВНЕ:
+      одразу прибираємо завдання
+    */
+
+    removeTask(
+      taskId
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "Перевірити підписку";
+
+    showStatus(
+      error.message
+    );
+  }
 }
 
-const data =
-await api({
+/*
+  =========================
+  REMOVE TASK
+  =========================
+*/
 
-telegram_id:
-telegramUser.id,
+function removeTask(taskId) {
 
-action:
-"complete_task",
+  const task =
+    document.getElementById(
+      "task-" + taskId
+    );
 
-task_id:
-taskId
+  if (task) {
 
-});
+    task.style.opacity =
+      "0";
 
-balance =
-Number(data.balance);
+    task.style.transform =
+      "scale(0.95)";
 
-updateBalance();
+    task.style.transition =
+      "0.2s";
 
-button.textContent =
-"Виконано ✓";
+    setTimeout(() => {
 
-setStatus(
-"Баланс збережено ✓"
-);
+      task.remove();
 
-alert(
-"🔥 +"+
-data.reward+
-" MELER"
-);
+      const remaining =
+        document.querySelectorAll(
+          ".task"
+        );
 
-}
-catch(error){
+      if (
+        remaining.length === 0
+      ) {
 
-button.disabled = false;
+        document.getElementById(
+          "tasks"
+        ).innerHTML = `
+          <div class="empty">
+            🎉 Усі доступні завдання виконано!<br><br>
+            Нові завдання з'являться тут пізніше.
+          </div>
+        `;
+      }
 
-button.textContent =
-"Перевірити підписку";
-
-alert(
-error.message
-);
-
-}
-
-}
-
-
-// =====================================
-// HTML SECURITY
-// =====================================
-
-function escapeHtml(value){
-
-return String(value ?? "")
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-
+    }, 200);
+  }
 }
 
+/*
+  =========================
+  ESCAPE HTML
+  =========================
+*/
 
-// =====================================
-// GAME
-// =====================================
+function escapeHtml(value) {
 
-function playGame(){
-
-alert(
-"🎮 Демо-гра буде підключена наступним кроком."
-);
-
+  return String(value)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 }
 
-
-// =====================================
-// NAVIGATION
-// =====================================
-
-function home(){
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-function showTasks(){
-
-document
-.getElementById("tasksSection")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-function showGames(){
-
-document
-.getElementById("gamesSection")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-
-// =====================================
-// START
-// =====================================
-
-updateBalance();
+/*
+  =========================
+  START
+  =========================
+*/
 
 login();
 
