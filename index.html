@@ -1,839 +1,476 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-
-<title>MELER</title>
-
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  background:#080808;
-  color:#fff;
-  font-family:Arial,sans-serif;
-  min-height:100vh;
-}
-
-button{
-  border:0;
-  font-family:Arial,sans-serif;
-  cursor:pointer;
-}
-
-.app{
-  width:100%;
-  max-width:520px;
-  margin:auto;
-  padding:16px 15px 95px;
-}
-
-/* HEADER */
-
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
-}
-
-.logo{
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:3px;
-}
-
-.balance-box{
-  background:#151515;
-  border:1px solid #292929;
-  border-radius:14px;
-  padding:8px 12px;
-  text-align:right;
-}
-
-.balance-label{
-  color:#666;
-  font-size:9px;
-  letter-spacing:1px;
-}
-
-.balance{
-  color:#ff2020;
-  font-size:16px;
-  font-weight:900;
-  margin-top:3px;
-}
-
-/* PAGES */
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
-/* HOME */
-
-.hero{
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(255,30,30,.20),
-      transparent 45%
-    ),
-    linear-gradient(145deg,#1a1a1a,#0d0d0d);
-
-  border:1px solid #292929;
-  border-radius:23px;
-  padding:22px;
-  margin-bottom:18px;
-}
-
-.hero-title{
-  font-size:27px;
-  font-weight:900;
-  margin-bottom:8px;
-}
-
-.hero-text{
-  color:#888;
-  font-size:14px;
-  line-height:1.5;
-}
-
-.hero-label{
-  color:#666;
-  font-size:10px;
-  margin-top:20px;
-}
-
-.hero-balance{
-  color:#ff2020;
-  font-size:32px;
-  font-weight:900;
-  margin-top:4px;
-}
-
-/* SECTION */
-
-.section-title{
-  font-size:21px;
-  font-weight:900;
-  margin:20px 0 12px;
-}
-
-/* QUICK */
-
-.quick-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.quick-card{
-  background:#131313;
-  border:1px solid #292929;
-  border-radius:17px;
-  padding:17px;
-  cursor:pointer;
-}
-
-.quick-card:active{
-  transform:scale(.97);
-}
-
-.quick-icon{
-  font-size:27px;
-  margin-bottom:10px;
-}
-
-.quick-title{
-  font-size:15px;
-  font-weight:900;
-}
-
-.quick-text{
-  color:#666;
-  font-size:11px;
-  margin-top:5px;
-}
-
-/* TASKS */
-
-.task{
-  background:#131313;
-  border:1px solid #292929;
-  border-radius:18px;
-  padding:17px;
-  margin-bottom:11px;
-}
-
-.task-title{
-  font-size:17px;
-  font-weight:900;
-  margin-bottom:6px;
-}
-
-.task-description{
-  color:#888;
-  font-size:13px;
-  line-height:1.45;
-  margin-bottom:15px;
-}
-
-.task-bottom{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.task-reward{
-  color:#ff2020;
-  font-size:15px;
-  font-weight:900;
-}
-
-.red-button{
-  background:#ff2020;
-  color:#fff;
-  padding:11px 15px;
-  border-radius:12px;
-  font-size:13px;
-  font-weight:900;
-}
-
-.red-button:disabled{
-  opacity:.5;
-}
-
-/* GAMES */
-
-.game-card{
-  background:linear-gradient(145deg,#181818,#0e0e0e);
-  border:1px solid #292929;
-  border-radius:20px;
-  padding:18px;
-  margin-bottom:12px;
-}
-
-.game-icon{
-  font-size:40px;
-  margin-bottom:10px;
-}
-
-.game-title{
-  font-size:19px;
-  font-weight:900;
-  margin-bottom:6px;
-}
-
-.game-description{
-  color:#777;
-  font-size:13px;
-  line-height:1.45;
-  margin-bottom:15px;
-}
-
-.game-button{
-  width:100%;
-  background:#ff2020;
-  color:#fff;
-  border-radius:13px;
-  padding:13px;
-  font-size:14px;
-  font-weight:900;
-}
-
-/* SHOP */
-
-.shop-balance{
-  background:#111;
-  border:1px solid #292929;
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:14px;
-}
-
-.shop-label{
-  color:#666;
-  font-size:10px;
-}
-
-.shop-value{
-  color:#ff2020;
-  font-size:28px;
-  font-weight:900;
-  margin-top:4px;
-}
-
-.reward-card{
-  background:#131313;
-  border:1px solid #292929;
-  border-radius:18px;
-  padding:17px;
-  margin-bottom:11px;
-}
-
-.reward-title{
-  font-size:17px;
-  font-weight:900;
-  margin-bottom:6px;
-}
-
-.reward-description{
-  color:#777;
-  font-size:13px;
-  line-height:1.45;
-  margin-bottom:14px;
-}
-
-.reward-bottom{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.reward-cost{
-  color:#ff2020;
-  font-weight:900;
-  font-size:15px;
-}
-
-.reward-stock{
-  color:#666;
-  font-size:11px;
-  margin-top:4px;
-}
-
-/* PROFILE */
-
-.profile-card{
-  background:linear-gradient(145deg,#171717,#0d0d0d);
-  border:1px solid #292929;
-  border-radius:22px;
-  padding:20px;
-}
-
-.profile-top{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  margin-bottom:20px;
-}
-
-.avatar{
-  width:68px;
-  height:68px;
-  border-radius:50%;
-  object-fit:cover;
-  background:#222;
-  border:2px solid #292929;
-}
-
-.profile-name{
-  font-size:19px;
-  font-weight:900;
-}
-
-.profile-username{
-  color:#777;
-  font-size:13px;
-  margin-top:5px;
-}
-
-.info-row{
-  display:flex;
-  justify-content:space-between;
-  padding:13px 0;
-  border-top:1px solid #252525;
-  font-size:14px;
-  gap:10px;
-}
-
-.info-label{
-  color:#777;
-}
-
-.info-value{
-  font-weight:800;
-  text-align:right;
-}
-
-/* HISTORY */
-
-.transaction{
-  background:#131313;
-  border:1px solid #252525;
-  border-radius:15px;
-  padding:14px;
-  margin-bottom:9px;
-
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.transaction-title{
-  font-size:14px;
-  font-weight:800;
-}
-
-.transaction-date{
-  color:#666;
-  font-size:11px;
-  margin-top:4px;
-}
-
-.transaction-amount{
-  color:#39d353;
-  font-weight:900;
-  font-size:15px;
-  white-space:nowrap;
-}
-
-/* EMPTY */
-
-.empty{
-  background:#111;
-  border:1px solid #252525;
-  border-radius:18px;
-  padding:28px 15px;
-  text-align:center;
-  color:#777;
-  line-height:1.5;
-}
-
-/* NAV */
-
-.nav{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-
-  height:73px;
-
-  background:rgba(10,10,10,.97);
-  border-top:1px solid #252525;
-
-  z-index:1000;
-}
-
-.nav-inner{
-  width:100%;
-  max-width:520px;
-  height:100%;
-  margin:auto;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-around;
-}
-
-.nav-item{
-  width:20%;
-  height:100%;
-
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-
-  color:#666;
-  font-size:9px;
-
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-}
-
-.nav-icon{
-  font-size:20px;
-  margin-bottom:4px;
-}
-
-.nav-item.active{
-  color:#ff2020;
-}
-
-/* STATUS */
-
-.status{
-  position:fixed;
-  left:50%;
-  bottom:88px;
-
-  transform:translateX(-50%);
-
-  background:#191919;
-  border:1px solid #333;
-
-  border-radius:13px;
-
-  padding:10px 16px;
-
-  color:#ddd;
-  font-size:13px;
-
-  display:none;
-  z-index:2000;
-
-  max-width:90%;
-  text-align:center;
-}
-
-.status.show{
-  display:block;
-}
-
-/* MODAL */
-
-.modal{
-  position:fixed;
-  inset:0;
-
-  background:rgba(0,0,0,.88);
-
-  display:none;
-  align-items:center;
-  justify-content:center;
-
-  padding:18px;
-
-  z-index:3000;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-card{
-  width:100%;
-  max-width:420px;
-
-  background:#121212;
-  border:1px solid #303030;
-
-  border-radius:23px;
-
-  padding:21px;
-}
-
-.modal-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  margin-bottom:18px;
-}
-
-.modal-title{
-  font-size:20px;
-  font-weight:900;
-}
-
-.close{
-  width:35px;
-  height:35px;
-
-  border-radius:50%;
-
-  background:#222;
-  color:#aaa;
-
-  font-size:20px;
-}
-
-.demo{
-  text-align:center;
-}
-
-.demo-icon{
-  font-size:70px;
-  margin:10px 0;
-}
-
-.demo-balance{
-  color:#ff2020;
-  font-size:25px;
-  font-weight:900;
-}
-
-.demo-text{
-  color:#777;
-  font-size:12px;
-  margin-top:8px;
-}
-
-.demo-button{
-  width:100%;
-  margin-top:18px;
-
-  background:#ff2020;
-  color:white;
-
-  border-radius:14px;
-
-  padding:15px;
-
-  font-size:14px;
-  font-weight:900;
-}
-
-.demo-result{
-  min-height:25px;
-  margin-top:15px;
-  font-weight:900;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
+  <title>MELER</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      background: #08090d;
+      color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    .header {
+      padding: 22px 18px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .balance {
+      background: #14161d;
+      border: 1px solid #252832;
+      border-radius: 14px;
+      padding: 9px 13px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .balance span {
+      color: #39e58c;
+    }
+
+    .page {
+      display: none;
+      padding: 0 16px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .hero {
+      background: linear-gradient(145deg, #151821, #0e1016);
+      border: 1px solid #252832;
+      border-radius: 22px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #9da2af;
+      line-height: 1.5;
+    }
+
+    .card {
+      background: #11131a;
+      border: 1px solid #252832;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .muted {
+      color: #8d93a1;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .section-title {
+      font-size: 21px;
+      font-weight: 900;
+      margin: 8px 0 15px;
+    }
+
+    .task-card {
+      background: #11131a;
+      border: 1px solid #252832;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 13px;
+    }
+
+    .task-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .task-name {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .reward {
+      color: #39e58c;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .task-description {
+      color: #9298a6;
+      font-size: 14px;
+      margin: 9px 0 15px;
+      line-height: 1.45;
+    }
+
+    .primary-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 13px;
+      padding: 13px 15px;
+      background: #ffffff;
+      color: #08090d;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .primary-btn:disabled {
+      opacity: .55;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      border: 1px solid #2b2f3a;
+      border-radius: 13px;
+      padding: 13px 15px;
+      background: #181b23;
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .profile-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: #20232d;
+      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .profile-name {
+      font-size: 19px;
+      font-weight: 900;
+    }
+
+    .profile-username {
+      color: #858b99;
+      margin-top: 4px;
+      font-size: 14px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #22252e;
+      font-size: 14px;
+    }
+
+    .info-row:last-child {
+      border-bottom: 0;
+    }
+
+    .info-label {
+      color: #858b99;
+    }
+
+    .info-value {
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .transaction {
+      display: flex;
+      justify-content: space-between;
+      padding: 13px 0;
+      border-bottom: 1px solid #22252e;
+    }
+
+    .transaction:last-child {
+      border-bottom: 0;
+    }
+
+    .transaction-type {
+      font-size: 14px;
+    }
+
+    .transaction-date {
+      color: #777d8b;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .transaction-amount {
+      color: #39e58c;
+      font-weight: 900;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777d8b;
+      padding: 35px 10px;
+      font-size: 14px;
+    }
+
+    .status {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 88px;
+      background: #191c24;
+      border: 1px solid #2b2f39;
+      border-radius: 14px;
+      padding: 13px 15px;
+      text-align: center;
+      font-size: 14px;
+      z-index: 20;
+      display: none;
+    }
+
+    .game-grid,
+    .shop-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .game-card,
+    .shop-card {
+      background: #11131a;
+      border: 1px solid #252832;
+      border-radius: 18px;
+      padding: 18px 14px;
+      text-align: center;
+    }
+
+    .game-icon,
+    .shop-icon {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .game-name,
+    .shop-name {
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .coming {
+      color: #777d8b;
+      font-size: 12px;
+      margin-top: 7px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      height: 68px;
+      background: rgba(18, 20, 27, .96);
+      border: 1px solid #292d37;
+      border-radius: 20px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      z-index: 30;
+      backdrop-filter: blur(15px);
+    }
+
+    .nav-btn {
+      border: 0;
+      background: transparent;
+      color: #777d8b;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .nav-icon {
+      font-size: 21px;
+    }
+
+    .nav-btn.active {
+      color: #ffffff;
+    }
+
+    .welcome-number {
+      font-size: 35px;
+      font-weight: 900;
+      color: #39e58c;
+      margin: 10px 0;
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <!-- HEADER -->
-
   <div class="header">
+    <div class="logo">MELER</div>
 
-    <div class="logo">
-      MELER
+    <div class="balance">
+      <span id="headerBalance">0</span> MELER
     </div>
-
-    <div class="balance-box">
-
-      <div class="balance-label">
-        BALANCE
-      </div>
-
-      <div
-        id="topBalance"
-        class="balance"
-      >
-        0 MELER
-      </div>
-
-    </div>
-
   </div>
 
-
   <!-- HOME -->
-
-  <section
-    id="homePage"
-    class="page active"
-  >
+  <section id="homePage" class="page active">
 
     <div class="hero">
+      <h1>Привіт 👋</h1>
 
-      <div class="hero-title">
-        Заробляй MELER
+      <p>
+        Виконуй завдання, отримуй MELER
+        та користуйся можливостями платформи.
+      </p>
+
+      <div class="welcome-number">
+        <span id="homeBalance">0</span>
       </div>
 
-      <div class="hero-text">
-        Виконуй завдання, накопичуй
-        MELER та використовуй їх
-        усередині платформи.
+      <div class="muted">
+        Твій баланс MELER
       </div>
-
-      <div class="hero-label">
-        ТВОЄМУ БАЛАНСУ
-      </div>
-
-      <div
-        id="homeBalance"
-        class="hero-balance"
-      >
-        0 MELER
-      </div>
-
     </div>
-
 
     <div class="section-title">
       Швидкий доступ
     </div>
 
-
-    <div class="quick-grid">
-
-      <div
-        class="quick-card"
-        onclick="openPage('tasksPage')"
-      >
-
-        <div class="quick-icon">
-          📋
-        </div>
-
-        <div class="quick-title">
-          Завдання
-        </div>
-
-        <div class="quick-text">
-          Заробляй MELER
-        </div>
-
+    <div class="card" onclick="showPage('tasks')">
+      <div class="card-title">📋 Завдання</div>
+      <div class="muted">
+        Виконуй доступні завдання та отримуй MELER.
       </div>
+    </div>
 
-
-      <div
-        class="quick-card"
-        onclick="openPage('gamesPage')"
-      >
-
-        <div class="quick-icon">
-          🎮
-        </div>
-
-        <div class="quick-title">
-          Ігри
-        </div>
-
-        <div class="quick-text">
-          Демо-ігри MELER
-        </div>
-
+    <div class="card" onclick="showPage('games')">
+      <div class="card-title">🎮 Ігри</div>
+      <div class="muted">
+        Розважальні ігри незабаром будуть доступні.
       </div>
+    </div>
 
-
-      <div
-        class="quick-card"
-        onclick="openPage('shopPage')"
-      >
-
-        <div class="quick-icon">
-          🎁
-        </div>
-
-        <div class="quick-title">
-          Магазин
-        </div>
-
-        <div class="quick-text">
-          Нагороди
-        </div>
-
+    <div class="card" onclick="showPage('shop')">
+      <div class="card-title">🎁 Магазин</div>
+      <div class="muted">
+        Витрачай MELER на доступні нагороди.
       </div>
-
-
-      <div
-        class="quick-card"
-        onclick="openPage('profilePage')"
-      >
-
-        <div class="quick-icon">
-          👤
-        </div>
-
-        <div class="quick-title">
-          Профіль
-        </div>
-
-        <div class="quick-text">
-          Твій акаунт
-        </div>
-
-      </div>
-
     </div>
 
   </section>
 
 
   <!-- TASKS -->
-
-  <section
-    id="tasksPage"
-    class="page"
-  >
+  <section id="tasksPage" class="page">
 
     <div class="section-title">
-      Завдання
+      📋 Завдання
     </div>
 
     <div id="tasks">
-
       <div class="empty">
         Завантаження...
       </div>
-
     </div>
 
   </section>
 
 
   <!-- GAMES -->
-
-  <section
-    id="gamesPage"
-    class="page"
-  >
+  <section id="gamesPage" class="page">
 
     <div class="section-title">
-      Ігри
+      🎮 Ігри
     </div>
 
+    <div class="hero">
+      <h1>Ігри</h1>
 
-    <div class="game-card">
-
-      <div class="game-icon">
-        🎯
-      </div>
-
-      <div class="game-title">
-        Lucky Click
-      </div>
-
-      <div class="game-description">
-        Демонстраційна гра MELER.
-        Внутрішня валюта використовується
-        лише для тестування механіки.
-      </div>
-
-      <button
-        class="game-button"
-        onclick="openGame()"
-      >
-        ГРАТИ
-      </button>
-
+      <p>
+        Розважальний розділ MELER.
+        Нові ігри з'являться зовсім скоро.
+      </p>
     </div>
 
+    <div class="game-grid">
 
-    <div class="game-card">
-
-      <div class="game-icon">
-        🎰
+      <div class="game-card" onclick="comingSoon()">
+        <div class="game-icon">🎰</div>
+        <div class="game-name">Slots</div>
+        <div class="coming">Скоро</div>
       </div>
 
-      <div class="game-title">
-        MELER Slots
+      <div class="game-card" onclick="comingSoon()">
+        <div class="game-icon">🎯</div>
+        <div class="game-name">Lucky</div>
+        <div class="coming">Скоро</div>
       </div>
 
-      <div class="game-description">
-        Демо-слот. Нові ігрові механіки
-        будуть додані пізніше.
+      <div class="game-card" onclick="comingSoon()">
+        <div class="game-icon">🎲</div>
+        <div class="game-name">Dice</div>
+        <div class="coming">Скоро</div>
       </div>
 
-      <button
-        class="game-button"
-        onclick="openGame()"
-      >
-        ГРАТИ
-      </button>
+      <div class="game-card" onclick="comingSoon()">
+        <div class="game-icon">🃏</div>
+        <div class="game-name">Cards</div>
+        <div class="coming">Скоро</div>
+      </div>
 
     </div>
 
@@ -841,37 +478,45 @@ button{
 
 
   <!-- SHOP -->
-
-  <section
-    id="shopPage"
-    class="page"
-  >
+  <section id="shopPage" class="page">
 
     <div class="section-title">
-      Магазин
+      🎁 Магазин
     </div>
 
+    <div class="hero">
+      <h1>Магазин</h1>
 
-    <div class="shop-balance">
-
-      <div class="shop-label">
-        ДОСТУПНО
-      </div>
-
-      <div
-        id="shopBalance"
-        class="shop-value"
-      >
-        0 MELER
-      </div>
-
+      <p>
+        Тут будуть доступні нагороди,
+        які можна буде отримувати за MELER.
+      </p>
     </div>
 
+    <div class="shop-grid">
 
-    <div id="rewards">
+      <div class="shop-card" onclick="comingSoon()">
+        <div class="shop-icon">🎁</div>
+        <div class="shop-name">Нагорода #1</div>
+        <div class="coming">Скоро</div>
+      </div>
 
-      <div class="empty">
-        Завантаження нагород...
+      <div class="shop-card" onclick="comingSoon()">
+        <div class="shop-icon">🏆</div>
+        <div class="shop-name">Нагорода #2</div>
+        <div class="coming">Скоро</div>
+      </div>
+
+      <div class="shop-card" onclick="comingSoon()">
+        <div class="shop-icon">⭐</div>
+        <div class="shop-name">Нагорода #3</div>
+        <div class="coming">Скоро</div>
+      </div>
+
+      <div class="shop-card" onclick="comingSoon()">
+        <div class="shop-icon">💎</div>
+        <div class="shop-name">Нагорода #4</div>
+        <div class="coming">Скоро</div>
       </div>
 
     </div>
@@ -880,30 +525,24 @@ button{
 
 
   <!-- PROFILE -->
-
-  <section
-    id="profilePage"
-    class="page"
-  >
+  <section id="profilePage" class="page">
 
     <div class="section-title">
-      Профіль
+      👤 Профіль
     </div>
 
+    <div class="card">
 
-    <div class="profile-card">
-
-      <div class="profile-top">
+      <div class="profile-head">
 
         <img
-          id="avatar"
+          id="profileAvatar"
           class="avatar"
           src=""
           alt=""
         >
 
         <div>
-
           <div
             id="profileName"
             class="profile-name"
@@ -915,32 +554,26 @@ button{
             id="profileUsername"
             class="profile-username"
           >
-            Telegram
+            @username
           </div>
-
         </div>
 
       </div>
 
-
       <div class="info-row">
-
         <div class="info-label">
           Telegram ID
         </div>
 
         <div
-          id="telegramId"
+          id="profileTelegramId"
           class="info-value"
         >
           —
         </div>
-
       </div>
 
-
       <div class="info-row">
-
         <div class="info-label">
           Баланс
         </div>
@@ -951,21 +584,21 @@ button{
         >
           0 MELER
         </div>
-
       </div>
 
     </div>
 
 
     <div class="section-title">
-      Історія MELER
+      Історія
     </div>
 
+    <div class="card">
 
-    <div id="transactions">
-
-      <div class="empty">
-        Завантаження...
+      <div id="transactions">
+        <div class="empty">
+          Завантаження...
+        </div>
       </div>
 
     </div>
@@ -975,846 +608,693 @@ button{
 </div>
 
 
+<!-- STATUS -->
+<div id="status" class="status"></div>
+
+
 <!-- NAVIGATION -->
+<div class="bottom-nav">
 
-<nav class="nav">
+  <button
+    class="nav-btn active"
+    data-page="home"
+    onclick="showPage('home')"
+  >
+    <div class="nav-icon">🏠</div>
+    <div>Головна</div>
+  </button>
 
-  <div class="nav-inner">
+  <button
+    class="nav-btn"
+    data-page="tasks"
+    onclick="showPage('tasks')"
+  >
+    <div class="nav-icon">📋</div>
+    <div>Завдання</div>
+  </button>
 
-    <div
-      class="nav-item active"
-      data-page="homePage"
-      onclick="openPage('homePage')"
-    >
+  <button
+    class="nav-btn"
+    data-page="games"
+    onclick="showPage('games')"
+  >
+    <div class="nav-icon">🎮</div>
+    <div>Ігри</div>
+  </button>
 
-      <div class="nav-icon">
-        🏠
-      </div>
+  <button
+    class="nav-btn"
+    data-page="shop"
+    onclick="showPage('shop')"
+  >
+    <div class="nav-icon">🎁</div>
+    <div>Магазин</div>
+  </button>
 
-      <div>
-        Головна
-      </div>
-
-    </div>
-
-
-    <div
-      class="nav-item"
-      data-page="tasksPage"
-      onclick="openPage('tasksPage')"
-    >
-
-      <div class="nav-icon">
-        📋
-      </div>
-
-      <div>
-        Завдання
-      </div>
-
-    </div>
-
-
-    <div
-      class="nav-item"
-      data-page="gamesPage"
-      onclick="openPage('gamesPage')"
-    >
-
-      <div class="nav-icon">
-        🎮
-      </div>
-
-      <div>
-        Ігри
-      </div>
-
-    </div>
-
-
-    <div
-      class="nav-item"
-      data-page="shopPage"
-      onclick="openPage('shopPage')"
-    >
-
-      <div class="nav-icon">
-        🎁
-      </div>
-
-      <div>
-        Магазин
-      </div>
-
-    </div>
-
-
-    <div
-      class="nav-item"
-      data-page="profilePage"
-      onclick="openPage('profilePage')"
-    >
-
-      <div class="nav-icon">
-        👤
-      </div>
-
-      <div>
-        Профіль
-      </div>
-
-    </div>
-
-  </div>
-
-</nav>
-
-
-<!-- GAME MODAL -->
-
-<div
-  id="gameModal"
-  class="modal"
->
-
-  <div class="modal-card">
-
-    <div class="modal-top">
-
-      <div class="modal-title">
-        🎯 Lucky Click
-      </div>
-
-      <button
-        class="close"
-        onclick="closeGame()"
-      >
-        ×
-      </button>
-
-    </div>
-
-
-    <div class="demo">
-
-      <div class="demo-icon">
-        🎯
-      </div>
-
-      <div
-        id="gameBalance"
-        class="demo-balance"
-      >
-        0 MELER
-      </div>
-
-      <div class="demo-text">
-        Демо-режим MELER
-      </div>
-
-      <button
-        class="demo-button"
-        onclick="playDemo()"
-      >
-        ГРАТИ
-      </button>
-
-      <div
-        id="gameResult"
-        class="demo-result"
-      ></div>
-
-    </div>
-
-  </div>
+  <button
+    class="nav-btn"
+    data-page="profile"
+    onclick="showPage('profile')"
+  >
+    <div class="nav-icon">👤</div>
+    <div>Профіль</div>
+  </button>
 
 </div>
 
 
-<!-- STATUS -->
-
-<div
-  id="status"
-  class="status"
-></div>
-
-
 <script>
 
-/* TELEGRAM */
-
-const tg =
-  window.Telegram &&
-  window.Telegram.WebApp
-    ? window.Telegram.WebApp
-    : null;
+  const tg =
+    window.Telegram &&
+    window.Telegram.WebApp
+      ? window.Telegram.WebApp
+      : null;
 
 
-if (tg) {
-
-  tg.ready();
-
-  tg.expand();
-
-}
-
-
-/* SUPABASE */
-
-const SUPABASE_URL =
-  "https://znguvxqhsvxmewkybpaw.supabase.co";
-
-
-const SUPABASE_KEY =
-  "sb_publishable_FVOO6zTiLHNc7PE_AWcUNQ_jNI5W2PR";
-
-
-const AUTH_FUNCTION =
-  SUPABASE_URL +
-  "/functions/v1/meler-auth";
-
-
-const CHANNEL =
-  "https://t.me/smertyVnischite";
-
-
-let currentUser = null;
-
-
-/* API */
-
-async function api(body) {
-
-  const response =
-    await fetch(
-      AUTH_FUNCTION,
-      {
-        method:"POST",
-
-        headers:{
-          "Content-Type":
-            "application/json",
-
-          "apikey":
-            SUPABASE_KEY
-        },
-
-        body:
-          JSON.stringify(body)
-      }
-    );
-
-
-  const data =
-    await response.json();
-
-
-  if (!response.ok) {
-
-    const error =
-      new Error(
-        data.error ||
-        "Помилка сервера"
-      );
-
-
-    error.already_completed =
-      data.already_completed ||
-      false;
-
-
-    throw error;
-
+  if (tg) {
+    tg.ready();
+    tg.expand();
   }
 
 
-  return data;
-
-}
-
-
-/* STATUS */
-
-function showStatus(text) {
-
-  const status =
-    document.getElementById(
-      "status"
-    );
+  const SUPABASE_URL =
+    "https://znguvxqhsvxmewkybpaw.supabase.co";
 
 
-  status.textContent =
-    text;
+  const SUPABASE_KEY =
+    "sb_publishable_FVOO6zTiLHNc7PE_AWcUNQ_jNI5W2PR";
 
 
-  status.classList.add(
-    "show"
-  );
+  const AUTH_FUNCTION =
+    SUPABASE_URL +
+    "/functions/v1/meler-auth";
 
 
-  setTimeout(
-    function(){
-
-      status.classList.remove(
-        "show"
-      );
-
-    },
-    2500
-  );
-
-}
+  const CHANNEL =
+    "https://t.me/smertyVnischite";
 
 
-/* NAVIGATION */
-
-function openPage(pageId) {
-
-  const pages =
-    document.querySelectorAll(
-      ".page"
-    );
+  let currentUser = null;
 
 
-  pages.forEach(
-    function(page){
+  async function api(body) {
 
-      page.classList.remove(
-        "active"
-      );
+    const response =
+      await fetch(
+        AUTH_FUNCTION,
+        {
+          method: "POST",
 
-    }
-  );
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY
+          },
 
-
-  const target =
-    document.getElementById(
-      pageId
-    );
-
-
-  if (target) {
-
-    target.classList.add(
-      "active"
-    );
-
-  }
-
-
-  const navItems =
-    document.querySelectorAll(
-      ".nav-item"
-    );
-
-
-  navItems.forEach(
-    function(item){
-
-      item.classList.remove(
-        "active"
+          body: JSON.stringify(body)
+        }
       );
 
 
-      if (
-        item.dataset.page ===
-        pageId
-      ){
+    const data =
+      await response.json();
 
-        item.classList.add(
-          "active"
+
+    if (!response.ok) {
+
+      const error =
+        new Error(
+          data.error ||
+          "Помилка сервера"
         );
 
-      }
 
+      error.already_completed =
+        data.already_completed ||
+        false;
+
+
+      throw error;
     }
-  );
 
 
-  if (
-    pageId ===
-    "profilePage"
-  ){
-
-    loadTransactions();
-
+    return data;
   }
 
 
-  if (
-    pageId ===
-    "shopPage"
-  ){
+  function showPage(page) {
 
-    loadRewards();
+    document
+      .querySelectorAll(".page")
+      .forEach(
+        el => el.classList.remove("active")
+      );
 
+
+    const target =
+      document.getElementById(
+        page + "Page"
+      );
+
+
+    if (target) {
+      target.classList.add("active");
+    }
+
+
+    document
+      .querySelectorAll(".nav-btn")
+      .forEach(
+        btn => {
+
+          btn.classList.toggle(
+            "active",
+            btn.dataset.page === page
+          );
+
+        }
+      );
+
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
   }
 
 
-  if (
-    pageId ===
-    "gamesPage"
-  ){
+  function showStatus(message) {
 
-    updateGameBalance();
-
-  }
-
-}
+    const box =
+      document.getElementById("status");
 
 
-/* LOGIN */
+    box.textContent = message;
+    box.style.display = "block";
 
-async function login() {
 
-  if (
-    !tg ||
-    !tg.initDataUnsafe
-  ){
-
-    showStatus(
-      "Відкрий MELER через Telegram"
+    clearTimeout(
+      window.statusTimer
     );
 
-    return;
 
+    window.statusTimer =
+      setTimeout(
+        () => {
+          box.style.display = "none";
+        },
+        3000
+      );
   }
 
 
-  const telegramUser =
-    tg.initDataUnsafe.user;
-
-
-  if (
-    !telegramUser ||
-    !telegramUser.id
-  ){
-
-    showStatus(
-      "Telegram-користувача не знайдено"
-    );
-
-    return;
-
+  function comingSoon() {
+    showStatus("🚀 Цей розділ буде доступний скоро");
   }
 
 
-  try {
+  function updateBalance() {
 
-    const result =
-      await api({
-
-        telegram_id:
-          telegramUser.id,
-
-        username:
-          telegramUser.username ||
-          null,
-
-        first_name:
-          telegramUser.first_name ||
-          null,
-
-        last_name:
-          telegramUser.last_name ||
-          null,
-
-        photo_url:
-          telegramUser.photo_url ||
-          null,
-
-        action:
-          "login"
-
-      });
+    if (!currentUser) {
+      return;
+    }
 
 
-    currentUser =
-      result.user;
+    const balance =
+      Number(
+        currentUser.balance || 0
+      );
 
 
-    updateProfile();
+    document.getElementById(
+      "headerBalance"
+    ).textContent =
+      balance.toFixed(2);
+
+
+    document.getElementById(
+      "homeBalance"
+    ).textContent =
+      balance.toFixed(2);
+
+
+    document.getElementById(
+      "profileBalance"
+    ).textContent =
+      balance.toFixed(2) +
+      " MELER";
+  }
+
+
+  function updateProfile() {
+
+    if (!currentUser) {
+      return;
+    }
+
+
+    const firstName =
+      currentUser.first_name ||
+      "";
+
+
+    const lastName =
+      currentUser.last_name ||
+      "";
+
+
+    const fullName =
+      (
+        firstName +
+        " " +
+        lastName
+      ).trim() ||
+      "Користувач";
+
+
+    document.getElementById(
+      "profileName"
+    ).textContent =
+      fullName;
+
+
+    document.getElementById(
+      "profileUsername"
+    ).textContent =
+      currentUser.username
+        ? "@" + currentUser.username
+        : "Telegram";
+
+
+    document.getElementById(
+      "profileTelegramId"
+    ).textContent =
+      currentUser.telegram_id ||
+      "—";
+
+
+    const avatar =
+      document.getElementById(
+        "profileAvatar"
+      );
+
+
+    if (currentUser.photo_url) {
+
+      avatar.src =
+        currentUser.photo_url;
+
+    } else {
+
+      avatar.removeAttribute("src");
+
+      avatar.alt =
+        fullName
+          .charAt(0)
+          .toUpperCase();
+    }
+
 
     updateBalance();
-
-    await loadTasks();
-
-    await loadTransactions();
-
-    await loadRewards();
-
-
-  } catch(error) {
-
-    console.error(error);
-
-    showStatus(
-      error.message
-    );
-
-  }
-
-}
-
-
-/* PROFILE */
-
-function updateProfile() {
-
-  if (!currentUser) {
-    return;
   }
 
 
-  const fullName =
-    [
-      currentUser.first_name,
-      currentUser.last_name
-    ]
-    .filter(Boolean)
-    .join(" ");
+  async function login() {
+
+    if (!tg || !tg.initDataUnsafe) {
+
+      showStatus(
+        "Відкрий MELER через Telegram"
+      );
+
+      return;
+    }
 
 
-  document.getElementById(
-    "profileName"
-  ).textContent =
-    fullName ||
-    "Користувач";
+    const telegramUser =
+      tg.initDataUnsafe.user;
 
 
-  document.getElementById(
-    "profileUsername"
-  ).textContent =
-    currentUser.username
-      ? "@" +
-        currentUser.username
-      : "Telegram";
+    if (
+      !telegramUser ||
+      !telegramUser.id
+    ) {
+
+      showStatus(
+        "Telegram-користувача не знайдено"
+      );
+
+      return;
+    }
 
 
-  document.getElementById(
-    "telegramId"
-  ).textContent =
-    currentUser.telegram_id;
+    try {
+
+      const result =
+        await api({
+
+          telegram_id:
+            telegramUser.id,
+
+          username:
+            telegramUser.username ||
+            null,
+
+          first_name:
+            telegramUser.first_name ||
+            null,
+
+          last_name:
+            telegramUser.last_name ||
+            null,
+
+          photo_url:
+            telegramUser.photo_url ||
+            null,
+
+          action:
+            "login"
+
+        });
 
 
-  document.getElementById(
-    "profileBalance"
-  ).textContent =
-    Number(
-      currentUser.balance || 0
-    ) +
-    " MELER";
+      currentUser =
+        result.user;
 
 
-  const avatar =
-    document.getElementById(
-      "avatar"
-    );
+      updateProfile();
 
 
-  if (
-    currentUser.photo_url
-  ){
+      await loadTasks();
 
-    avatar.src =
-      currentUser.photo_url;
+      await loadTransactions();
 
-    avatar.style.display =
-      "block";
+    } catch (error) {
 
-  }else{
+      console.error(error);
 
-    avatar.style.display =
-      "none";
-
-  }
-
-}
-
-
-/* BALANCE */
-
-function updateBalance() {
-
-  if (!currentUser) {
-    return;
-  }
-
-
-  const balance =
-    Number(
-      currentUser.balance || 0
-    );
-
-
-  document.getElementById(
-    "topBalance"
-  ).textContent =
-    balance +
-    " MELER";
-
-
-  document.getElementById(
-    "homeBalance"
-  ).textContent =
-    balance +
-    " MELER";
-
-
-  document.getElementById(
-    "profileBalance"
-  ).textContent =
-    balance +
-    " MELER";
-
-
-  document.getElementById(
-    "shopBalance"
-  ).textContent =
-    balance +
-    " MELER";
-
-
-  updateGameBalance();
-
-}
-
-
-/* TASKS */
-
-async function loadTasks() {
-
-  if (!currentUser) {
-    return;
+      showStatus(
+        error.message
+      );
+    }
   }
 
 
-  const container =
-    document.getElementById(
-      "tasks"
-    );
+  async function loadTasks() {
+
+    if (!currentUser) {
+      return;
+    }
 
 
-  container.innerHTML =
-    `
-      <div class="empty">
-        Завантаження...
-      </div>
-    `;
-
-
-  try {
-
-    const result =
-      await api({
-
-        telegram_id:
-          currentUser.telegram_id,
-
-        action:
-          "get_tasks"
-
-      });
-
-
-    renderTasks(
-      result.tasks || []
-    );
-
-
-  } catch(error) {
-
-    console.error(error);
+    const container =
+      document.getElementById(
+        "tasks"
+      );
 
 
     container.innerHTML =
-      `
-        <div class="empty">
-          Не вдалося завантажити завдання.
-        </div>
-      `;
+      '<div class="empty">Завантаження...</div>';
 
+
+    try {
+
+      const result =
+        await api({
+
+          telegram_id:
+            currentUser.telegram_id,
+
+          action:
+            "get_tasks"
+
+        });
+
+
+      renderTasks(
+        result.tasks || []
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        '<div class="empty">Не вдалося завантажити завдання.</div>';
+    }
   }
 
-}
+
+  function renderTasks(tasks) {
+
+    const container =
+      document.getElementById(
+        "tasks"
+      );
 
 
-function renderTasks(tasks) {
+    if (!tasks.length) {
 
-  const container =
-    document.getElementById(
-      "tasks"
-    );
+      container.innerHTML =
+        '<div class="empty">🎉 Усі доступні завдання виконані.</div>';
 
+      return;
+    }
 
-  container.innerHTML =
-    "";
-
-
-  if (
-    tasks.length === 0
-  ){
 
     container.innerHTML =
-      `
-        <div class="empty">
-          🎉 Усі доступні завдання виконано!
-          <br><br>
-          Нові завдання з'являться пізніше.
-        </div>
-      `;
-
-    return;
-
-  }
+      "";
 
 
-  tasks.forEach(
-    function(task){
+    tasks.forEach(task => {
 
-      const element =
+      const card =
         document.createElement(
           "div"
         );
 
 
-      element.className =
-        "task";
+      card.className =
+        "task-card";
 
 
-      element.id =
-        "task-" +
-        task.id;
+      card.innerHTML = `
 
+        <div class="task-top">
 
-      element.innerHTML =
-        `
-          <div class="task-title">
-            ${escapeHtml(task.title)}
+          <div class="task-name">
+            ${escapeHtml(task.title || "Завдання")}
           </div>
 
-          <div class="task-description">
-            ${escapeHtml(
-              task.description || ""
-            )}
+          <div class="reward">
+            +${Number(task.reward || 0)} MELER
           </div>
 
-          <div class="task-bottom">
+        </div>
 
-            <div class="task-reward">
-              +${Number(task.reward)} MELER
-            </div>
+        <div class="task-description">
+          ${escapeHtml(task.description || "")}
+        </div>
 
-            <button
-              class="red-button"
-              onclick="startTask(
-                ${Number(task.id)},
-                this
-              )"
-            >
-              Підписатися
-            </button>
+        <button
+          class="primary-btn"
+          data-task-id="${task.id}"
+        >
+          Підписатися
+        </button>
 
-          </div>
-        `;
+      `;
 
 
-      container.appendChild(
-        element
-      );
-
-    }
-  );
-
-}
-
-
-/* TASK */
-
-function startTask(
-  taskId,
-  button
-){
-
-  button.disabled =
-    true;
-
-
-  if (tg) {
-
-    tg.openTelegramLink(
-      CHANNEL
-    );
-
-  } else {
-
-    window.open(
-      CHANNEL,
-      "_blank"
-    );
-
-  }
-
-
-  setTimeout(
-    function(){
-
-      button.disabled =
-        false;
-
-      button.textContent =
-        "Перевірити підписку";
+      const button =
+        card.querySelector(
+          "button"
+        );
 
 
       button.onclick =
-        function(){
-
-          checkSubscription(
-            taskId,
-            button
-          );
-
-        };
-
-    },
-    700
-  );
-
-}
+        () => startTask(
+          task.id,
+          button
+        );
 
 
-/* CHECK */
+      container.appendChild(
+        card
+      );
 
-async function checkSubscription(
-  taskId,
-  button
-){
-
-  button.disabled =
-    true;
+    });
+  }
 
 
-  button.textContent =
-    "Перевіряємо...";
+  function escapeHtml(value) {
+
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
 
 
-  try {
+  function startTask(
+    taskId,
+    button
+  ) {
 
-    const check =
-      await api({
-
-        telegram_id:
-          currentUser.telegram_id,
-
-        action:
-          "check_subscription"
-
-      });
+    button.disabled =
+      true;
 
 
-    if (
-      !check.subscribed
-    ){
+    button.textContent =
+      "Відкриваємо...";
+
+
+    if (tg) {
+
+      tg.openTelegramLink(
+        CHANNEL
+      );
+
+    } else {
+
+      window.open(
+        CHANNEL,
+        "_blank"
+      );
+    }
+
+
+    setTimeout(
+      () => {
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Перевірити підписку";
+
+        button.onclick =
+          () =>
+            checkSubscription(
+              taskId,
+              button
+            );
+
+      },
+      700
+    );
+  }
+
+
+  async function checkSubscription(
+    taskId,
+    button
+  ) {
+
+    button.disabled =
+      true;
+
+
+    button.textContent =
+      "Перевіряємо...";
+
+
+    try {
+
+      const check =
+        await api({
+
+          telegram_id:
+            currentUser.telegram_id,
+
+          action:
+            "check_subscription"
+
+        });
+
+
+      if (!check.subscribed) {
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Перевірити підписку";
+
+        showStatus(
+          "❌ Спочатку підпишись на канал"
+        );
+
+        return;
+      }
+
+
+      const result =
+        await api({
+
+          telegram_id:
+            currentUser.telegram_id,
+
+          action:
+            "complete_task",
+
+          task_id:
+            taskId
+
+        });
+
+
+      if (
+        result.already_completed
+      ) {
+
+        removeTask(
+          taskId
+        );
+
+        return;
+      }
+
+
+      currentUser.balance =
+        result.balance;
+
+
+      updateBalance();
+
+
+      showStatus(
+        "🎉 +" +
+        result.reward +
+        " MELER"
+      );
+
+
+      removeTask(
+        taskId
+      );
+
+
+      await loadTransactions();
+
+    } catch (error) {
+
+      console.error(error);
+
+
+      if (
+        error.already_completed
+      ) {
+
+        removeTask(
+          taskId
+        );
+
+        return;
+      }
+
 
       button.disabled =
         false;
@@ -1824,702 +1304,186 @@ async function checkSubscription(
 
 
       showStatus(
-        "❌ Спочатку підпишись на канал"
+        error.message
+      );
+    }
+  }
+
+
+  function removeTask(taskId) {
+
+    const button =
+      document.querySelector(
+        `button[data-task-id="${taskId}"]`
       );
 
 
+    if (!button) {
       return;
-
     }
 
 
-    const result =
-      await api({
+    const card =
+      button.closest(
+        ".task-card"
+      );
 
-        telegram_id:
-          currentUser.telegram_id,
 
-        action:
-          "complete_task",
+    if (card) {
+      card.remove();
+    }
 
-        task_id:
-          taskId
 
-      });
+    const container =
+      document.getElementById(
+        "tasks"
+      );
 
 
     if (
-      result.already_completed
-    ){
+      container &&
+      !container.querySelector(
+        ".task-card"
+      )
+    ) {
 
-      removeTask(
-        taskId
-      );
+      container.innerHTML =
+        '<div class="empty">🎉 Усі доступні завдання виконані.</div>';
+    }
+  }
 
+
+  async function loadTransactions() {
+
+    if (!currentUser) {
       return;
-
     }
 
 
-    currentUser.balance =
-      result.balance;
-
-
-    updateBalance();
-
-
-    showStatus(
-      "🎉 +" +
-      result.reward +
-      " MELER"
-    );
-
-
-    removeTask(
-      taskId
-    );
-
-
-    await loadTransactions();
-
-
-  } catch(error) {
-
-    console.error(error);
-
-
-    if (
-      error.already_completed
-    ){
-
-      removeTask(
-        taskId
+    const container =
+      document.getElementById(
+        "transactions"
       );
 
-      return;
 
+    container.innerHTML =
+      '<div class="empty">Завантаження...</div>';
+
+
+    try {
+
+      const result =
+        await api({
+
+          telegram_id:
+            currentUser.telegram_id,
+
+          action:
+            "get_transactions"
+
+        });
+
+
+      renderTransactions(
+        result.transactions || []
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        '<div class="empty">Не вдалося завантажити історію.</div>';
+    }
+  }
+
+
+  function renderTransactions(
+    transactions
+  ) {
+
+    const container =
+      document.getElementById(
+        "transactions"
+      );
+
+
+    if (!transactions.length) {
+
+      container.innerHTML =
+        '<div class="empty">Поки що немає операцій.</div>';
+
+      return;
     }
 
 
-    button.disabled =
-      false;
-
-    button.textContent =
-      "Перевірити підписку";
-
-
-    showStatus(
-      error.message
-    );
-
-  }
-
-}
-
-
-/* REMOVE TASK */
-
-function removeTask(taskId){
-
-  const element =
-    document.getElementById(
-      "task-" +
-      taskId
-    );
-
-
-  if (!element) {
-    return;
-  }
-
-
-  element.remove();
-
-
-  const remaining =
-    document.querySelectorAll(
-      ".task"
-    );
-
-
-  if (
-    remaining.length === 0
-  ){
-
-    document.getElementById(
-      "tasks"
-    ).innerHTML =
-      `
-        <div class="empty">
-          🎉 Усі доступні завдання виконано!
-          <br><br>
-          Нові завдання з'являться пізніше.
-        </div>
-      `;
-
-  }
-
-}
-
-
-/* TRANSACTIONS */
-
-async function loadTransactions(){
-
-  if (!currentUser) {
-    return;
-  }
-
-
-  const container =
-    document.getElementById(
-      "transactions"
-    );
-
-
-  try {
-
-    const result =
-      await api({
-
-        telegram_id:
-          currentUser.telegram_id,
-
-        action:
-          "get_transactions"
-
-      });
-
-
-    renderTransactions(
-      result.transactions || []
-    );
-
-
-  } catch(error) {
-
-    console.error(error);
-
-
     container.innerHTML =
-      `
-        <div class="empty">
-          Не вдалося завантажити історію.
-        </div>
-      `;
-
-  }
-
-}
+      "";
 
 
-function renderTransactions(
-  transactions
-){
+    transactions.forEach(
+      transaction => {
 
-  const container =
-    document.getElementById(
-      "transactions"
-    );
-
-
-  container.innerHTML =
-    "";
+        const row =
+          document.createElement(
+            "div"
+          );
 
 
-  if (
-    transactions.length === 0
-  ){
-
-    container.innerHTML =
-      `
-        <div class="empty">
-          Історія поки порожня.
-        </div>
-      `;
-
-    return;
-
-  }
+        row.className =
+          "transaction";
 
 
-  transactions.forEach(
-    function(transaction){
-
-      const element =
-        document.createElement(
-          "div"
-        );
-
-
-      element.className =
-        "transaction";
+        const date =
+          transaction.created_at
+            ? new Date(
+                transaction.created_at
+              ).toLocaleString(
+                "uk-UA"
+              )
+            : "";
 
 
-      const amount =
-        Number(
-          transaction.amount || 0
-        );
+        const amount =
+          Number(
+            transaction.amount || 0
+          );
 
 
-      element.innerHTML =
-        `
+        row.innerHTML = `
+
           <div>
 
-            <div class="transaction-title">
-              ${transactionTitle(
-                transaction.type
+            <div class="transaction-type">
+              ${escapeHtml(
+                transaction.type ||
+                "Операція"
               )}
             </div>
 
             <div class="transaction-date">
-              ${formatDate(
-                transaction.created_at
-              )}
+              ${escapeHtml(date)}
             </div>
 
           </div>
 
           <div class="transaction-amount">
-            +${amount} MELER
+            +${amount.toFixed(2)}
           </div>
+
         `;
 
 
-      container.appendChild(
-        element
-      );
-
-    }
-  );
-
-}
-
-
-function transactionTitle(type){
-
-  if (
-    type ===
-    "task_reward"
-  ){
-
-    return "Виконання завдання";
-
-  }
-
-
-  return "Нарахування MELER";
-
-}
-
-
-/* SHOP */
-
-async function loadRewards(){
-
-  const container =
-    document.getElementById(
-      "rewards"
-    );
-
-
-  try {
-
-    const response =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/rewards" +
-        "?select=id,title,description,cost,stock,is_active" +
-        "&is_active=eq.true" +
-        "&order=id.asc",
-        {
-          headers:{
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " +
-              SUPABASE_KEY
-          }
-        }
-      );
-
-
-    if (!response.ok){
-
-      throw new Error(
-        "Помилка магазину"
-      );
-
-    }
-
-
-    const rewards =
-      await response.json();
-
-
-    renderRewards(
-      rewards || []
-    );
-
-
-  } catch(error) {
-
-    console.error(error);
-
-
-    container.innerHTML =
-      `
-        <div class="empty">
-          🎁 Нагород поки немає.
-          <br><br>
-          Додай нагороди в Supabase.
-        </div>
-      `;
-
-  }
-
-}
-
-
-function renderRewards(rewards){
-
-  const container =
-    document.getElementById(
-      "rewards"
-    );
-
-
-  container.innerHTML =
-    "";
-
-
-  if (
-    rewards.length === 0
-  ){
-
-    container.innerHTML =
-      `
-        <div class="empty">
-          🎁 Нагород поки немає.
-          <br><br>
-          Вони з'являться тут пізніше.
-        </div>
-      `;
-
-    return;
-
-  }
-
-
-  rewards.forEach(
-    function(reward){
-
-      const element =
-        document.createElement(
-          "div"
+        container.appendChild(
+          row
         );
 
-
-      element.className =
-        "reward-card";
-
-
-      element.innerHTML =
-        `
-          <div class="reward-title">
-            ${escapeHtml(
-              reward.title
-            )}
-          </div>
-
-          <div class="reward-description">
-            ${escapeHtml(
-              reward.description || ""
-            )}
-          </div>
-
-          <div class="reward-bottom">
-
-            <div>
-
-              <div class="reward-cost">
-                ${Number(
-                  reward.cost
-                )} MELER
-              </div>
-
-              <div class="reward-stock">
-                ${
-                  Number(reward.stock) > 0
-                  ? "Є в наявності"
-                  : "Немає в наявності"
-                }
-              </div>
-
-            </div>
-
-            <button
-              class="red-button"
-              onclick="requestReward(
-                ${Number(reward.id)},
-                ${Number(reward.cost)}
-              )"
-              ${
-                Number(reward.stock) <= 0
-                ? "disabled"
-                : ""
-              }
-            >
-              Обміняти
-            </button>
-
-          </div>
-        `;
-
-
-      container.appendChild(
-        element
-      );
-
-    }
-  );
-
-}
-
-
-/* REWARD */
-
-function requestReward(
-  rewardId,
-  cost
-){
-
-  if (!currentUser) {
-    return;
-  }
-
-
-  const balance =
-    Number(
-      currentUser.balance || 0
-    );
-
-
-  if (
-    balance < cost
-  ){
-
-    showStatus(
-      "❌ Недостатньо MELER"
-    );
-
-    return;
-
-  }
-
-
-  showStatus(
-    "🎁 Обмін нагород поки в демо-режимі"
-  );
-
-}
-
-
-/* GAME */
-
-function openGame(){
-
-  if (!currentUser){
-
-    showStatus(
-      "Завантаження профілю..."
-    );
-
-    return;
-
-  }
-
-
-  updateGameBalance();
-
-
-  document.getElementById(
-    "gameResult"
-  ).textContent =
-    "";
-
-
-  document.getElementById(
-    "gameModal"
-  ).classList.add(
-    "show"
-  );
-
-}
-
-
-function closeGame(){
-
-  document.getElementById(
-    "gameModal"
-  ).classList.remove(
-    "show"
-  );
-
-}
-
-
-function updateGameBalance(){
-
-  if (!currentUser) {
-    return;
-  }
-
-
-  const balance =
-    Number(
-      currentUser.balance || 0
-    );
-
-
-  const element =
-    document.getElementById(
-      "gameBalance"
-    );
-
-
-  if (element){
-
-    element.textContent =
-      balance +
-      " MELER";
-
-  }
-
-}
-
-
-function playDemo(){
-
-  const result =
-    document.getElementById(
-      "gameResult"
-    );
-
-
-  const random =
-    Math.random();
-
-
-  if (
-    random < .4
-  ){
-
-    result.textContent =
-      "🎉 У демо-грі пощастило!";
-
-    result.style.color =
-      "#39d353";
-
-  } else {
-
-    result.textContent =
-      "😔 Цього разу не пощастило";
-
-    result.style.color =
-      "#ff2020";
-
-  }
-
-}
-
-
-/* HELPERS */
-
-function formatDate(value){
-
-  if (!value) {
-    return "";
-  }
-
-
-  const date =
-    new Date(value);
-
-
-  return date.toLocaleString(
-    "uk-UA",
-    {
-      day:"2-digit",
-      month:"2-digit",
-      year:"numeric",
-      hour:"2-digit",
-      minute:"2-digit"
-    }
-  );
-
-}
-
-
-function escapeHtml(value){
-
-  return String(value)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-/* CLOSE MODAL */
-
-document
-  .getElementById(
-    "gameModal"
-  )
-  .addEventListener(
-    "click",
-    function(event){
-
-      if (
-        event.target.id ===
-        "gameModal"
-      ){
-
-        closeGame();
-
       }
+    );
+  }
 
-    }
-  );
 
-
-/* START */
-
-login();
+  login();
 
 </script>
 
