@@ -3,18 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
 <title>MELER</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
 body{
   background:#080808;
   color:#fff;
   font-family:Arial,sans-serif;
   min-height:100vh;
+}
+
+button{
+  font-family:inherit;
 }
 
 .app{
@@ -40,11 +50,14 @@ body{
 }
 
 .balance-card{
+  position:relative;
+  overflow:hidden;
   background:linear-gradient(145deg,#1a0808,#0e0e0e);
   border:1px solid #3b1111;
   border-radius:24px;
   padding:28px 20px;
   text-align:center;
+  box-shadow:0 10px 35px rgba(255,0,0,.08);
 }
 
 .balance-title{
@@ -84,6 +97,7 @@ body{
 
 .button.primary{
   background:#e91515;
+  border-color:#ff3030;
 }
 
 .section{
@@ -108,19 +122,31 @@ body{
   margin-bottom:10px;
 }
 
+.task-info{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width:0;
+}
+
 .task-title{
   font-size:15px;
   font-weight:800;
+}
+
+.task-description{
+  color:#777;
+  font-size:12px;
 }
 
 .task-reward{
   color:#ff2929;
   font-size:13px;
   font-weight:700;
-  margin-top:6px;
 }
 
 .task-button{
+  flex-shrink:0;
   border:none;
   background:#e91515;
   color:white;
@@ -129,24 +155,77 @@ body{
   font-weight:800;
 }
 
+.task-button:disabled{
+  background:#333;
+  color:#777;
+}
+
+.empty{
+  text-align:center;
+  padding:25px;
+  color:#666;
+  background:#111;
+  border:1px solid #222;
+  border-radius:18px;
+}
+
 .status{
   text-align:center;
   color:#777;
   font-size:12px;
-  margin-top:18px;
-  min-height:20px;
+  margin-top:15px;
+  min-height:18px;
 }
 
-.debug{
-  margin-top:15px;
-  padding:12px;
-  background:#151515;
-  border:1px solid #333;
-  border-radius:12px;
+.notice{
+  margin-top:18px;
+  padding:14px;
+  border-radius:15px;
+  background:#160909;
+  border:1px solid #351010;
   color:#aaa;
-  font-size:11px;
-  word-break:break-word;
+  font-size:13px;
+  line-height:1.4;
 }
+
+.bottom-nav{
+  position:fixed;
+  z-index:100;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(8,8,8,.96);
+  border-top:1px solid #262626;
+  backdrop-filter:blur(15px);
+  padding:9px 10px;
+}
+
+.nav{
+  max-width:500px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+}
+
+.nav button{
+  border:none;
+  background:transparent;
+  color:#666;
+  padding:9px 5px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.nav button.active{
+  color:#ff2020;
+}
+
+.nav-icon{
+  display:block;
+  font-size:20px;
+  margin-bottom:3px;
+}
+
 </style>
 </head>
 
@@ -154,7 +233,9 @@ body{
 
 <div class="app">
 
-  <div class="logo">MELER</div>
+  <div class="logo">
+    MELER
+  </div>
 
   <div class="welcome" id="welcome">
     Підключення...
@@ -175,46 +256,47 @@ body{
 
   <div class="buttons">
 
-    <button class="button primary" onclick="showTasks()">
+    <button
+      class="button primary"
+      onclick="showTasks()">
       🎁 Заробити
     </button>
 
-    <button class="button" onclick="showGames()">
+    <button
+      class="button"
+      onclick="showGames()">
       🎮 Грати
     </button>
 
   </div>
 
-  <div class="section" id="tasksSection">
+
+  <!-- TASKS -->
+
+  <div
+    class="section"
+    id="tasksSection">
 
     <div class="section-title">
       🔥 Завдання
     </div>
 
-    <div class="task">
+    <div id="tasksList">
 
-      <div>
-        <div class="task-title">
-          📢 Підписатися на канал
-        </div>
-
-        <div class="task-reward">
-          +100 MELER
-        </div>
+      <div class="empty">
+        Завантаження завдань...
       </div>
-
-      <button
-        class="task-button"
-        id="taskButton"
-        onclick="completeTask()">
-        Отримати
-      </button>
 
     </div>
 
   </div>
 
-  <div class="section" id="gamesSection">
+
+  <!-- GAMES -->
+
+  <div
+    class="section"
+    id="gamesSection">
 
     <div class="section-title">
       🎮 Мініігри
@@ -222,14 +304,16 @@ body{
 
     <div class="task">
 
-      <div>
+      <div class="task-info">
+
         <div class="task-title">
           🎲 Dice
         </div>
 
-        <div class="task-reward">
+        <div class="task-description">
           Демо-гра
         </div>
+
       </div>
 
       <button
@@ -242,185 +326,258 @@ body{
 
   </div>
 
-  <div class="status" id="status">
+
+  <div class="notice">
+
+    Виконуй завдання, отримуй MELER
+    та використовуй їх у доступних
+    розвагах і винагородах.
+
   </div>
 
-  <div class="debug" id="debug">
-    Перевірка підключення...
+  <div
+    class="status"
+    id="status">
   </div>
 
 </div>
 
+
+<div class="bottom-nav">
+
+  <div class="nav">
+
+    <button
+      class="active"
+      onclick="home()">
+
+      <span class="nav-icon">
+        🏠
+      </span>
+
+      Головна
+
+    </button>
+
+
+    <button
+      onclick="showTasks()">
+
+      <span class="nav-icon">
+        🎁
+      </span>
+
+      Завдання
+
+    </button>
+
+
+    <button
+      onclick="showGames()">
+
+      <span class="nav-icon">
+        🎮
+      </span>
+
+      Ігри
+
+    </button>
+
+  </div>
+
+</div>
+
+
 <script>
+
+
+// ======================================
+// SUPABASE
+// ======================================
 
 const SUPABASE_URL =
 "https://znguvxqhsvxmewkybpaw.supabase.co";
 
+
 const SUPABASE_KEY =
-"sb_publishable_FVOO6zTiLHNc7PE_AWcUNQ_jNI5W2PR";
+"ТУТ_ВСТАВ_СВІЙ_PUBLISHABLE_АБО_ANONYMOUS_KEY";
+
 
 const AUTH_FUNCTION =
-SUPABASE_URL + "/functions/v1/meler-auth";
+SUPABASE_URL +
+"/functions/v1/meler-auth";
+
 
 let telegramUser = null;
+
 let balance = 0;
 
+let tasks = [];
 
-// =====================================
+
+// ======================================
 // TELEGRAM
-// =====================================
+// ======================================
 
 function initTelegram(){
 
-  if(!window.Telegram || !Telegram.WebApp){
+  if(
+    !window.Telegram ||
+    !Telegram.WebApp
+  ){
 
-    setDebug("❌ Telegram WebApp не знайдено");
+    document.getElementById(
+      "welcome"
+    ).textContent =
+      "Відкрий MELER через Telegram";
 
     return false;
   }
 
+
   Telegram.WebApp.ready();
+
   Telegram.WebApp.expand();
 
+
   telegramUser =
-    Telegram.WebApp.initDataUnsafe?.user || null;
+    Telegram.WebApp
+      .initDataUnsafe
+      ?.user || null;
+
 
   if(!telegramUser){
 
-    setDebug(
-      "❌ Telegram користувач не знайдений"
-    );
+    document.getElementById(
+      "welcome"
+    ).textContent =
+      "Користувач Telegram не знайдений";
 
     return false;
   }
 
-  setDebug(
-    "Telegram OK | ID: " +
-    telegramUser.id
-  );
 
   return true;
 }
 
 
-// =====================================
-// DEBUG
-// =====================================
-
-function setDebug(text){
-
-  document.getElementById("debug").textContent =
-    text;
-
-}
+// ======================================
+// STATUS
+// ======================================
 
 function setStatus(text){
 
-  document.getElementById("status").textContent =
-    text;
+  document.getElementById(
+    "status"
+  ).textContent = text;
 
 }
 
 
-// =====================================
+// ======================================
 // BALANCE
-// =====================================
+// ======================================
 
 function updateBalance(){
 
-  document.getElementById("balance").textContent =
-    Number(balance).toLocaleString("uk-UA");
+  document.getElementById(
+    "balance"
+  ).textContent =
+    Number(balance)
+      .toLocaleString("uk-UA");
 
 }
 
 
-// =====================================
+// ======================================
 // LOGIN
-// =====================================
+// ======================================
 
 async function login(){
 
   if(!initTelegram()){
 
-    document.getElementById("welcome").textContent =
-      "Помилка Telegram";
-
     return;
   }
 
-  document.getElementById("welcome").textContent =
+
+  document.getElementById(
+    "welcome"
+  ).textContent =
+
     "Привіт, " +
-    (telegramUser.first_name || "користувач") +
+    (
+      telegramUser.first_name ||
+      "користувач"
+    ) +
     " 👋";
 
-  setStatus("Підключення до MELER...");
+
+  setStatus(
+    "Підключення..."
+  );
+
 
   try{
 
-    setDebug("Відправляємо запит до Supabase...");
-
     const response =
-      await fetch(AUTH_FUNCTION, {
+      await fetch(
+        AUTH_FUNCTION,
+        {
 
-        method:"POST",
+          method:"POST",
 
-        headers:{
-          "Content-Type":"application/json",
-          "apikey":SUPABASE_KEY,
-          "Authorization":
-            "Bearer " + SUPABASE_KEY
-        },
+          headers:{
+            "Content-Type":
+              "application/json",
 
-        body:JSON.stringify({
+            "apikey":
+              SUPABASE_KEY,
 
-          telegram_id:telegramUser.id,
+            "Authorization":
+              "Bearer " +
+              SUPABASE_KEY
+          },
 
-          username:
-            telegramUser.username || null,
+          body:
+            JSON.stringify({
 
-          first_name:
-            telegramUser.first_name || null,
+              telegram_id:
+                telegramUser.id,
 
-          last_name:
-            telegramUser.last_name || null,
+              username:
+                telegramUser.username ||
+                null,
 
-          photo_url:
-            telegramUser.photo_url || null,
+              first_name:
+                telegramUser.first_name ||
+                null,
 
-          action:"login"
+              last_name:
+                telegramUser.last_name ||
+                null,
 
-        })
+              photo_url:
+                telegramUser.photo_url ||
+                null,
 
-      });
+              action:
+                "login"
 
+            })
 
-    const text =
-      await response.text();
-
-    setDebug(
-      "Supabase HTTP " +
-      response.status +
-      " | " +
-      text
-    );
-
-
-    let data;
-
-    try{
-
-      data = JSON.parse(text);
-
-    }catch(e){
-
-      throw new Error(
-        "Supabase повернув неправильну відповідь"
+        }
       );
 
-    }
+
+    const data =
+      await response.json();
 
 
-    if(!response.ok || !data.success){
+    if(
+      !response.ok ||
+      !data.success
+    ){
 
       throw new Error(
         data.error ||
@@ -431,27 +588,28 @@ async function login(){
 
 
     balance =
-      Number(data.user.balance || 0);
+      Number(
+        data.user.balance || 0
+      );
+
 
     updateBalance();
 
-    setStatus("Підключено ✓");
 
-    setDebug(
-      "✅ Підключено. Telegram ID: " +
-      telegramUser.id
+    setStatus(
+      "Підключено ✓"
     );
+
+
+    await loadTasks();
 
   }
   catch(error){
 
     console.error(error);
 
-    setStatus("Помилка підключення");
-
-    setDebug(
-      "❌ ПОМИЛКА: " +
-      error.message
+    setStatus(
+      "Помилка підключення"
     );
 
   }
@@ -459,57 +617,248 @@ async function login(){
 }
 
 
-// =====================================
-// COMPLETE TASK
-// =====================================
+// ======================================
+// LOAD TASKS
+// ======================================
 
-async function completeTask(){
+async function loadTasks(){
 
-  if(!telegramUser){
+  const list =
+    document.getElementById(
+      "tasksList"
+    );
 
-    alert("Відкрий MELER через Telegram.");
 
-    return;
-  }
+  list.innerHTML =
+    '<div class="empty">Завантаження завдань...</div>';
 
-  const button =
-    document.getElementById("taskButton");
-
-  button.disabled = true;
-  button.textContent = "Обробка...";
 
   try{
 
     const response =
-      await fetch(AUTH_FUNCTION, {
+      await fetch(
+        AUTH_FUNCTION,
+        {
 
-        method:"POST",
+          method:"POST",
 
-        headers:{
-          "Content-Type":"application/json",
-          "apikey":SUPABASE_KEY,
-          "Authorization":
-            "Bearer " + SUPABASE_KEY
-        },
+          headers:{
+            "Content-Type":
+              "application/json",
 
-        body:JSON.stringify({
+            "apikey":
+              SUPABASE_KEY,
 
-          telegram_id:telegramUser.id,
+            "Authorization":
+              "Bearer " +
+              SUPABASE_KEY
+          },
 
-          action:"complete_task",
+          body:
+            JSON.stringify({
 
-          task_id:1
+              telegram_id:
+                telegramUser.id,
 
-        })
+              action:
+                "get_tasks"
 
-      });
+            })
+
+        }
+      );
 
 
     const data =
       await response.json();
 
 
-    if(!response.ok || !data.success){
+    if(
+      !response.ok ||
+      !data.success
+    ){
+
+      throw new Error(
+        data.error ||
+        "Не вдалося завантажити завдання"
+      );
+
+    }
+
+
+    tasks =
+      data.tasks || [];
+
+
+    renderTasks();
+
+  }
+  catch(error){
+
+    console.error(error);
+
+
+    list.innerHTML =
+      '<div class="empty">Не вдалося завантажити завдання</div>';
+
+  }
+
+}
+
+
+// ======================================
+// RENDER TASKS
+// ======================================
+
+function renderTasks(){
+
+  const list =
+    document.getElementById(
+      "tasksList"
+    );
+
+
+  if(!tasks.length){
+
+    list.innerHTML =
+      '<div class="empty">Наразі немає доступних завдань</div>';
+
+    return;
+  }
+
+
+  list.innerHTML = "";
+
+
+  tasks.forEach(
+    function(task){
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "task";
+
+
+      item.innerHTML = `
+
+        <div class="task-info">
+
+          <div class="task-title">
+            ${escapeHtml(task.title)}
+          </div>
+
+          ${
+            task.description
+              ? `
+                <div class="task-description">
+                  ${escapeHtml(task.description)}
+                </div>
+              `
+              : ""
+          }
+
+          <div class="task-reward">
+            +${Number(task.reward)}
+            MELER
+          </div>
+
+        </div>
+
+        <button
+          class="task-button"
+          onclick="completeTask(${Number(task.id)}, this)">
+
+          Отримати
+
+        </button>
+
+      `;
+
+
+      list.appendChild(item);
+
+    }
+  );
+
+}
+
+
+// ======================================
+// COMPLETE TASK
+// ======================================
+
+async function completeTask(
+  taskId,
+  button
+){
+
+  if(!telegramUser){
+
+    alert(
+      "Відкрий MELER через Telegram."
+    );
+
+    return;
+  }
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "Обробка...";
+
+
+  try{
+
+    const response =
+      await fetch(
+        AUTH_FUNCTION,
+        {
+
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              SUPABASE_KEY
+          },
+
+          body:
+            JSON.stringify({
+
+              telegram_id:
+                telegramUser.id,
+
+              action:
+                "complete_task",
+
+              task_id:
+                taskId
+
+            })
+
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !response.ok ||
+      !data.success
+    ){
 
       throw new Error(
         data.error ||
@@ -522,14 +871,13 @@ async function completeTask(){
     balance =
       Number(data.balance);
 
+
     updateBalance();
+
 
     button.textContent =
       "Виконано ✓";
 
-    setStatus(
-      "Баланс збережено ✓"
-    );
 
     alert(
       "🔥 +" +
@@ -537,24 +885,51 @@ async function completeTask(){
       " MELER"
     );
 
+
+    setStatus(
+      "Баланс збережено ✓"
+    );
+
   }
   catch(error){
 
     console.error(error);
 
-    button.disabled = false;
-    button.textContent = "Отримати";
 
-    alert(error.message);
+    button.disabled = false;
+
+    button.textContent =
+      "Отримати";
+
+
+    alert(
+      error.message
+    );
 
   }
 
 }
 
 
-// =====================================
+// ======================================
+// ESCAPE HTML
+// ======================================
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+// ======================================
 // DEMO GAME
-// =====================================
+// ======================================
 
 function playGame(){
 
@@ -565,14 +940,26 @@ function playGame(){
 }
 
 
-// =====================================
+// ======================================
 // NAVIGATION
-// =====================================
+// ======================================
+
+function home(){
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
 
 function showTasks(){
 
   document
-    .getElementById("tasksSection")
+    .getElementById(
+      "tasksSection"
+    )
     .scrollIntoView({
       behavior:"smooth"
     });
@@ -583,7 +970,9 @@ function showTasks(){
 function showGames(){
 
   document
-    .getElementById("gamesSection")
+    .getElementById(
+      "gamesSection"
+    )
     .scrollIntoView({
       behavior:"smooth"
     });
@@ -591,9 +980,9 @@ function showGames(){
 }
 
 
-// =====================================
+// ======================================
 // START
-// =====================================
+// ======================================
 
 updateBalance();
 
