@@ -1,644 +1,602 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  >
-
-  <title>MELER</title>
-
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: #080808;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      min-height: 100vh;
-    }
-
-    button {
-      border: 0;
-      outline: 0;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .app {
-      max-width: 520px;
-      margin: auto;
-      padding: 18px 16px 100px;
-    }
-
-    /* HEADER */
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-    }
-
-    .logo {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: 3px;
-    }
-
-    .balance-box {
-      background: #151515;
-      border: 1px solid #292929;
-      border-radius: 14px;
-      padding: 8px 13px;
-      text-align: right;
-    }
-
-    .balance-label {
-      color: #666;
-      font-size: 9px;
-      letter-spacing: 1px;
-    }
-
-    .balance {
-      color: #ff2020;
-      font-size: 16px;
-      font-weight: 900;
-      margin-top: 2px;
-    }
-
-    /* PAGES */
-
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    /* HERO */
-
-    .hero {
-      background:
-        radial-gradient(
-          circle at top right,
-          rgba(255, 30, 30, .18),
-          transparent 40%
-        ),
-        linear-gradient(
-          145deg,
-          #191919,
-          #0d0d0d
-        );
-
-      border: 1px solid #292929;
-      border-radius: 23px;
-      padding: 23px;
-      margin-bottom: 18px;
-    }
-
-    .hero-title {
-      font-size: 27px;
-      font-weight: 900;
-      margin-bottom: 9px;
-    }
-
-    .hero-text {
-      color: #888;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .hero-balance {
-      margin-top: 20px;
-      font-size: 32px;
-      font-weight: 900;
-      color: #ff2020;
-    }
-
-    .hero-balance-label {
-      color: #666;
-      font-size: 11px;
-      margin-bottom: 4px;
-    }
-
-    /* TITLES */
-
-    .section-title {
-      font-size: 21px;
-      font-weight: 900;
-      margin: 22px 0 12px;
-    }
-
-    /* QUICK CARDS */
-
-    .quick-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .quick-card {
-      background: #131313;
-      border: 1px solid #292929;
-      border-radius: 17px;
-      padding: 17px;
-      cursor: pointer;
-      transition: .2s;
-    }
-
-    .quick-card:active {
-      transform: scale(.97);
-    }
-
-    .quick-icon {
-      font-size: 25px;
-      margin-bottom: 10px;
-    }
-
-    .quick-title {
-      font-size: 15px;
-      font-weight: 800;
-    }
-
-    .quick-text {
-      color: #666;
-      font-size: 11px;
-      margin-top: 5px;
-    }
-
-    /* TASKS */
-
-    .task {
-      background: #131313;
-      border: 1px solid #292929;
-      border-radius: 18px;
-      padding: 17px;
-      margin-bottom: 11px;
-    }
-
-    .task-title {
-      font-size: 17px;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .task-description {
-      color: #888;
-      font-size: 13px;
-      line-height: 1.45;
-      margin-bottom: 14px;
-    }
-
-    .task-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .reward {
-      color: #ff2525;
-      font-size: 15px;
-      font-weight: 900;
-    }
-
-    .red-button {
-      background: #ff2020;
-      color: #fff;
-      border-radius: 12px;
-      padding: 11px 15px;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .red-button:disabled {
-      opacity: .5;
-    }
-
-    /* EMPTY */
-
-    .empty {
-      background: #111;
-      border: 1px solid #252525;
-      border-radius: 18px;
-      padding: 30px 16px;
-      text-align: center;
-      color: #777;
-      line-height: 1.5;
-    }
-
-    /* GAMES */
-
-    .game-card {
-      background:
-        linear-gradient(
-          145deg,
-          #181818,
-          #0e0e0e
-        );
-
-      border: 1px solid #292929;
-      border-radius: 20px;
-      padding: 18px;
-      margin-bottom: 12px;
-    }
-
-    .game-icon {
-      font-size: 38px;
-      margin-bottom: 12px;
-    }
-
-    .game-name {
-      font-size: 19px;
-      font-weight: 900;
-      margin-bottom: 6px;
-    }
-
-    .game-description {
-      color: #777;
-      font-size: 13px;
-      line-height: 1.45;
-      margin-bottom: 15px;
-    }
-
-    .game-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .game-limit {
-      color: #777;
-      font-size: 11px;
-    }
-
-    .game-button {
-      background: #ff2020;
-      color: white;
-      padding: 11px 17px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    /* GAME MODAL */
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, .88);
-      z-index: 500;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal.show {
-      display: flex;
-    }
-
-    .modal-card {
-      width: 100%;
-      max-width: 430px;
-      background: #121212;
-      border: 1px solid #303030;
-      border-radius: 24px;
-      padding: 22px;
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-    }
-
-    .modal-title {
-      font-size: 21px;
-      font-weight: 900;
-    }
-
-    .close-button {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      background: #222;
-      color: #aaa;
-      font-size: 20px;
-    }
-
-    .demo-game {
-      text-align: center;
-    }
-
-    .demo-icon {
-      font-size: 70px;
-      margin: 10px 0 15px;
-    }
-
-    .demo-balance {
-      color: #ff2020;
-      font-size: 24px;
-      font-weight: 900;
-      margin-bottom: 15px;
-    }
-
-    .demo-button {
-      width: 100%;
-      background: #ff2020;
-      color: #fff;
-      border-radius: 14px;
-      padding: 15px;
-      font-size: 15px;
-      font-weight: 900;
-      margin-top: 10px;
-    }
-
-    .demo-result {
-      min-height: 25px;
-      margin-top: 15px;
-      font-weight: 800;
-    }
-
-    /* SHOP */
-
-    .reward-card {
-      background: #131313;
-      border: 1px solid #292929;
-      border-radius: 18px;
-      padding: 17px;
-      margin-bottom: 11px;
-    }
-
-    .reward-title {
-      font-size: 17px;
-      font-weight: 900;
-      margin-bottom: 6px;
-    }
-
-    .reward-description {
-      color: #777;
-      font-size: 13px;
-      line-height: 1.45;
-      margin-bottom: 14px;
-    }
-
-    .reward-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .reward-cost {
-      color: #ff2020;
-      font-weight: 900;
-      font-size: 15px;
-    }
-
-    .stock {
-      color: #666;
-      font-size: 11px;
-      margin-top: 4px;
-    }
-
-    /* PROFILE */
-
-    .profile-card {
-      background:
-        linear-gradient(
-          145deg,
-          #171717,
-          #0d0d0d
-        );
-
-      border: 1px solid #292929;
-      border-radius: 22px;
-      padding: 20px;
-    }
-
-    .profile-top {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .avatar {
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: #222;
-      border: 2px solid #292929;
-    }
-
-    .profile-name {
-      font-size: 19px;
-      font-weight: 900;
-    }
-
-    .profile-username {
-      color: #777;
-      font-size: 13px;
-      margin-top: 5px;
-    }
-
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 13px 0;
-      border-top: 1px solid #252525;
-      font-size: 14px;
-      gap: 15px;
-    }
-
-    .info-label {
-      color: #777;
-    }
-
-    .info-value {
-      font-weight: 700;
-      text-align: right;
-    }
-
-    /* TRANSACTIONS */
-
-    .transaction {
-      background: #131313;
-      border: 1px solid #252525;
-      border-radius: 15px;
-      padding: 14px;
-      margin-bottom: 9px;
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .transaction-left {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .transaction-title {
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .transaction-date {
-      color: #666;
-      font-size: 11px;
-    }
-
-    .transaction-amount {
-      color: #39d353;
-      font-weight: 900;
-      font-size: 15px;
-      white-space: nowrap;
-    }
-
-    /* NAVIGATION */
-
-    .nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-
-      height: 74px;
-
-      background: rgba(10, 10, 10, .97);
-      border-top: 1px solid #252525;
-
-      display: flex;
-      justify-content: center;
-
-      z-index: 100;
-    }
-
-    .nav-inner {
-      width: 100%;
-      max-width: 520px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-    }
-
-    .nav-item {
-      width: 20%;
-      text-align: center;
-
-      color: #666;
-
-      font-size: 10px;
-
-      cursor: pointer;
-
-      padding: 8px 0;
-
-      transition: .2s;
-    }
-
-    .nav-icon {
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
-
-    .nav-item.active {
-      color: #ff2020;
-    }
-
-    /* STATUS */
-
-    .status {
-      position: fixed;
-
-      bottom: 88px;
-      left: 50%;
-
-      transform: translateX(-50%);
-
-      background: #191919;
-      border: 1px solid #333;
-
-      border-radius: 13px;
-
-      padding: 10px 16px;
-
-      font-size: 13px;
-      color: #ddd;
-
-      z-index: 700;
-
-      display: none;
-
-      white-space: nowrap;
-
-      max-width: calc(100vw - 30px);
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .status.show {
-      display: block;
-    }
-
-    /* BALANCE CARD */
-
-    .balance-card {
-      background: #111;
-      border: 1px solid #292929;
-      border-radius: 19px;
-      padding: 18px;
-    }
-
-    .balance-card-label {
-      color: #666;
-      font-size: 11px;
-      margin-bottom: 5px;
-    }
-
-    .balance-card-value {
-      color: #ff2020;
-      font-size: 29px;
-      font-weight: 900;
-    }
-
-    @media (max-width: 380px) {
-
-      .nav-item {
-        font-size: 9px;
-      }
-
-      .nav-icon {
-        font-size: 18px;
-      }
-
-      .logo {
-        font-size: 25px;
-      }
-
-      .balance {
-        font-size: 14px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<title>MELER</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  background:#080808;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+}
+
+button{
+  border:0;
+  font-family:Arial,sans-serif;
+  cursor:pointer;
+}
+
+.app{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  padding:16px 15px 95px;
+}
+
+/* HEADER */
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:3px;
+}
+
+.balance-box{
+  background:#151515;
+  border:1px solid #292929;
+  border-radius:14px;
+  padding:8px 12px;
+  text-align:right;
+}
+
+.balance-label{
+  color:#666;
+  font-size:9px;
+  letter-spacing:1px;
+}
+
+.balance{
+  color:#ff2020;
+  font-size:16px;
+  font-weight:900;
+  margin-top:3px;
+}
+
+/* PAGES */
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* HOME */
+
+.hero{
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255,30,30,.20),
+      transparent 45%
+    ),
+    linear-gradient(145deg,#1a1a1a,#0d0d0d);
+
+  border:1px solid #292929;
+  border-radius:23px;
+  padding:22px;
+  margin-bottom:18px;
+}
+
+.hero-title{
+  font-size:27px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.hero-text{
+  color:#888;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.hero-label{
+  color:#666;
+  font-size:10px;
+  margin-top:20px;
+}
+
+.hero-balance{
+  color:#ff2020;
+  font-size:32px;
+  font-weight:900;
+  margin-top:4px;
+}
+
+/* SECTION */
+
+.section-title{
+  font-size:21px;
+  font-weight:900;
+  margin:20px 0 12px;
+}
+
+/* QUICK */
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.quick-card{
+  background:#131313;
+  border:1px solid #292929;
+  border-radius:17px;
+  padding:17px;
+  cursor:pointer;
+}
+
+.quick-card:active{
+  transform:scale(.97);
+}
+
+.quick-icon{
+  font-size:27px;
+  margin-bottom:10px;
+}
+
+.quick-title{
+  font-size:15px;
+  font-weight:900;
+}
+
+.quick-text{
+  color:#666;
+  font-size:11px;
+  margin-top:5px;
+}
+
+/* TASKS */
+
+.task{
+  background:#131313;
+  border:1px solid #292929;
+  border-radius:18px;
+  padding:17px;
+  margin-bottom:11px;
+}
+
+.task-title{
+  font-size:17px;
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+.task-description{
+  color:#888;
+  font-size:13px;
+  line-height:1.45;
+  margin-bottom:15px;
+}
+
+.task-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.task-reward{
+  color:#ff2020;
+  font-size:15px;
+  font-weight:900;
+}
+
+.red-button{
+  background:#ff2020;
+  color:#fff;
+  padding:11px 15px;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:900;
+}
+
+.red-button:disabled{
+  opacity:.5;
+}
+
+/* GAMES */
+
+.game-card{
+  background:linear-gradient(145deg,#181818,#0e0e0e);
+  border:1px solid #292929;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:12px;
+}
+
+.game-icon{
+  font-size:40px;
+  margin-bottom:10px;
+}
+
+.game-title{
+  font-size:19px;
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+.game-description{
+  color:#777;
+  font-size:13px;
+  line-height:1.45;
+  margin-bottom:15px;
+}
+
+.game-button{
+  width:100%;
+  background:#ff2020;
+  color:#fff;
+  border-radius:13px;
+  padding:13px;
+  font-size:14px;
+  font-weight:900;
+}
+
+/* SHOP */
+
+.shop-balance{
+  background:#111;
+  border:1px solid #292929;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:14px;
+}
+
+.shop-label{
+  color:#666;
+  font-size:10px;
+}
+
+.shop-value{
+  color:#ff2020;
+  font-size:28px;
+  font-weight:900;
+  margin-top:4px;
+}
+
+.reward-card{
+  background:#131313;
+  border:1px solid #292929;
+  border-radius:18px;
+  padding:17px;
+  margin-bottom:11px;
+}
+
+.reward-title{
+  font-size:17px;
+  font-weight:900;
+  margin-bottom:6px;
+}
+
+.reward-description{
+  color:#777;
+  font-size:13px;
+  line-height:1.45;
+  margin-bottom:14px;
+}
+
+.reward-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.reward-cost{
+  color:#ff2020;
+  font-weight:900;
+  font-size:15px;
+}
+
+.reward-stock{
+  color:#666;
+  font-size:11px;
+  margin-top:4px;
+}
+
+/* PROFILE */
+
+.profile-card{
+  background:linear-gradient(145deg,#171717,#0d0d0d);
+  border:1px solid #292929;
+  border-radius:22px;
+  padding:20px;
+}
+
+.profile-top{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.avatar{
+  width:68px;
+  height:68px;
+  border-radius:50%;
+  object-fit:cover;
+  background:#222;
+  border:2px solid #292929;
+}
+
+.profile-name{
+  font-size:19px;
+  font-weight:900;
+}
+
+.profile-username{
+  color:#777;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.info-row{
+  display:flex;
+  justify-content:space-between;
+  padding:13px 0;
+  border-top:1px solid #252525;
+  font-size:14px;
+  gap:10px;
+}
+
+.info-label{
+  color:#777;
+}
+
+.info-value{
+  font-weight:800;
+  text-align:right;
+}
+
+/* HISTORY */
+
+.transaction{
+  background:#131313;
+  border:1px solid #252525;
+  border-radius:15px;
+  padding:14px;
+  margin-bottom:9px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.transaction-title{
+  font-size:14px;
+  font-weight:800;
+}
+
+.transaction-date{
+  color:#666;
+  font-size:11px;
+  margin-top:4px;
+}
+
+.transaction-amount{
+  color:#39d353;
+  font-weight:900;
+  font-size:15px;
+  white-space:nowrap;
+}
+
+/* EMPTY */
+
+.empty{
+  background:#111;
+  border:1px solid #252525;
+  border-radius:18px;
+  padding:28px 15px;
+  text-align:center;
+  color:#777;
+  line-height:1.5;
+}
+
+/* NAV */
+
+.nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+
+  height:73px;
+
+  background:rgba(10,10,10,.97);
+  border-top:1px solid #252525;
+
+  z-index:1000;
+}
+
+.nav-inner{
+  width:100%;
+  max-width:520px;
+  height:100%;
+  margin:auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+}
+
+.nav-item{
+  width:20%;
+  height:100%;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  color:#666;
+  font-size:9px;
+
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.nav-icon{
+  font-size:20px;
+  margin-bottom:4px;
+}
+
+.nav-item.active{
+  color:#ff2020;
+}
+
+/* STATUS */
+
+.status{
+  position:fixed;
+  left:50%;
+  bottom:88px;
+
+  transform:translateX(-50%);
+
+  background:#191919;
+  border:1px solid #333;
+
+  border-radius:13px;
+
+  padding:10px 16px;
+
+  color:#ddd;
+  font-size:13px;
+
+  display:none;
+  z-index:2000;
+
+  max-width:90%;
+  text-align:center;
+}
+
+.status.show{
+  display:block;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,.88);
+
+  display:none;
+  align-items:center;
+  justify-content:center;
+
+  padding:18px;
+
+  z-index:3000;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-card{
+  width:100%;
+  max-width:420px;
+
+  background:#121212;
+  border:1px solid #303030;
+
+  border-radius:23px;
+
+  padding:21px;
+}
+
+.modal-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:18px;
+}
+
+.modal-title{
+  font-size:20px;
+  font-weight:900;
+}
+
+.close{
+  width:35px;
+  height:35px;
+
+  border-radius:50%;
+
+  background:#222;
+  color:#aaa;
+
+  font-size:20px;
+}
+
+.demo{
+  text-align:center;
+}
+
+.demo-icon{
+  font-size:70px;
+  margin:10px 0;
+}
+
+.demo-balance{
+  color:#ff2020;
+  font-size:25px;
+  font-weight:900;
+}
+
+.demo-text{
+  color:#777;
+  font-size:12px;
+  margin-top:8px;
+}
+
+.demo-button{
+  width:100%;
+  margin-top:18px;
+
+  background:#ff2020;
+  color:white;
+
+  border-radius:14px;
+
+  padding:15px;
+
+  font-size:14px;
+  font-weight:900;
+}
+
+.demo-result{
+  min-height:25px;
+  margin-top:15px;
+  font-weight:900;
+}
+</style>
 </head>
 
 <body>
@@ -660,8 +618,8 @@
       </div>
 
       <div
-        class="balance"
         id="topBalance"
+        class="balance"
       >
         0 MELER
       </div>
@@ -673,7 +631,7 @@
 
   <!-- HOME -->
 
-  <div
+  <section
     id="homePage"
     class="page active"
   >
@@ -685,18 +643,18 @@
       </div>
 
       <div class="hero-text">
-        Виконуй завдання, грай у демо-ігри
-        та обмінюй накопичені MELER
-        на доступні нагороди.
+        Виконуй завдання, накопичуй
+        MELER та використовуй їх
+        усередині платформи.
       </div>
 
-      <div class="hero-balance-label">
-        ТВОЄ ЗАРАЗ
+      <div class="hero-label">
+        ТВОЄМУ БАЛАНСУ
       </div>
 
       <div
-        class="hero-balance"
         id="homeBalance"
+        class="hero-balance"
       >
         0 MELER
       </div>
@@ -745,7 +703,7 @@
         </div>
 
         <div class="quick-text">
-          Грай за MELER
+          Демо-ігри MELER
         </div>
 
       </div>
@@ -765,7 +723,7 @@
         </div>
 
         <div class="quick-text">
-          Обмінюй MELER
+          Нагороди
         </div>
 
       </div>
@@ -792,12 +750,12 @@
 
     </div>
 
-  </div>
+  </section>
 
 
   <!-- TASKS -->
 
-  <div
+  <section
     id="tasksPage"
     class="page"
   >
@@ -814,12 +772,12 @@
 
     </div>
 
-  </div>
+  </section>
 
 
   <!-- GAMES -->
 
-  <div
+  <section
     id="gamesPage"
     class="page"
   >
@@ -828,36 +786,29 @@
       Ігри
     </div>
 
+
     <div class="game-card">
 
       <div class="game-icon">
         🎯
       </div>
 
-      <div class="game-name">
+      <div class="game-title">
         Lucky Click
       </div>
 
       <div class="game-description">
-        Демо-гра MELER.
-        Використовуй внутрішню валюту
-        та спробуй отримати випадковий результат.
+        Демонстраційна гра MELER.
+        Внутрішня валюта використовується
+        лише для тестування механіки.
       </div>
 
-      <div class="game-bottom">
-
-        <div class="game-limit">
-          Мін. ставка: 10 MELER
-        </div>
-
-        <button
-          class="game-button"
-          onclick="openGame()"
-        >
-          Грати
-        </button>
-
-      </div>
+      <button
+        class="game-button"
+        onclick="openGame()"
+      >
+        ГРАТИ
+      </button>
 
     </div>
 
@@ -868,43 +819,30 @@
         🎰
       </div>
 
-      <div class="game-name">
+      <div class="game-title">
         MELER Slots
       </div>
 
       <div class="game-description">
-        Демонстраційний слот
-        з внутрішньою валютою MELER.
+        Демо-слот. Нові ігрові механіки
+        будуть додані пізніше.
       </div>
 
-      <div class="game-bottom">
-
-        <div class="game-limit">
-          Демо
-        </div>
-
-        <button
-          class="game-button"
-          onclick="openGame()"
-        >
-          Грати
-        </button>
-
-      </div>
+      <button
+        class="game-button"
+        onclick="openGame()"
+      >
+        ГРАТИ
+      </button>
 
     </div>
 
-
-    <div class="empty">
-      🎮 Нові ігри скоро з'являться.
-    </div>
-
-  </div>
+  </section>
 
 
   <!-- SHOP -->
 
-  <div
+  <section
     id="shopPage"
     class="page"
   >
@@ -913,25 +851,24 @@
       Магазин
     </div>
 
-    <div class="balance-card">
 
-      <div class="balance-card-label">
+    <div class="shop-balance">
+
+      <div class="shop-label">
         ДОСТУПНО
       </div>
 
       <div
-        class="balance-card-value"
         id="shopBalance"
+        class="shop-value"
       >
         0 MELER
       </div>
 
     </div>
 
-    <div
-      id="rewards"
-      style="margin-top: 14px;"
-    >
+
+    <div id="rewards">
 
       <div class="empty">
         Завантаження нагород...
@@ -939,12 +876,12 @@
 
     </div>
 
-  </div>
+  </section>
 
 
   <!-- PROFILE -->
 
-  <div
+  <section
     id="profilePage"
     class="page"
   >
@@ -952,6 +889,7 @@
     <div class="section-title">
       Профіль
     </div>
+
 
     <div class="profile-card">
 
@@ -1023,22 +961,23 @@
       Історія MELER
     </div>
 
+
     <div id="transactions">
 
       <div class="empty">
-        Завантаження історії...
+        Завантаження...
       </div>
 
     </div>
 
-  </div>
+  </section>
 
 </div>
 
 
 <!-- NAVIGATION -->
 
-<div class="nav">
+<nav class="nav">
 
   <div class="nav-inner">
 
@@ -1052,7 +991,9 @@
         🏠
       </div>
 
-      Головна
+      <div>
+        Головна
+      </div>
 
     </div>
 
@@ -1067,7 +1008,9 @@
         📋
       </div>
 
-      Завдання
+      <div>
+        Завдання
+      </div>
 
     </div>
 
@@ -1082,7 +1025,9 @@
         🎮
       </div>
 
-      Ігри
+      <div>
+        Ігри
+      </div>
 
     </div>
 
@@ -1097,7 +1042,9 @@
         🎁
       </div>
 
-      Магазин
+      <div>
+        Магазин
+      </div>
 
     </div>
 
@@ -1112,13 +1059,15 @@
         👤
       </div>
 
-      Профіль
+      <div>
+        Профіль
+      </div>
 
     </div>
 
   </div>
 
-</div>
+</nav>
 
 
 <!-- GAME MODAL -->
@@ -1130,14 +1079,14 @@
 
   <div class="modal-card">
 
-    <div class="modal-header">
+    <div class="modal-top">
 
       <div class="modal-title">
         🎯 Lucky Click
       </div>
 
       <button
-        class="close-button"
+        class="close"
         onclick="closeGame()"
       >
         ×
@@ -1146,33 +1095,33 @@
     </div>
 
 
-    <div class="demo-game">
+    <div class="demo">
 
       <div class="demo-icon">
         🎯
       </div>
 
       <div
-        class="demo-balance"
         id="gameBalance"
+        class="demo-balance"
       >
         0 MELER
       </div>
 
-      <div style="color:#777;font-size:13px;">
-        Демо-режим внутрішньої валюти MELER
+      <div class="demo-text">
+        Демо-режим MELER
       </div>
 
       <button
         class="demo-button"
         onclick="playDemo()"
       >
-        ГРАТИ — 10 MELER
+        ГРАТИ
       </button>
 
       <div
-        class="demo-result"
         id="gameResult"
+        class="demo-result"
       ></div>
 
     </div>
@@ -1191,6 +1140,8 @@
 
 
 <script>
+
+/* TELEGRAM */
 
 const tg =
   window.Telegram &&
@@ -1214,10 +1165,8 @@ const SUPABASE_URL =
   "https://znguvxqhsvxmewkybpaw.supabase.co";
 
 
-*sb_publishable_FVOO6zTiLHNc7PE_AWcUNQ_jNI5W2PR*
-
 const SUPABASE_KEY =
-  "ВСТАВ_СВІЙ_ЗБЕРЕЖЕНИЙ_KEY";
+  "sb_publishable_FVOO6zTiLHNc7PE_AWcUNQ_jNI5W2PR";
 
 
 const AUTH_FUNCTION =
@@ -1240,9 +1189,9 @@ async function api(body) {
     await fetch(
       AUTH_FUNCTION,
       {
-        method: "POST",
+        method:"POST",
 
-        headers: {
+        headers:{
           "Content-Type":
             "application/json",
 
@@ -1268,15 +1217,19 @@ async function api(body) {
         "Помилка сервера"
       );
 
+
     error.already_completed =
       data.already_completed ||
       false;
 
+
     throw error;
+
   }
 
 
   return data;
+
 }
 
 
@@ -1284,28 +1237,31 @@ async function api(body) {
 
 function showStatus(text) {
 
-  const element =
+  const status =
     document.getElementById(
       "status"
     );
 
 
-  element.textContent =
+  status.textContent =
     text;
 
 
-  element.classList.add(
+  status.classList.add(
     "show"
   );
 
 
-  setTimeout(() => {
+  setTimeout(
+    function(){
 
-    element.classList.remove(
-      "show"
-    );
+      status.classList.remove(
+        "show"
+      );
 
-  }, 2500);
+    },
+    2500
+  );
 
 }
 
@@ -1314,44 +1270,56 @@ function showStatus(text) {
 
 function openPage(pageId) {
 
-  document
-    .querySelectorAll(".page")
-    .forEach(page => {
+  const pages =
+    document.querySelectorAll(
+      ".page"
+    );
+
+
+  pages.forEach(
+    function(page){
 
       page.classList.remove(
         "active"
       );
 
-    });
+    }
+  );
 
 
-  const page =
+  const target =
     document.getElementById(
       pageId
     );
 
 
-  if (page) {
+  if (target) {
 
-    page.classList.add(
+    target.classList.add(
       "active"
     );
 
   }
 
 
-  document
-    .querySelectorAll(".nav-item")
-    .forEach(item => {
+  const navItems =
+    document.querySelectorAll(
+      ".nav-item"
+    );
+
+
+  navItems.forEach(
+    function(item){
 
       item.classList.remove(
         "active"
       );
 
+
       if (
         item.dataset.page ===
         pageId
-      ) {
+      ){
 
         item.classList.add(
           "active"
@@ -1359,13 +1327,14 @@ function openPage(pageId) {
 
       }
 
-    });
+    }
+  );
 
 
   if (
     pageId ===
     "profilePage"
-  ) {
+  ){
 
     loadTransactions();
 
@@ -1375,7 +1344,7 @@ function openPage(pageId) {
   if (
     pageId ===
     "shopPage"
-  ) {
+  ){
 
     loadRewards();
 
@@ -1385,7 +1354,7 @@ function openPage(pageId) {
   if (
     pageId ===
     "gamesPage"
-  ) {
+  ){
 
     updateGameBalance();
 
@@ -1401,7 +1370,7 @@ async function login() {
   if (
     !tg ||
     !tg.initDataUnsafe
-  ) {
+  ){
 
     showStatus(
       "Відкрий MELER через Telegram"
@@ -1419,7 +1388,7 @@ async function login() {
   if (
     !telegramUser ||
     !telegramUser.id
-  ) {
+  ){
 
     showStatus(
       "Telegram-користувача не знайдено"
@@ -1475,7 +1444,7 @@ async function login() {
     await loadRewards();
 
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
 
@@ -1502,8 +1471,8 @@ function updateProfile() {
       currentUser.first_name,
       currentUser.last_name
     ]
-      .filter(Boolean)
-      .join(" ");
+    .filter(Boolean)
+    .join(" ");
 
 
   document.getElementById(
@@ -1528,6 +1497,15 @@ function updateProfile() {
     currentUser.telegram_id;
 
 
+  document.getElementById(
+    "profileBalance"
+  ).textContent =
+    Number(
+      currentUser.balance || 0
+    ) +
+    " MELER";
+
+
   const avatar =
     document.getElementById(
       "avatar"
@@ -1536,7 +1514,7 @@ function updateProfile() {
 
   if (
     currentUser.photo_url
-  ) {
+  ){
 
     avatar.src =
       currentUser.photo_url;
@@ -1544,15 +1522,12 @@ function updateProfile() {
     avatar.style.display =
       "block";
 
-  } else {
+  }else{
 
     avatar.style.display =
       "none";
 
   }
-
-
-  updateBalance();
 
 }
 
@@ -1561,10 +1536,14 @@ function updateProfile() {
 
 function updateBalance() {
 
+  if (!currentUser) {
+    return;
+  }
+
+
   const balance =
     Number(
-      currentUser?.balance ||
-      0
+      currentUser.balance || 0
     );
 
 
@@ -1643,7 +1622,7 @@ async function loadTasks() {
     );
 
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
 
@@ -1674,7 +1653,7 @@ function renderTasks(tasks) {
 
   if (
     tasks.length === 0
-  ) {
+  ){
 
     container.innerHTML =
       `
@@ -1690,77 +1669,72 @@ function renderTasks(tasks) {
   }
 
 
-  tasks.forEach(task => {
+  tasks.forEach(
+    function(task){
 
-    const element =
-      document.createElement(
-        "div"
-      );
-
-
-    element.className =
-      "task";
+      const element =
+        document.createElement(
+          "div"
+        );
 
 
-    element.id =
-      "task-" +
-      task.id;
+      element.className =
+        "task";
 
 
-    element.innerHTML =
-      `
+      element.id =
+        "task-" +
+        task.id;
 
-        <div class="task-title">
-          ${escapeHtml(
-            task.title
-          )}
-        </div>
 
-        <div class="task-description">
-          ${escapeHtml(
-            task.description ||
-            ""
-          )}
-        </div>
-
-        <div class="task-bottom">
-
-          <div class="reward">
-            +${Number(
-              task.reward
-            )} MELER
+      element.innerHTML =
+        `
+          <div class="task-title">
+            ${escapeHtml(task.title)}
           </div>
 
-          <button
-            class="red-button"
-            onclick="startTask(
-              ${Number(task.id)},
-              this
-            )"
-          >
-            Підписатися
-          </button>
+          <div class="task-description">
+            ${escapeHtml(
+              task.description || ""
+            )}
+          </div>
 
-        </div>
+          <div class="task-bottom">
 
-      `;
+            <div class="task-reward">
+              +${Number(task.reward)} MELER
+            </div>
+
+            <button
+              class="red-button"
+              onclick="startTask(
+                ${Number(task.id)},
+                this
+              )"
+            >
+              Підписатися
+            </button>
+
+          </div>
+        `;
 
 
-    container.appendChild(
-      element
-    );
+      container.appendChild(
+        element
+      );
 
-  });
+    }
+  );
 
 }
 
 
-/* START TASK */
+/* TASK */
 
 function startTask(
   taskId,
   button
-) {
+){
 
   button.disabled =
     true;
@@ -1782,33 +1756,39 @@ function startTask(
   }
 
 
-  setTimeout(() => {
+  setTimeout(
+    function(){
 
-    button.disabled =
-      false;
+      button.disabled =
+        false;
 
-    button.textContent =
-      "Перевірити підписку";
+      button.textContent =
+        "Перевірити підписку";
 
 
-    button.onclick =
-      () =>
-        checkSubscription(
-          taskId,
-          button
-        );
+      button.onclick =
+        function(){
 
-  }, 700);
+          checkSubscription(
+            taskId,
+            button
+          );
+
+        };
+
+    },
+    700
+  );
 
 }
 
 
-/* CHECK SUBSCRIPTION */
+/* CHECK */
 
 async function checkSubscription(
   taskId,
   button
-) {
+){
 
   button.disabled =
     true;
@@ -1834,7 +1814,7 @@ async function checkSubscription(
 
     if (
       !check.subscribed
-    ) {
+    ){
 
       button.disabled =
         false;
@@ -1870,7 +1850,7 @@ async function checkSubscription(
 
     if (
       result.already_completed
-    ) {
+    ){
 
       removeTask(
         taskId
@@ -1903,14 +1883,14 @@ async function checkSubscription(
     await loadTransactions();
 
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
 
 
     if (
       error.already_completed
-    ) {
+    ){
 
       removeTask(
         taskId
@@ -1923,7 +1903,6 @@ async function checkSubscription(
 
     button.disabled =
       false;
-
 
     button.textContent =
       "Перевірити підписку";
@@ -1940,9 +1919,7 @@ async function checkSubscription(
 
 /* REMOVE TASK */
 
-function removeTask(
-  taskId
-) {
+function removeTask(taskId){
 
   const element =
     document.getElementById(
@@ -1956,54 +1933,38 @@ function removeTask(
   }
 
 
-  element.style.opacity =
-    "0";
+  element.remove();
 
 
-  element.style.transform =
-    "scale(.95)";
+  const remaining =
+    document.querySelectorAll(
+      ".task"
+    );
 
 
-  element.style.transition =
-    ".2s";
+  if (
+    remaining.length === 0
+  ){
 
+    document.getElementById(
+      "tasks"
+    ).innerHTML =
+      `
+        <div class="empty">
+          🎉 Усі доступні завдання виконано!
+          <br><br>
+          Нові завдання з'являться пізніше.
+        </div>
+      `;
 
-  setTimeout(() => {
-
-    element.remove();
-
-
-    const remaining =
-      document.querySelectorAll(
-        ".task"
-      );
-
-
-    if (
-      remaining.length === 0
-    ) {
-
-      document.getElementById(
-        "tasks"
-      ).innerHTML =
-        `
-          <div class="empty">
-            🎉 Усі доступні завдання виконано!
-            <br><br>
-            Нові завдання з'являться пізніше.
-          </div>
-        `;
-
-    }
-
-  }, 200);
+  }
 
 }
 
 
 /* TRANSACTIONS */
 
-async function loadTransactions() {
+async function loadTransactions(){
 
   if (!currentUser) {
     return;
@@ -2031,12 +1992,11 @@ async function loadTransactions() {
 
 
     renderTransactions(
-      result.transactions ||
-      []
+      result.transactions || []
     );
 
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
 
@@ -2055,7 +2015,7 @@ async function loadTransactions() {
 
 function renderTransactions(
   transactions
-) {
+){
 
   const container =
     document.getElementById(
@@ -2069,7 +2029,7 @@ function renderTransactions(
 
   if (
     transactions.length === 0
-  ) {
+  ){
 
     container.innerHTML =
       `
@@ -2084,7 +2044,7 @@ function renderTransactions(
 
 
   transactions.forEach(
-    transaction => {
+    function(transaction){
 
       const element =
         document.createElement(
@@ -2096,12 +2056,6 @@ function renderTransactions(
         "transaction";
 
 
-      const date =
-        formatDate(
-          transaction.created_at
-        );
-
-
       const amount =
         Number(
           transaction.amount || 0
@@ -2110,8 +2064,7 @@ function renderTransactions(
 
       element.innerHTML =
         `
-
-          <div class="transaction-left">
+          <div>
 
             <div class="transaction-title">
               ${transactionTitle(
@@ -2120,7 +2073,9 @@ function renderTransactions(
             </div>
 
             <div class="transaction-date">
-              ${date}
+              ${formatDate(
+                transaction.created_at
+              )}
             </div>
 
           </div>
@@ -2128,7 +2083,6 @@ function renderTransactions(
           <div class="transaction-amount">
             +${amount} MELER
           </div>
-
         `;
 
 
@@ -2142,16 +2096,12 @@ function renderTransactions(
 }
 
 
-/* TRANSACTION TITLE */
-
-function transactionTitle(
-  type
-) {
+function transactionTitle(type){
 
   if (
     type ===
     "task_reward"
-  ) {
+  ){
 
     return "Виконання завдання";
 
@@ -2165,12 +2115,7 @@ function transactionTitle(
 
 /* SHOP */
 
-async function loadRewards() {
-
-  if (!currentUser) {
-    return;
-  }
-
+async function loadRewards(){
 
   const container =
     document.getElementById(
@@ -2183,9 +2128,12 @@ async function loadRewards() {
     const response =
       await fetch(
         SUPABASE_URL +
-        "/rest/v1/rewards?select=id,title,description,cost,stock,is_active&is_active=eq.true&order=id.asc",
+        "/rest/v1/rewards" +
+        "?select=id,title,description,cost,stock,is_active" +
+        "&is_active=eq.true" +
+        "&order=id.asc",
         {
-          headers: {
+          headers:{
             "apikey":
               SUPABASE_KEY,
 
@@ -2197,10 +2145,12 @@ async function loadRewards() {
       );
 
 
-    if (!response.ok) {
+    if (!response.ok){
+
       throw new Error(
-        "Не вдалося завантажити магазин"
+        "Помилка магазину"
       );
+
     }
 
 
@@ -2213,7 +2163,7 @@ async function loadRewards() {
     );
 
 
-  } catch (error) {
+  } catch(error) {
 
     console.error(error);
 
@@ -2221,7 +2171,7 @@ async function loadRewards() {
     container.innerHTML =
       `
         <div class="empty">
-          Магазин поки порожній.
+          🎁 Нагород поки немає.
           <br><br>
           Додай нагороди в Supabase.
         </div>
@@ -2232,11 +2182,7 @@ async function loadRewards() {
 }
 
 
-/* RENDER REWARDS */
-
-function renderRewards(
-  rewards
-) {
+function renderRewards(rewards){
 
   const container =
     document.getElementById(
@@ -2250,14 +2196,14 @@ function renderRewards(
 
   if (
     rewards.length === 0
-  ) {
+  ){
 
     container.innerHTML =
       `
         <div class="empty">
           🎁 Нагород поки немає.
           <br><br>
-          Нові нагороди з'являться пізніше.
+          Вони з'являться тут пізніше.
         </div>
       `;
 
@@ -2266,92 +2212,88 @@ function renderRewards(
   }
 
 
-  rewards.forEach(reward => {
+  rewards.forEach(
+    function(reward){
 
-    const element =
-      document.createElement(
-        "div"
-      );
-
-
-    element.className =
-      "reward-card";
+      const element =
+        document.createElement(
+          "div"
+        );
 
 
-    element.innerHTML =
-      `
+      element.className =
+        "reward-card";
 
-        <div class="reward-title">
-          ${escapeHtml(
-            reward.title
-          )}
-        </div>
 
-        <div class="reward-description">
-          ${escapeHtml(
-            reward.description ||
-            ""
-          )}
-        </div>
-
-        <div class="reward-bottom">
-
-          <div>
-
-            <div class="reward-cost">
-              ${Number(
-                reward.cost
-              )} MELER
-            </div>
-
-            <div class="stock">
-              ${Number(
-                reward.stock
-              ) > 0
-                ? "Є в наявності"
-                : "Немає в наявності"}
-            </div>
-
+      element.innerHTML =
+        `
+          <div class="reward-title">
+            ${escapeHtml(
+              reward.title
+            )}
           </div>
 
-          <button
-            class="red-button"
-            onclick="redeemReward(
-              ${Number(reward.id)},
-              ${Number(reward.cost)},
-              ${Number(reward.stock)}
-            )"
-            ${Number(reward.stock) <= 0 ? "disabled" : ""}
-          >
-            Обміняти
-          </button>
+          <div class="reward-description">
+            ${escapeHtml(
+              reward.description || ""
+            )}
+          </div>
 
-        </div>
+          <div class="reward-bottom">
 
-      `;
+            <div>
+
+              <div class="reward-cost">
+                ${Number(
+                  reward.cost
+                )} MELER
+              </div>
+
+              <div class="reward-stock">
+                ${
+                  Number(reward.stock) > 0
+                  ? "Є в наявності"
+                  : "Немає в наявності"
+                }
+              </div>
+
+            </div>
+
+            <button
+              class="red-button"
+              onclick="requestReward(
+                ${Number(reward.id)},
+                ${Number(reward.cost)}
+              )"
+              ${
+                Number(reward.stock) <= 0
+                ? "disabled"
+                : ""
+              }
+            >
+              Обміняти
+            </button>
+
+          </div>
+        `;
 
 
-    container.appendChild(
-      element
-    );
+      container.appendChild(
+        element
+      );
 
-  });
+    }
+  );
 
 }
 
 
-/*
-  Нагорода поки що показує повідомлення.
-  Реальне списання балансу краще робити
-  через окрему захищену Edge Function/RPC,
-  а не напряму з браузера.
-*/
+/* REWARD */
 
-async function redeemReward(
+function requestReward(
   rewardId,
-  cost,
-  stock
-) {
+  cost
+){
 
   if (!currentUser) {
     return;
@@ -2365,21 +2307,8 @@ async function redeemReward(
 
 
   if (
-    stock <= 0
-  ) {
-
-    showStatus(
-      "Нагороди немає в наявності"
-    );
-
-    return;
-
-  }
-
-
-  if (
     balance < cost
-  ) {
+  ){
 
     showStatus(
       "❌ Недостатньо MELER"
@@ -2391,7 +2320,7 @@ async function redeemReward(
 
 
   showStatus(
-    "🎁 Система обміну буде доступна після підключення виплат"
+    "🎁 Обмін нагород поки в демо-режимі"
   );
 
 }
@@ -2399,9 +2328,9 @@ async function redeemReward(
 
 /* GAME */
 
-function openGame() {
+function openGame(){
 
-  if (!currentUser) {
+  if (!currentUser){
 
     showStatus(
       "Завантаження профілю..."
@@ -2415,39 +2344,33 @@ function openGame() {
   updateGameBalance();
 
 
-  document
-    .getElementById(
-      "gameResult"
-    )
-    .textContent =
+  document.getElementById(
+    "gameResult"
+  ).textContent =
     "";
 
 
-  document
-    .getElementById(
-      "gameModal"
-    )
-    .classList.add(
-      "show"
-    );
+  document.getElementById(
+    "gameModal"
+  ).classList.add(
+    "show"
+  );
 
 }
 
 
-function closeGame() {
+function closeGame(){
 
-  document
-    .getElementById(
-      "gameModal"
-    )
-    .classList.remove(
-      "show"
-    );
+  document.getElementById(
+    "gameModal"
+  ).classList.remove(
+    "show"
+  );
 
 }
 
 
-function updateGameBalance() {
+function updateGameBalance(){
 
   if (!currentUser) {
     return;
@@ -2466,7 +2389,7 @@ function updateGameBalance() {
     );
 
 
-  if (element) {
+  if (element){
 
     element.textContent =
       balance +
@@ -2477,23 +2400,7 @@ function updateGameBalance() {
 }
 
 
-/*
-  Демо-гра тільки локально.
-  Вона НЕ змінює баланс Supabase.
-*/
-
-function playDemo() {
-
-  if (!currentUser) {
-    return;
-  }
-
-
-  const balance =
-    Number(
-      currentUser.balance || 0
-    );
-
+function playDemo(){
 
   const result =
     document.getElementById(
@@ -2501,31 +2408,16 @@ function playDemo() {
     );
 
 
-  if (
-    balance < 10
-  ) {
-
-    result.textContent =
-      "❌ Недостатньо MELER";
-
-    result.style.color =
-      "#ff2020";
-
-    return;
-
-  }
-
-
   const random =
     Math.random();
 
 
   if (
-    random < .35
-  ) {
+    random < .4
+  ){
 
     result.textContent =
-      "🎉 Виграш у демо-режимі!";
+      "🎉 У демо-грі пощастило!";
 
     result.style.color =
       "#39d353";
@@ -2545,9 +2437,7 @@ function playDemo() {
 
 /* HELPERS */
 
-function formatDate(
-  value
-) {
+function formatDate(value){
 
   if (!value) {
     return "";
@@ -2561,21 +2451,18 @@ function formatDate(
   return date.toLocaleString(
     "uk-UA",
     {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-
-      hour: "2-digit",
-      minute: "2-digit"
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
     }
   );
 
 }
 
 
-function escapeHtml(
-  value
-) {
+function escapeHtml(value){
 
   return String(value)
 
@@ -2607,7 +2494,7 @@ function escapeHtml(
 }
 
 
-/* CLOSE MODAL ON BACKGROUND */
+/* CLOSE MODAL */
 
 document
   .getElementById(
@@ -2615,12 +2502,12 @@ document
   )
   .addEventListener(
     "click",
-    event => {
+    function(event){
 
       if (
         event.target.id ===
         "gameModal"
-      ) {
+      ){
 
         closeGame();
 
